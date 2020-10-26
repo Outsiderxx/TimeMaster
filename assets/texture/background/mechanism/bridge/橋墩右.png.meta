@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "8ef6d0b4-c54e-4062-a815-c712af06e0de",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 67,
+  "height": 57,
+  "platformSettings": {},
+  "subMetas": {
+    "橋墩右": {
+      "ver": "1.0.4",
+      "uuid": "75241ead-6c47-43bf-af6d-8e5fd5baf7ec",
+      "rawTextureUuid": "8ef6d0b4-c54e-4062-a815-c712af06e0de",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 67,
+      "height": 57,
+      "rawWidth": 67,
+      "rawHeight": 57,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
