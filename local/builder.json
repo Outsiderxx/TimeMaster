@@ -2,7 +2,7 @@
   "platform": "web-mobile",
   "actualPlatform": "web-mobile",
   "template": "link",
-  "buildPath": "C:\\Users\\USER\\Desktop",
+  "buildPath": "./build",
   "debug": false,
   "sourceMaps": true,
   "embedWebDebugger": false,
