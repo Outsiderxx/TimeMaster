@@ -1,6 +1,4 @@
 stages:
-    - prepare
-    - test
     - build
     - after_build
     - deploy
