@@ -1,0 +1,37 @@
+stages:
+    - prepare
+    - test
+    - build
+    - after_build
+    - deploy
+
+variables:
+    GIT_STRATEGY: none
+
+CocosCreator_Build:
+    stage: build
+    variables:
+        GIT_STRATEGY: clone
+    script:
+        - D:\CocosCreator\2.4.0\CocosCreator.exe --path . --build
+    tags:
+        - TimeMaster
+
+After_Build:
+    stage: after_build
+    script:
+        - mkdir public
+        - mv .\build\web-mobile\* .\public
+    tags:
+        - TimeMaster
+
+pages:
+    stage: deploy
+    script:
+        - echo "start deployment"
+    artifacts:
+        name: 'TimeMaster'
+        paths:
+            - public
+    tags:
+        - TimeMaster
