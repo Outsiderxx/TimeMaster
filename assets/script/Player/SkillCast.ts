@@ -16,7 +16,6 @@ export default class SkillCast extends cc.Component {
         cc.director.getCollisionManager().enabled = true;
         cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
-<<<<<<< HEAD
         this.node.active = false;
     }
 
@@ -28,9 +27,6 @@ export default class SkillCast extends cc.Component {
 
     public changeScene() {
         this.scene = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
-=======
-        this.scene = cc.find('Canvas/GameStage/Scene');
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
         this.scene.on(cc.Node.EventType.TOUCH_START, (event: cc.Event.EventTouch) => {
             this.userPointer.node.active = true;
             const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());
@@ -50,16 +46,6 @@ export default class SkillCast extends cc.Component {
         this.scene.on(cc.Node.EventType.TOUCH_CANCEL, (event: cc.Event.EventTouch) => {
             this.userPointer.node.active = false;
         });
-<<<<<<< HEAD
-=======
-        this.node.active = false;
-    }
-
-    update() {
-        if (this.userPointer.node.active) {
-            this.addCameraOffset();
-        }
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
     }
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {

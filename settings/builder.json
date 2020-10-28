@@ -1,11 +1,7 @@
 {
   "title": "TimeMaster",
   "packageName": "org.cocos2d.demo",
-<<<<<<< HEAD
   "startScene": "ae164704-7b45-4076-9a91-bd4524ae5ba5",
-=======
-  "startScene": "894a7661-13e6-4761-9a99-5689d14c0c72",
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
   "excludeScenes": [],
   "includeSDKBox": false,
   "orientation": {
@@ -14,23 +10,14 @@
     "portrait": false,
     "upsideDown": false
   },
-<<<<<<< HEAD
   "webOrientation": "landscape",
-=======
-  "webOrientation": "auto",
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
   "mainCompressionType": "default",
   "mainIsRemote": false,
   "optimizeHotUpdate": false,
-<<<<<<< HEAD
   "md5Cache": false,
   "nativeMd5Cache": false,
-=======
-  "md5Cache": true,
-  "nativeMd5Cache": true,
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
   "encryptJs": true,
   "xxteaKey": "93caebd7-a7d7-48",
   "zipCompressJs": true,
@@ -63,10 +50,6 @@
     "scheme": "https",
     "skipRecord": false
   },
-<<<<<<< HEAD
   "appBundle": false,
   "includeAnySDK": false
-=======
-  "appBundle": false
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
 }

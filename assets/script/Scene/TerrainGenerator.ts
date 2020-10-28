@@ -4,11 +4,7 @@ const { ccclass, property } = cc._decorator;
 export default class TerrainGenerator extends cc.Component {
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-<<<<<<< HEAD
         // cc.director.getPhysicsManager().debugDrawFlags = 1; // for collider debug
-=======
-        //cc.director.getPhysicsManager().debugDrawFlags = 1; // for collider debug
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
         // 獲取 tiledMap 資訊
         const tiledmap: cc.TiledMap = this.node.getComponent(cc.TiledMap);
         const tiledSize = tiledmap.getTileSize();

@@ -8,7 +8,6 @@ export default class CameraController extends cc.Component {
     @property(cc.Camera)
     private camera: cc.Camera = null;
 
-<<<<<<< HEAD
     @property(cc.Node)
     private mask: cc.Node = null;
 
@@ -17,10 +16,6 @@ export default class CameraController extends cc.Component {
 
     @property(cc.Node)
     private middleGround: cc.Node = null;
-=======
-    @property(cc.Sprite)
-    private background: cc.Sprite = null;
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
 
     @property(PlayerManager)
     private player: PlayerManager = null;
@@ -45,13 +40,9 @@ export default class CameraController extends cc.Component {
         } else {
             this.camera.node.y = this.player.node.y;
         }
-<<<<<<< HEAD
         this.mask.setPosition(this.camera.node.x, this.camera.node.y);
         this.adapter.setPosition(-this.mask.x, -this.mask.y);
         this.middleGround.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
-=======
-        this.background.node.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
->>>>>>> c4923516ab869143154832a5cc0222c321448c81
     }
 
     public focusOn(position: cc.Vec2, scale: number) {}
