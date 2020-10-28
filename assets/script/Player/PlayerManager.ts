@@ -23,8 +23,13 @@ export default class PlayerManager extends cc.Component {
     @property(cc.Node)
     private skillRange: cc.Node = null;
 
+<<<<<<< HEAD
     @property(SkillCast)
     private userPointer: SkillCast = null;
+=======
+    @property(cc.Node)
+    private userPointer: cc.Node = null;
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
 
     private input = {};
     private onTheGround: boolean = false;
@@ -32,8 +37,11 @@ export default class PlayerManager extends cc.Component {
     private currentUsingSkill: SkillSet = -1;
     private isClimbing: boolean = false;
     private isAlive: boolean = true;
+<<<<<<< HEAD
     private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
     private currentSceneIdx: number = null; // current scene idx
+=======
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
 
     onLoad() {
         // 技能切換
@@ -54,12 +62,20 @@ export default class PlayerManager extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             this.input[event.keyCode] = true;
             if (event.keyCode === cc.macro.KEY.escape) {
+<<<<<<< HEAD
                 this.reset();
+=======
+                this.reset(new cc.Vec2(-517, -168));
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
             }
         });
 
         // 玩家點擊到機關並且在技能範圍內
+<<<<<<< HEAD
         this.userPointer.node.on('skillHit', (target: cc.Collider) => {
+=======
+        this.userPointer.on('skillHit', (target: cc.Collider) => {
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
             console.log('skill casted');
             const mechanism: Mechanism = target.getComponent(Mechanism);
             const { none, accelerate, slowdown, rollback } = SkillSet;
@@ -133,6 +149,7 @@ export default class PlayerManager extends cc.Component {
         }
     }
 
+<<<<<<< HEAD
     public reset(idx?: number) {
         if (idx !== undefined) {
             this.currentSceneIdx = idx;
@@ -141,12 +158,19 @@ export default class PlayerManager extends cc.Component {
             this.currentSceneIdx = 0; // 如果沒有從主菜單進遊戲， currentSceneIdx 為 null，會導致錯誤
         }
 
+=======
+    public reset(position: cc.Vec2) {
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
         // status
         this.healthPoint = 5;
         this.updateHearts(this.healthPoint);
 
         // position
+<<<<<<< HEAD
         this.node.setPosition(this.playerPosition[this.currentSceneIdx]);
+=======
+        this.node.setPosition(position);
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
 
         // movement
         this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
@@ -160,9 +184,12 @@ export default class PlayerManager extends cc.Component {
         // skill range
         this.skillRange.active = false;
         this.skillRange.children.forEach((node) => (node.active = false));
+<<<<<<< HEAD
 
         //pointer
         this.userPointer.changeScene();
+=======
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {

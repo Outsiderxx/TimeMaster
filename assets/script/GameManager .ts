@@ -24,12 +24,22 @@ export default class GameController extends cc.Component {
     @property(CameraController)
     private camera: CameraController = null;
 
+<<<<<<< HEAD
     @property([SceneManager])
     private scene: SceneManager[] = [];
+=======
+    @property(SceneManager)
+    private scene: SceneManager = null;
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
 
     @property(TransitionController)
     private transition: TransitionController = null;
 
+<<<<<<< HEAD
+=======
+    private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
+
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
     onLoad() {
         this.menu.node.on('back', () => {
             this.initStage();
@@ -47,6 +57,7 @@ export default class GameController extends cc.Component {
         });
     }
 
+<<<<<<< HEAD
     start() {
         this.initStage();
     }
@@ -55,6 +66,12 @@ export default class GameController extends cc.Component {
         this.scene[idx].reset();
         this.player.reset(idx);
         this.camera.reset();
+=======
+    private initStage(idx: number = 0) {
+        this.player.reset(this.playerPosition[idx]);
+        this.camera.reset();
+        this.scene.reset();
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
         // monster reset
     }
 }

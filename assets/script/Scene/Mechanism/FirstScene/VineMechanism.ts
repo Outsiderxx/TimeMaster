@@ -7,6 +7,11 @@ export default class VineMechanism extends Mechanism {
     @property(cc.Animation)
     private vineAnimation: cc.Animation = null;
 
+<<<<<<< HEAD
+=======
+    public status: 'original' | 'transforming' | 'triggered' = 'original';
+
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
     // TODO: need to add joint point at the root
 
     onLoad() {
@@ -49,6 +54,7 @@ export default class VineMechanism extends Mechanism {
     public slowdown() {}
 
     public reset() {
+<<<<<<< HEAD
         // const climbCollider: cc.BoxCollider = this.vineAnimation.getComponent(cc.BoxCollider);
         // const skillCollider: cc.BoxCollider = this.getComponent(cc.BoxCollider);
         this.vineAnimation.play('vineGrownBack');
@@ -56,5 +62,14 @@ export default class VineMechanism extends Mechanism {
         // climbCollider.offset.y = -this.vineAnimation.node.height / 2;
         // skillCollider.size.height = 300;
         // skillCollider.offset.y = -150;
+=======
+        const climbCollider: cc.BoxCollider = this.vineAnimation.getComponent(cc.BoxCollider);
+        const skillCollider: cc.BoxCollider = this.getComponent(cc.BoxCollider);
+        this.status = 'original';
+        climbCollider.size.height = this.vineAnimation.node.height;
+        climbCollider.offset.y = -this.vineAnimation.node.height / 2;
+        skillCollider.size.height = 300;
+        skillCollider.offset.y = -150;
+>>>>>>> c4923516ab869143154832a5cc0222c321448c81
     }
 }
