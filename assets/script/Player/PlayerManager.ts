@@ -33,6 +33,7 @@ export default class PlayerManager extends cc.Component {
     private isClimbing: boolean = false;
     private isAlive: boolean = true;
     private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
+    private currentSceneIdx: number = null; // current scene idx
 
     onLoad() {
         // 技能切換
@@ -53,7 +54,7 @@ export default class PlayerManager extends cc.Component {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             this.input[event.keyCode] = true;
             if (event.keyCode === cc.macro.KEY.escape) {
-                this.reset(new cc.Vec2(-517, -168));
+                this.reset();
             }
         });
 
@@ -132,13 +133,20 @@ export default class PlayerManager extends cc.Component {
         }
     }
 
-    public reset(idx) {
+    public reset(idx?: number) {
+        if (idx !== undefined) {
+            this.currentSceneIdx = idx;
+        }
+        if (this.currentSceneIdx === null) {
+            this.currentSceneIdx = 0; // 如果沒有從主菜單進遊戲， currentSceneIdx 為 null，會導致錯誤
+        }
+
         // status
         this.healthPoint = 5;
         this.updateHearts(this.healthPoint);
 
         // position
-        this.node.setPosition(this.playerPosition[idx]);
+        this.node.setPosition(this.playerPosition[this.currentSceneIdx]);
 
         // movement
         this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);

@@ -17,7 +17,7 @@
   "mainIsRemote": false,
   "optimizeHotUpdate": false,
   "md5Cache": false,
-  "nativeMd5Cache": true,
+  "nativeMd5Cache": false,
   "encryptJs": true,
   "xxteaKey": "93caebd7-a7d7-48",
   "zipCompressJs": true,
@@ -51,5 +51,5 @@
     "skipRecord": false
   },
   "appBundle": false,
-  "includeAnySDK": null
+  "includeAnySDK": false
 }

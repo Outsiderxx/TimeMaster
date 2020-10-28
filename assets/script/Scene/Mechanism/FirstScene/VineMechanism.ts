@@ -7,8 +7,6 @@ export default class VineMechanism extends Mechanism {
     @property(cc.Animation)
     private vineAnimation: cc.Animation = null;
 
-    public status: 'original' | 'transforming' | 'triggered' = 'original';
-
     // TODO: need to add joint point at the root
 
     onLoad() {
