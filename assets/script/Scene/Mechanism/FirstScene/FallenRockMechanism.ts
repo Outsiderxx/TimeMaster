@@ -1,9 +1,9 @@
-import Mechanism from '../Mechanism';
+import TimeEffect from '../../../TimeEffect';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class FallenRockMechanism extends Mechanism {
+export default class FallenRockMechanism extends TimeEffect {
     @property
     private dropSpeed: number = 0;
 

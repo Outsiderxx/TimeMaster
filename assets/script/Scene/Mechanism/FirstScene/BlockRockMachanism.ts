@@ -1,9 +1,9 @@
-import Mechanism from '../Mechanism';
+import TimeEffect from '../../../TimeEffect';
 
 const { ccclass, property } = cc._decorator;
 const Input = {};
 @ccclass
-export default class BlockRockMechanism extends Mechanism {
+export default class BlockRockMechanism extends TimeEffect {
     @property(cc.Sprite)
     private rock: cc.Sprite = null;
 

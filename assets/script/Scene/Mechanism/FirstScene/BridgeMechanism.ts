@@ -1,9 +1,9 @@
-import Mechanism from '../Mechanism';
+import TimeEffect from '../../../TimeEffect';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class BridgeMechanism extends Mechanism {
+export default class BridgeMechanism extends TimeEffect {
     @property(cc.Animation)
     private bridgeAnimation: cc.Animation = null;
 

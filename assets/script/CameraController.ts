@@ -20,23 +20,26 @@ export default class CameraController extends cc.Component {
     @property(PlayerManager)
     private player: PlayerManager = null;
 
-    @property(SceneManager)
-    private sceneManager: SceneManager = null;
+    private sceneManager: cc.Node = null;
 
     private isFocus: boolean = false;
+
+    onLoad() {
+        this.sceneManager = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
+    }
 
     update() {
         if (this.player.node.x <= 0) {
             this.camera.node.x = 0;
-        } else if (this.player.node.x >= this.sceneManager.node.width - 640 - 640) {
-            this.camera.node.x = this.sceneManager.node.width - 640 - 640;
+        } else if (this.player.node.x >= this.sceneManager.width - 640 - 640) {
+            this.camera.node.x = this.sceneManager.width - 640 - 640;
         } else {
             this.camera.node.x = this.player.node.x;
         }
         if (this.player.node.y <= 0) {
             this.camera.node.y = 0;
-        } else if (this.player.node.y >= this.sceneManager.node.height - 360 - 360) {
-            this.camera.node.y = this.sceneManager.node.height - 360 - 360;
+        } else if (this.player.node.y >= this.sceneManager.height - 360 - 360) {
+            this.camera.node.y = this.sceneManager.height - 360 - 360;
         } else {
             this.camera.node.y = this.player.node.y;
         }
@@ -49,5 +52,6 @@ export default class CameraController extends cc.Component {
 
     public reset() {
         this.camera.node.setPosition(new cc.Vec2(0, 0));
+        this.sceneManager = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
     }
 }

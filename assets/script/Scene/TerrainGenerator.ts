@@ -17,12 +17,12 @@ export default class TerrainGenerator extends cc.Component {
                 const tiled: cc.TiledTile = layer.getTiledTileAt(i, j, true);
                 if (tiled.gid != 0) {
                     const body: cc.RigidBody = tiled.node.addComponent(cc.RigidBody);
-                    const collider: cc.PhysicsBoxCollider = tiled.node.addComponent(cc.PhysicsBoxCollider);
+                    const physicsCollider: cc.PhysicsBoxCollider = tiled.node.addComponent(cc.PhysicsBoxCollider);
                     tiled.node.group = 'default';
                     body.type = cc.RigidBodyType.Static;
-                    collider.offset = cc.v2(tiledSize.width / 2, tiledSize.height / 2);
-                    collider.size = tiledSize;
-                    collider.apply();
+                    physicsCollider.offset = cc.v2(tiledSize.width / 2, tiledSize.height / 2);
+                    physicsCollider.size = tiledSize;
+                    physicsCollider.apply();
                 }
             }
         }

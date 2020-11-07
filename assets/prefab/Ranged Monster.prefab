@@ -33,10 +33,16 @@
       },
       {
         "__id__": 6
+      },
+      {
+        "__id__": 7
+      },
+      {
+        "__id__": 8
       }
     ],
     "_prefab": {
-      "__id__": 7
+      "__id__": 9
     },
     "_opacity": 255,
     "_color": {
@@ -60,8 +66,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -299.424,
-        148.204,
+        0,
+        0,
         0,
         0,
         0,
@@ -81,13 +87,13 @@
     "_skewX": 0,
     "_skewY": 0,
     "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
+    "_groupIndex": 5,
+    "groupIndex": 5,
     "_id": ""
   },
   {
     "__type__": "cc.Sprite",
-    "_name": "",
+    "_name": "Ranged Monster<Sprite>",
     "_objFlags": 0,
     "node": {
       "__id__": 1
@@ -115,6 +121,59 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
+    "_id": ""
+  },
+  {
+    "__type__": "ee10e7JukpFl58NpwyqqXKQ",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "bullet": {
+      "__uuid__": "4152d547-9eba-48a2-82f3-bee6ca2d36b5"
+    },
+    "moveSpeed": 100,
+    "attackDistance": 500,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CircleCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 750,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.BoxCollider",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "tag": 1,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 100,
+      "height": 100
+    },
     "_id": ""
   },
   {
@@ -150,7 +209,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "tag": 4,
+    "tag": 0,
     "_density": 1,
     "_sensor": false,
     "_friction": 0.2,
@@ -169,14 +228,14 @@
     "_id": ""
   },
   {
-    "__type__": "cc.PhysicsCircleCollider",
+    "__type__": "cc.PhysicsBoxCollider",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 1
     },
     "_enabled": true,
-    "tag": 3,
+    "tag": 1,
     "_density": 1,
     "_sensor": true,
     "_friction": 0.2,
@@ -184,24 +243,14 @@
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 2,
+      "y": -47.1
     },
-    "_radius": 350,
-    "_id": ""
-  },
-  {
-    "__type__": "ee10e7JukpFl58NpwyqqXKQ",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
+    "_size": {
+      "__type__": "cc.Size",
+      "width": 80,
+      "height": 10
     },
-    "_enabled": true,
-    "bullet": {
-      "__uuid__": "8d5a8647-0189-401f-a8eb-537864b7727e"
-    },
-    "maxMoveSpeed": 200,
     "_id": ""
   },
   {

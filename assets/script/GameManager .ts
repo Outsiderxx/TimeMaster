@@ -48,13 +48,12 @@ export default class GameController extends cc.Component {
     }
 
     start() {
-        this.initStage();
+        // this.initStage();
     }
 
     private initStage(idx: number = 0) {
         this.scene[idx].reset();
         this.player.reset(idx);
         this.camera.reset();
-        // monster reset
     }
 }

@@ -1,24 +1,12 @@
-import Mechanism from '../Scene/Mechanism/Mechanism';
+import TimeEffect from '../TimeEffect';
 import SkillCast from './SkillCast';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class PlayerManager extends cc.Component {
-    @property
-    private healthPoint: number = 5;
-
     @property(cc.Animation)
     private playerAnimation: cc.Animation = null;
-
-    @property
-    private moveAccel: number = 0;
-
-    @property
-    private jumpFroce: number = 0;
-
-    @property(cc.Node)
-    private heartGroup: cc.Node = null;
 
     @property(cc.Node)
     private skillRange: cc.Node = null;
@@ -26,14 +14,34 @@ export default class PlayerManager extends cc.Component {
     @property(SkillCast)
     private userPointer: SkillCast = null;
 
+    @property(cc.Node)
+    private heartGroup: cc.Node = null;
+
+    @property
+    private healthPoint: number = 5;
+
+    @property
+    private moveAccel: number = 0;
+
+    @property
+    private jumpFroce: number = 0;
+
+    @property
+    private invincibleTime: number = 0;
+
     private input = {};
     private onTheGround: boolean = false;
     private speed: cc.Vec2 = cc.v2(0, 0);
     private currentUsingSkill: SkillSet = -1;
     private isClimbing: boolean = false;
     private isAlive: boolean = true;
+    private isInvincible: boolean = false;
     private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
     private currentSceneIdx: number = null; // current scene idx
+
+    public get status() {
+        return this.isAlive;
+    }
 
     onLoad() {
         // 技能切換
@@ -61,7 +69,7 @@ export default class PlayerManager extends cc.Component {
         // 玩家點擊到機關並且在技能範圍內
         this.userPointer.node.on('skillHit', (target: cc.Collider) => {
             console.log('skill casted');
-            const mechanism: Mechanism = target.getComponent(Mechanism);
+            const mechanism: TimeEffect = target.getComponent(TimeEffect);
             const { none, accelerate, slowdown, rollback } = SkillSet;
             if (this.currentUsingSkill !== none && mechanism.checkStatus(this.currentUsingSkill)) {
                 switch (this.currentUsingSkill) {
@@ -84,6 +92,7 @@ export default class PlayerManager extends cc.Component {
 
     update(dt: number) {
         if (!this.isAlive) {
+            this.node.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
             return;
         }
         if (this.onTheGround) {
@@ -166,19 +175,20 @@ export default class PlayerManager extends cc.Component {
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
-        //碰地判斷
-        if (self.tag == 2) {
-            this.onTheGround = true;
-        }
         // 受到傷害
-        else if (other.node.group === 'Damage') {
+        if (self.tag === 0 && (other.node.group === 'Damage' || other.node.group === 'MonsterDamage') && !this.isInvincible) {
             this.updateHearts(--this.healthPoint);
+            this.beingInvincible();
+        } else if (self.tag === 1) {
+            // 碰地測試
+            this.onTheGround = true;
         }
     }
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         // 攀爬
-        if (self.tag === 1) {
+        if (other.node.name === 'VineBody') {
+            // 避免觸發其他觸發器
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             this.onTheGround = true;
             this.isClimbing = true;
@@ -198,7 +208,7 @@ export default class PlayerManager extends cc.Component {
 
     private onCollisionExit(other: cc.Collider, self: cc.Collider) {
         // 結束攀爬
-        if (self.tag === 1) {
+        if (other.node.name === 'VineBody') {
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             rigidBody.type = cc.RigidBodyType.Dynamic;
             this.onTheGround = false;
@@ -210,28 +220,6 @@ export default class PlayerManager extends cc.Component {
     // private onEndContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, otherCollider: cc.PhysicsCollider) {
     //     if (self.tag == 2) {
     //         this.onTheGround = false;
-    //     }
-    // }
-
-    // player stauts change ???
-    // private attitudeSet(originFaceDirection: number, ToBeFaceDirection: number) {
-    //     //從靜止到移動
-    //     if (originFaceDirection == 0 && ToBeFaceDirection == -1) {
-    //         this.node.scaleX = -0.5;
-    //         this.faceDirection = -1;
-    //     } else if (originFaceDirection == 0 && ToBeFaceDirection == 1) {
-    //         this.node.scaleX = 0.5;
-    //         this.faceDirection = 1;
-    //     }
-    //     //更換移動方向 左到右 & 右到左
-    //     else if (originFaceDirection == 1 && ToBeFaceDirection == -1) {
-    //         this.speed.x = -300;
-    //         this.node.scaleX = -0.5;
-    //         this.faceDirection = -1;
-    //     } else if (originFaceDirection == -1 && ToBeFaceDirection == 1) {
-    //         this.speed.x = 300;
-    //         this.node.scaleX = 0.5;
-    //         this.faceDirection = 1;
     //     }
     // }
 
@@ -281,6 +269,11 @@ export default class PlayerManager extends cc.Component {
                 this.isAlive = false;
             }
         }
+    }
+
+    private beingInvincible() {
+        this.isInvincible = true;
+        this.scheduleOnce(() => (this.isInvincible = false), this.invincibleTime);
     }
 }
 
