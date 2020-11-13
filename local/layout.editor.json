@@ -7,8 +7,8 @@
       "windowType": "dockable",
       "x": -8,
       "y": -8,
-      "width": 1936,
-      "height": 1056,
+      "width": 1552,
+      "height": 840,
       "layout": {
         "children": [
           {
@@ -18,9 +18,9 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 432,
+                "height": 333.8125,
                 "type": "panel",
-                "width": 335
+                "width": 267
               },
               {
                 "active": 0,
@@ -28,23 +28,23 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 503,
+                "height": 385.7875061035156,
                 "type": "panel",
-                "width": 335
+                "width": 267
               }
             ],
-            "height": 938,
+            "height": 722.6000366210938,
             "type": "dock-v",
-            "width": 335
+            "width": 267
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 938,
+            "height": 722.6000366210938,
             "type": "panel",
-            "width": 384
+            "width": 306
           },
           {
             "children": [
@@ -53,25 +53,25 @@
                 "children": [
                   "scene"
                 ],
-                "height": 581,
+                "height": 325.8125,
                 "type": "panel",
-                "width": 1194.984375
+                "width": 957
               },
               {
-                "active": 0,
+                "active": 1,
                 "children": [
                   "console",
                   "timeline",
                   "game-window"
                 ],
-                "height": 354,
+                "height": 393.7749938964844,
                 "type": "panel",
-                "width": 1194.984375
+                "width": 957
               }
             ],
-            "height": 938,
+            "height": 722.6000366210938,
             "type": "dock-v",
-            "width": 1194.984375
+            "width": 957
           }
         ],
         "type": "dock-h"
@@ -90,9 +90,9 @@
   },
   "panels": {
     "project-settings": {
-      "x": 341,
+      "x": 340,
       "y": 36,
-      "width": 955,
+      "width": 956,
       "height": 716
     },
     "preferences": {
@@ -122,7 +122,7 @@
   },
   "panelLabelWidth": {
     "project-settings": null,
-    "inspector": "40.2778%",
+    "inspector": "36.8966%",
     "builder": null
   }
 }
