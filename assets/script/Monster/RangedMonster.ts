@@ -129,7 +129,7 @@ export default class RangedMonster extends cc.Component {
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
         const p1 = cc.v2(temp.x, temp.y - 50);
-        const p2 = cc.v2(temp.x + 10, temp.y - 100.5);
+        const p2 = cc.v2(temp.x + 10, temp.y - 100);
         const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
         if(rayResults.length === 0) {
             this.onTheGround = false;
