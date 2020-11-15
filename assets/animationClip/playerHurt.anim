@@ -1,0 +1,67 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "playerHurt",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.775,
+  "sample": 40,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "3d91e6d0-b577-44f6-9184-68e05e91317c"
+            }
+          },
+          {
+            "frame": 0.125,
+            "value": {
+              "__uuid__": "871df949-6dec-43dc-8a01-c0e3419c87f7"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "9ccdbf24-809a-4505-851a-f72bc99f77fb"
+            }
+          },
+          {
+            "frame": 0.375,
+            "value": {
+              "__uuid__": "0aec6250-7463-4e75-b8c9-833a42fee1ff"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "8bd27cf0-61b5-45b0-bee4-1a98b617b72b"
+            }
+          },
+          {
+            "frame": 0.625,
+            "value": {
+              "__uuid__": "a38c1830-7596-4fb8-9743-4c9a33ccdff0"
+            }
+          },
+          {
+            "frame": 0.75,
+            "value": {
+              "__uuid__": "3f40b2cf-64ac-4e21-b6f9-99bc3dd6ceb5"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0.75,
+      "func": "endHurt",
+      "params": []
+    }
+  ]
+}

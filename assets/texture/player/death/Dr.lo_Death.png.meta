@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "f4a9ebf7-1a1b-47d6-a4d5-5b6f12562d6d",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 600,
+  "height": 900,
+  "platformSettings": {},
+  "subMetas": {
+    "Dr.lo_Death": {
+      "ver": "1.0.4",
+      "uuid": "84af1ad8-dfd4-4f0c-a546-34e64364ea5d",
+      "rawTextureUuid": "f4a9ebf7-1a1b-47d6-a4d5-5b6f12562d6d",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -32,
+      "offsetY": -12.5,
+      "trimX": 26,
+      "trimY": 84,
+      "width": 484,
+      "height": 757,
+      "rawWidth": 600,
+      "rawHeight": 900,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

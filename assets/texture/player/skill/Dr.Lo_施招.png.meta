@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "069e3ea4-8c43-4129-876f-d060bec3e309",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 300,
+  "height": 300,
+  "platformSettings": {},
+  "subMetas": {
+    "Dr.Lo_施招": {
+      "ver": "1.0.4",
+      "uuid": "84a9dbe7-d390-4512-89f8-705e0f0b9ef4",
+      "rawTextureUuid": "069e3ea4-8c43-4129-876f-d060bec3e309",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 300,
+      "height": 300,
+      "rawWidth": 300,
+      "rawHeight": 300,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

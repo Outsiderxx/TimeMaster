@@ -1,9 +1,9 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "playerDefault",
+  "_name": "playerIdle",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1.64,
+  "_duration": 0.68,
   "sample": 25,
   "speed": 1,
   "wrapMode": 2,
@@ -14,31 +14,19 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "4a541364-ec2d-4011-ba5f-5e569c182ef0"
+              "__uuid__": "7bd88755-3243-42b7-bc46-dd046ea0874d"
             }
           },
           {
-            "frame": 0.4,
+            "frame": 0.32,
             "value": {
-              "__uuid__": "11ddaad9-dc7a-470d-81f6-f372087bbe9a"
+              "__uuid__": "e62c0848-d07e-4e3f-956e-124db0bf0c63"
             }
           },
           {
-            "frame": 0.8,
+            "frame": 0.64,
             "value": {
-              "__uuid__": "e3c79142-14e1-4fe4-a373-a119eb6614fd"
-            }
-          },
-          {
-            "frame": 1.2,
-            "value": {
-              "__uuid__": "36302832-d84c-4239-bbde-261e318beb89"
-            }
-          },
-          {
-            "frame": 1.6,
-            "value": {
-              "__uuid__": "4a541364-ec2d-4011-ba5f-5e569c182ef0"
+              "__uuid__": "7bd88755-3243-42b7-bc46-dd046ea0874d"
             }
           }
         ]
