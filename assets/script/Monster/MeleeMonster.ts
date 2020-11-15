@@ -1,5 +1,6 @@
 import MeleeAttack from './MeleeAttack';
 import BulletDamage from './BulletDamage';
+import PlayerManager from '../Player/PlayerManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -23,38 +24,48 @@ export default class MeleeMonster extends cc.Component {
     private _moveDirection: boolean = true; // true: left, false: right
     private onTheGround: boolean = false;
     private playerFounded: boolean = false;
+    private startAttack: boolean = false;
     private reachEdge: boolean = false;
     private player: cc.Node = null;;
 
     update(dt: number) {
-        this.reachEdgeCheck()
-        this.onTheGroundCheck()
-        if (this.monsterAnimation.currentClip?.name !== 'monsterAttack' && this.onTheGround) {
-            // 追蹤模式 距離保持 250，碰到邊界停下來
-            if (this.playerFounded) {
-                if (!this.reachEdge) {
-                    const worldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
-                    const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(worldPos).x;
-                    const direction: boolean = distance < 0; // true: player在怪物右邊 false: player在怪物右邊
-                    this.moveDirection = direction;
-                    this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
-                    this.playRunAnimation();
-                }
-                else {
-                    this.playIdleAnimation();
-                }
-            } else {
-                // 普通模式下，碰到邊界後往反方向走
-                if (this.reachEdge) {
-                    this.moveDirection = !this._moveDirection;
-                    this.reachEdge = false;
-                }
-                this.node.x += this.moveSpeed * dt * (this._moveDirection ? -1 : 1);
-                this.playWalkAnimation();
-            }
+        this.reachEdgeCheck();
+        this.onTheGroundCheck();
+        if(this.startAttack && this.onTheGround) {
+            this.playAttackAnimation();
+            this.schedule(this.playAttackAnimation, this.freezeTime, cc.macro.REPEAT_FOREVER, 0);
         }
-        if(!this.onTheGround) {
-            this.playIdleAnimation();
+        else {
+            this.unschedule(this.playAttackAnimation);
+            if (this.monsterAnimation.currentClip?.name !== 'monsterAttack' && this.onTheGround) {
+                // 追蹤模式 距離保持 250，碰到邊界停下來
+                if (this.playerFounded) {
+                    if (!this.reachEdge) {
+                        const worldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
+                        const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(worldPos).x;
+                        const direction: boolean = distance < 0; // true: player在怪物右邊 false: player在怪物右邊
+                        this.moveDirection = direction;
+                        this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
+                        this.playRunAnimation();
+                    }
+                    else {
+                        this.playIdleAnimation();
+                    }
+                } else {
+                    // 普通模式下，碰到邊界後往反方向走
+                    if (this.reachEdge) {
+                        this.moveDirection = !this._moveDirection;
+                        this.reachEdge = false;
+                    }
+                    this.node.x += this.moveSpeed * dt * (this._moveDirection ? -1 : 1);
+                    this.playWalkAnimation();
+                }
+            }
+            if(!this.onTheGround) {
+                this.playIdleAnimation();
+                const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                rigidBody.type = cc.RigidBodyType.Dynamic;
+            }
         }
     }
 
@@ -80,10 +91,7 @@ export default class MeleeMonster extends cc.Component {
                 this.node.destroy();
             }
         } else if (self.tag === 2 && other.node.name === 'Player') {
-            if (this.monsterAnimation.currentClip?.name !== 'monsterAttack') {
-                this.playAttackAnimation();
-                this.schedule(this.playAttackAnimation, this.freezeTime, cc.macro.REPEAT_FOREVER, 0);
-            }
+            this.startAttack = true;
         }
     }
 
@@ -92,7 +100,7 @@ export default class MeleeMonster extends cc.Component {
         if (self.tag === 0 && other.node.name === 'Player') {
             this.playerFounded = false;
         } else if (self.tag === 2 && other.node.name === 'Player') {
-             this.unschedule(this.playAttackAnimation);
+             this.startAttack = false;
         }
     }
 
@@ -170,8 +178,14 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private playAttackAnimation() {
-        this.monsterAnimation.play('monsterAttack');
-        this.schedule(this.generateDamageArea,0.5,0);
+        if (!this.player.getComponent(PlayerManager).status) {
+            this.unschedule(this.playAttackAnimation);
+            return;
+        }
+        if (this.monsterAnimation.currentClip?.name !== 'monsterAttack') {
+            this.monsterAnimation.play('monsterAttack');
+            this.schedule(this.generateDamageArea,0.5,0);
+        }
     }
 
     private playDeathAnimation() {
@@ -184,7 +198,7 @@ export default class MeleeMonster extends cc.Component {
 
     private generateDamageArea() {
         let newArea = cc.instantiate(this.damageArea);
-        const offset = this._moveDirection ? -90 : 90;
+        const offset = this._moveDirection ? -40 : 40;
         newArea.setPosition(this.node.x + offset, this.node.y);
         this.node.parent.addChild(newArea);
     } 

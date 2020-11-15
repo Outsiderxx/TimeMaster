@@ -29,7 +29,7 @@ export default class RangedMonster extends cc.Component {
     private player: cc.Node = null; // 透過碰撞測試取得
 
     update(dt: number) {
-        this.onTheGroundCheck()
+        this.onTheGroundCheck();
         if(this.monsterAnimation.currentClip?.name !== 'monsterShoot') {
         if (this.onTheGround) {
                 this.reachEdgeCheck()
@@ -64,6 +64,8 @@ export default class RangedMonster extends cc.Component {
                 }
             }else {
                 this.playIdleAnimation();
+                const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                rigidBody.type = cc.RigidBodyType.Dynamic;
             }
         }
     }
