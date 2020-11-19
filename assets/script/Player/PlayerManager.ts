@@ -1,6 +1,7 @@
 import TimeEffect from '../TimeEffect';
 import SkillCast from './SkillCast';
 import AnimationEvent from './AnimationEvent';
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -16,10 +17,11 @@ export default class PlayerManager extends cc.Component {
 
     @property(cc.Node)
     private heartGroup: cc.Node = null;
+    @property(cc.Node)
+    private feetRayPoint: cc.Node = null;
 
     @property(AnimationEvent)
     private animationEvent: AnimationEvent = null;
-
     @property
     private healthPoint: number = 5;
 
@@ -42,7 +44,6 @@ export default class PlayerManager extends cc.Component {
     private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
     private currentSceneIdx: number = null; // current scene idx
     public playerState: number = StateSet.none;
-
     public get status() {
         return this.isAlive;
     }
@@ -100,6 +101,8 @@ export default class PlayerManager extends cc.Component {
             this.node.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
             return;
         }
+        //碰地判斷
+        this.onTheGroundCheck();
         if (this.onTheGround) {
             let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
             //左右移動
@@ -116,11 +119,13 @@ export default class PlayerManager extends cc.Component {
             if (this.speed.x) {
                 lv.x = this.speed.x * this.moveAccel;
                 if (this.playerAnimation.currentClip?.name !== 'playerRun') {
+                    this.playerState = StateSet.none;
                     this.finiteState(StateSet.run);
                 }
             } else {
                 lv.x = 0;
                 if (this.playerAnimation.currentClip?.name !== 'playerIdle') {
+                    this.playerState = StateSet.none;
                     this.finiteState(StateSet.idle);
                 }
             }
@@ -140,7 +145,6 @@ export default class PlayerManager extends cc.Component {
                     if (this.onTheGround) {
                         lv.y = this.jumpFroce;
                         this.finiteState(StateSet.jump);
-                        this.onTheGround = false;
                     }
                 }
             }
@@ -189,12 +193,6 @@ export default class PlayerManager extends cc.Component {
             this.updateHearts(--this.healthPoint);
             this.beingInvincible();
 
-
-        } else if (self.tag === 1) {
-            // 碰地測試
-            if (this.playerState != StateSet.idle && this.playerState != StateSet.run)
-                this.animationEvent.endJump();
-            this.onTheGround = true;
         }
     }
 
@@ -284,6 +282,27 @@ export default class PlayerManager extends cc.Component {
         this.scheduleOnce(() => (this.isInvincible = false), this.invincibleTime);
     }
 
+    private onTheGroundCheck() {
+
+        const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
+        const leftP1 = cc.v2(tempPoint.x - 10, tempPoint.y);
+        const leftP2 = cc.v2(tempPoint.x - 10, tempPoint.y - 50);
+
+        const rightP1 = cc.v2(tempPoint.x + 10, tempPoint.y);
+        const rightP2 = cc.v2(tempPoint.x + 10, tempPoint.y - 50);
+
+        const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
+        const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
+
+        if (leftRayResult.length === 0 && rightRayResult.length === 0) {
+            this.onTheGround = false;
+        } else {
+            this.onTheGround = true;
+            // if (leftRayResult[0].collider.node.group === 'default' || rightRayResult[0].collider.node.group === 'default') {
+            //     this.onTheGround = true;
+            // }
+        }
+    }
 
     private finiteState(nextState: number) {
 
@@ -358,4 +377,3 @@ export enum StateSet {
     die,
 
 }
-

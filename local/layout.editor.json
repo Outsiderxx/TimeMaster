@@ -18,9 +18,9 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 327.2375183105469,
+                "height": 325.9750061035156,
                 "type": "panel",
-                "width": 265.20001220703125
+                "width": 266.6125183105469
               },
               {
                 "active": 0,
@@ -28,23 +28,23 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 377.9624938964844,
+                "height": 376.7250061035156,
                 "type": "panel",
-                "width": 265.20001220703125
+                "width": 266.6125183105469
               }
             ],
-            "height": 708.2000122070312,
+            "height": 705.7000122070312,
             "type": "dock-v",
-            "width": 265.20001220703125
+            "width": 266.6125183105469
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 708.2000122070312,
+            "height": 705.7000122070312,
             "type": "panel",
-            "width": 304.07501220703125
+            "width": 304.2749938964844
           },
           {
             "children": [
@@ -53,9 +53,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 319.2749938964844,
+                "height": 318.1625061035156,
                 "type": "panel",
-                "width": 947.125
+                "width": 945.5250244140625
               },
               {
                 "active": 1,
@@ -64,14 +64,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 385.9250183105469,
+                "height": 384.5249938964844,
                 "type": "panel",
-                "width": 947.125
+                "width": 945.5250244140625
               }
             ],
-            "height": 708.2000122070312,
+            "height": 705.7000122070312,
             "type": "dock-v",
-            "width": 947.125
+            "width": 945.5250244140625
           }
         ],
         "type": "dock-h"
@@ -109,9 +109,9 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 752,
-      "y": 230,
-      "width": 420,
+      "x": 556,
+      "y": 120,
+      "width": 421,
       "height": 585
     },
     "sprite-editor": {
@@ -119,6 +119,12 @@
       "y": 259,
       "width": 516,
       "height": 539
+    },
+    "package-asset.export": {
+      "x": 587,
+      "y": 123,
+      "width": 421,
+      "height": 585
     }
   },
   "panelLabelWidth": {

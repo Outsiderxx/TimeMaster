@@ -90,7 +90,6 @@ export default class Bullet extends TimeEffect {
     public rollback() {
         this.bulletXSpeed = -this.bulletXSpeed;
         this.bulletYSpeed = -this.bulletYSpeed;
-        this.node.angle = this.node.angle - 180;
         if (this.damagePart.group === 'Damage') {
             this.damagePart.group = 'MonsterDamage';
         } else {

@@ -134,7 +134,6 @@
     "bullet": {
       "__uuid__": "4152d547-9eba-48a2-82f3-bee6ca2d36b5"
     },
-    "playerAnimation": null,
     "moveSpeed": 100,
     "attackDistance": 500,
     "_id": ""

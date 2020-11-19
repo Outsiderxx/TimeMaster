@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "0bde8b85-3408-4d75-9d63-2a25c2d3961b",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 48,
+  "height": 33,
+  "platformSettings": {},
+  "subMetas": {
+    "懸浮平台": {
+      "ver": "1.0.4",
+      "uuid": "f0721dca-168e-4205-8548-8dd355e2d98f",
+      "rawTextureUuid": "0bde8b85-3408-4d75-9d63-2a25c2d3961b",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 48,
+      "height": 33,
+      "rawWidth": 48,
+      "rawHeight": 33,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

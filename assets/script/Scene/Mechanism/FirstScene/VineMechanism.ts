@@ -20,11 +20,11 @@ export default class VineMechanism extends TimeEffect {
             climbCollider.size.height = this.vineAnimation.node.height;
             climbCollider.offset.y = -this.vineAnimation.node.height / 2;
             if (this.vineAnimation.currentClip.name === 'vineGrows') {
-                skillCollider.size.height = this.vineAnimation.node.height;
+                skillCollider.size.height = this.vineAnimation.node.height * 0.8;   //animation size's problem
                 skillCollider.offset.y = -this.vineAnimation.node.height / 2;
             } else {
-                skillCollider.size.height = 300;
-                skillCollider.offset.y = -150;
+                skillCollider.size.height = 150;
+                skillCollider.offset.y = -75;
             }
         });
     }
