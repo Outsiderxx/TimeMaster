@@ -1,0 +1,79 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "monsterJump",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "6c22f608-c029-4bdc-a79c-b51acc9a15ab"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "2084a05f-02b4-4055-bcc9-24ee63e54eb4"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "40560f81-1eb2-4551-bbed-f0f700b3ea6e"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "6290352f-5ada-4ac3-ad2b-74116c5ab61f"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "9677b3f9-0275-46bd-b302-876fc2e94825"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "6cf50327-3488-470f-af04-f6d22d69049f"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "46f70941-1be3-4193-8e6b-d54212ca0d0a"
+            }
+          },
+          {
+            "frame": 0.7,
+            "value": {
+              "__uuid__": "647947e6-2c47-4ab9-bc94-30adabbf9087"
+            }
+          },
+          {
+            "frame": 0.8,
+            "value": {
+              "__uuid__": "18c84b39-3f6e-45a8-850e-6451c71d6407"
+            }
+          },
+          {
+            "frame": 0.9,
+            "value": {
+              "__uuid__": "a158a5d1-8682-4f2f-80b0-e1d0df14c11e"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

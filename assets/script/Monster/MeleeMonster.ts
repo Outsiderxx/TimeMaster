@@ -1,5 +1,6 @@
 import MeleeAttack from './MeleeAttack';
 import BulletDamage from './BulletDamage';
+import PlayerManager from '../Player/PlayerManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -23,6 +24,7 @@ export default class MeleeMonster extends cc.Component {
     private _moveDirection: boolean = true; // true: left, false: right
     private onTheGround: boolean = false;
     private playerFounded: boolean = false;
+    private startAttack: boolean = false;
     private reachEdge: boolean = false;
     private player: cc.Node = null;
 
@@ -48,8 +50,6 @@ export default class MeleeMonster extends cc.Component {
                     this.moveDirection = !this._moveDirection;
                     this.reachEdge = false;
                 }
-                this.node.x += this.moveSpeed * dt * (this._moveDirection ? -1 : 1);
-                this.playWalkAnimation();
             }
         }
         if (!this.onTheGround) {
@@ -79,10 +79,7 @@ export default class MeleeMonster extends cc.Component {
                 this.node.destroy();
             }
         } else if (self.tag === 2 && other.node.name === 'Player') {
-            if (this.monsterAnimation.currentClip?.name !== 'monsterAttack') {
-                this.playAttackAnimation();
-                this.schedule(this.playAttackAnimation, this.freezeTime, cc.macro.REPEAT_FOREVER, 0);
-            }
+            this.startAttack = true;
         }
     }
 
@@ -180,7 +177,7 @@ export default class MeleeMonster extends cc.Component {
 
     private generateDamageArea() {
         let newArea = cc.instantiate(this.damageArea);
-        const offset = this._moveDirection ? -90 : 90;
+        const offset = this._moveDirection ? -40 : 40;
         newArea.setPosition(this.node.x + offset, this.node.y);
         this.node.parent.addChild(newArea);
     }
