@@ -17,13 +17,11 @@ export default class PlayerManager extends cc.Component {
 
     @property(cc.Node)
     private heartGroup: cc.Node = null;
-
     @property(cc.Node)
     private feetRayPoint: cc.Node = null;
 
     @property(AnimationEvent)
     private animationEvent: AnimationEvent = null;
-
     @property
     private healthPoint: number = 5;
 

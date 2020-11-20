@@ -68,7 +68,7 @@
       "ctor": "Float64Array",
       "array": [
         1036.261,
-        308.867,
+        300.675,
         0,
         0,
         0,
@@ -134,7 +134,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -20,
+        0,
         0,
         0,
         0,
@@ -225,7 +225,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "34783d03-b67e-4afa-93e5-b38bd49a8dd7"
+      "__id__": 0
     },
     "fileId": "03qmnPscxH5b+0VADfNzwy",
     "sync": false
@@ -262,12 +262,12 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 150,
+      "x": 0,
       "y": -20
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 700,
+      "width": 500,
       "height": 150
     },
     "_id": ""
@@ -283,7 +283,7 @@
     "tag": 1,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": -20,
+      "x": 0,
       "y": -30
     },
     "_size": {
@@ -304,7 +304,7 @@
     "tag": 2,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 60,
+      "x": 80,
       "y": -15
     },
     "_size": {
@@ -322,7 +322,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_type": 2,
+    "_type": 1,
     "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
@@ -355,7 +355,7 @@
     "body": null,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": -20,
+      "x": 0,
       "y": -30
     },
     "_size": {
@@ -371,7 +371,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "34783d03-b67e-4afa-93e5-b38bd49a8dd7"
+      "__id__": 0
     },
     "fileId": "50wrfNUDJOJLSP0vb58Vys",
     "sync": false

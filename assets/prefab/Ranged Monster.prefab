@@ -24,7 +24,7 @@
         "__id__": 6
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 9
@@ -67,7 +67,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        1005.481,
+        954.177,
         300.675,
         0,
         0,
@@ -225,7 +225,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "444b37e8-521d-4f97-b28c-23dccc186f30"
+      "__id__": 0
     },
     "fileId": "78OxY3EchFbrQK8VNiUr27",
     "sync": false
@@ -332,9 +332,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "444b37e8-521d-4f97-b28c-23dccc186f30"
+      "__id__": 0
     },
-    "fileId": "75SJy+/dNIWZyOBRUMoNqj",
+    "fileId": "0363PbKdhClLVHJ0yUHlZZ",
     "sync": false
   },
   {
@@ -355,7 +355,7 @@
       "__id__": 4
     },
     "moveSpeed": 100,
-    "attackDistance": 350,
+    "attackDistance": 250,
     "_id": ""
   },
   {
@@ -369,7 +369,7 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 200,
+      "x": 0,
       "y": -20
     },
     "_size": {
@@ -408,7 +408,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_type": 2,
+    "_type": 1,
     "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
@@ -457,7 +457,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "444b37e8-521d-4f97-b28c-23dccc186f30"
+      "__id__": 0
     },
     "fileId": "daUZ/4h7pOt5lgykhgUA2O",
     "sync": false
