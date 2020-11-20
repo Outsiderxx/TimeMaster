@@ -1,5 +1,6 @@
 import TimeEffect from '../TimeEffect';
 import SkillCast from './SkillCast';
+import AnimationEvent from './AnimationEvent';
 
 const { ccclass, property } = cc._decorator;
 
@@ -16,6 +17,12 @@ export default class PlayerManager extends cc.Component {
 
     @property(cc.Node)
     private heartGroup: cc.Node = null;
+
+    @property(cc.Node)
+    private feetRayPoint: cc.Node = null;
+
+    @property(AnimationEvent)
+    private animationEvent: AnimationEvent = null;
 
     @property
     private healthPoint: number = 5;
@@ -38,13 +45,14 @@ export default class PlayerManager extends cc.Component {
     private isInvincible: boolean = false;
     private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
     private currentSceneIdx: number = null; // current scene idx
-
+    public playerState: number = null;
     public get status() {
         return this.isAlive;
     }
 
     onLoad() {
         // 技能切換
+        this.playerState = StateSet.none;
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             if ((event.keyCode === cc.macro.KEY.q || event.keyCode === cc.macro.KEY.e || event.keyCode === cc.macro.KEY.r) && !this.input[event.keyCode]) {
                 this.toggleSkill(event.keyCode, true);
@@ -72,6 +80,7 @@ export default class PlayerManager extends cc.Component {
             const mechanism: TimeEffect = target.getComponent(TimeEffect);
             const { none, accelerate, slowdown, rollback } = SkillSet;
             if (this.currentUsingSkill !== none && mechanism.checkStatus(this.currentUsingSkill)) {
+                this.finiteState(StateSet.useSkill);
                 switch (this.currentUsingSkill) {
                     case accelerate:
                         console.log(`Accelerate ${target.name}`);
@@ -95,6 +104,8 @@ export default class PlayerManager extends cc.Component {
             this.node.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
             return;
         }
+        //碰地判斷
+        this.onTheGroundCheck();
         if (this.onTheGround) {
             let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
             //左右移動
@@ -111,12 +122,14 @@ export default class PlayerManager extends cc.Component {
             if (this.speed.x) {
                 lv.x = this.speed.x * this.moveAccel;
                 if (this.playerAnimation.currentClip?.name !== 'playerRun') {
-                    this.playerAnimation.play('playerRun');
+                    this.playerState = StateSet.none;
+                    this.finiteState(StateSet.run);
                 }
             } else {
                 lv.x = 0;
                 if (this.playerAnimation.currentClip?.name !== 'playerIdle') {
-                    this.playerAnimation.play('playerIdle');
+                    this.playerState = StateSet.none;
+                    this.finiteState(StateSet.idle);
                 }
             }
 
@@ -134,7 +147,7 @@ export default class PlayerManager extends cc.Component {
                 if (this.input[cc.macro.KEY.space]) {
                     if (this.onTheGround) {
                         lv.y = this.jumpFroce;
-                        this.onTheGround = false;
+                        this.finiteState(StateSet.jump);
                     }
                 }
             }
@@ -177,11 +190,11 @@ export default class PlayerManager extends cc.Component {
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         // 受到傷害
         if (self.tag === 0 && (other.node.group === 'Damage' || other.node.group === 'MonsterDamage') && !this.isInvincible) {
+            if (this.healthPoint > 1) {
+                this.finiteState(StateSet.hurt);
+            }
             this.updateHearts(--this.healthPoint);
             this.beingInvincible();
-        } else if (self.tag === 1) {
-            // 碰地測試
-            this.onTheGround = true;
         }
     }
 
@@ -197,6 +210,7 @@ export default class PlayerManager extends cc.Component {
         }
         // 角色死亡
         if (other.node.name === 'Deadline') {
+            this.finiteState(StateSet.die);
             this.updateHearts(0);
         }
         // 通關
@@ -215,13 +229,6 @@ export default class PlayerManager extends cc.Component {
             this.isClimbing = false;
         }
     }
-
-    // 要在地面才能跳躍
-    // private onEndContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, otherCollider: cc.PhysicsCollider) {
-    //     if (self.tag == 2) {
-    //         this.onTheGround = false;
-    //     }
-    // }
 
     // show skill range
     private toggleSkill(keyCode: number, isOpen: boolean) {
@@ -265,6 +272,7 @@ export default class PlayerManager extends cc.Component {
         } else {
             this.heartGroup.children.slice(num).forEach((node) => (node.getComponentInChildren(cc.Toggle).isChecked = false));
             if (num === 0) {
+                this.finiteState(StateSet.die);
                 this.node.emit('dead');
                 this.isAlive = false;
             }
@@ -275,6 +283,80 @@ export default class PlayerManager extends cc.Component {
         this.isInvincible = true;
         this.scheduleOnce(() => (this.isInvincible = false), this.invincibleTime);
     }
+
+    private onTheGroundCheck() {
+        const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
+        const leftP1 = cc.v2(tempPoint.x - 10, tempPoint.y);
+        const leftP2 = cc.v2(tempPoint.x - 10, tempPoint.y - 50);
+
+        const rightP1 = cc.v2(tempPoint.x + 10, tempPoint.y);
+        const rightP2 = cc.v2(tempPoint.x + 10, tempPoint.y - 50);
+
+        const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
+        const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
+
+        if (leftRayResult.length === 0 && rightRayResult.length === 0) {
+            this.onTheGround = false;
+        } else {
+            this.onTheGround = true;
+            // if (leftRayResult[0].collider.node.group === 'default' || rightRayResult[0].collider.node.group === 'default') {
+            //     this.onTheGround = true;
+            // }
+        }
+    }
+
+    private finiteState(nextState: number) {
+        if (nextState == StateSet.hurt || nextState == StateSet.die) {
+            this.StateChange(nextState);
+            return;
+        }
+        if (nextState == StateSet.useSkill && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
+            this.StateChange(nextState);
+            return;
+        }
+        if (nextState == StateSet.jump && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
+            this.StateChange(nextState);
+            return;
+        }
+        if (nextState == StateSet.run && (this.playerState == StateSet.none || this.playerState == StateSet.idle)) {
+            this.StateChange(nextState);
+            return;
+        }
+        if (nextState == StateSet.idle && this.playerState == StateSet.none) {
+            this.StateChange(nextState);
+            return;
+        }
+    }
+
+    private StateChange(state: number) {
+        switch (state) {
+            case StateSet.idle:
+                this.playerAnimation.play('playerIdle');
+                this.playerState = StateSet.idle;
+                break;
+            case StateSet.run:
+                this.playerAnimation.play('playerRun');
+                this.playerState = StateSet.run;
+                break;
+            case StateSet.jump:
+                this.playerAnimation.play('playerJump');
+                this.playerState = StateSet.jump;
+                break;
+            case StateSet.useSkill:
+                this.playerAnimation.play('playerUseSkill');
+                this.playerState = StateSet.useSkill;
+                break;
+            case StateSet.hurt:
+                this.playerAnimation.play('playerHurt');
+                this.playerState = StateSet.hurt;
+                break;
+            case StateSet.die:
+                this.playerAnimation.play('playerDeath');
+                console.log('die');
+                this.playerState = StateSet.die;
+                break;
+        }
+    }
 }
 
 export enum SkillSet {
@@ -282,4 +364,14 @@ export enum SkillSet {
     accelerate,
     slowdown,
     rollback,
+}
+
+export enum StateSet {
+    none = -1,
+    idle,
+    run,
+    jump,
+    useSkill,
+    hurt,
+    die,
 }

@@ -1,0 +1,43 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "playerUseSkill",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.275,
+  "sample": 40,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "84a9dbe7-d390-4512-89f8-705e0f0b9ef4"
+            }
+          },
+          {
+            "frame": 0.125,
+            "value": {
+              "__uuid__": "8c4240a2-3582-4204-a177-eeacff7eca2a"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "8ea4bf06-0170-4736-82c9-ae1087d7e889"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0.25,
+      "func": "endSkill",
+      "params": []
+    }
+  ]
+}

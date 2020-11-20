@@ -14,30 +14,36 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "33f586fb-5336-4f6f-8cdb-4d370af3e127"
+              "__uuid__": "04a09133-20ea-4a6f-b260-7cd12e4487c6"
             }
           },
           {
             "frame": 0.16666666666666666,
             "value": {
-              "__uuid__": "9bb0a2d9-cb38-44ad-a654-bf1153606df0"
+              "__uuid__": "409f84a0-d7b5-487b-b17e-aec88186e9e0"
             }
           },
           {
             "frame": 0.3333333333333333,
             "value": {
-              "__uuid__": "457af1b7-a730-4169-a245-f6f225424460"
+              "__uuid__": "4ff6d3ae-ac6d-4c6b-a1bb-42049fc45d73"
             }
           },
           {
             "frame": 0.5,
             "value": {
-              "__uuid__": "b243e5cd-3ee0-4634-aaf4-12ba82637888"
+              "__uuid__": "1d788567-5c35-4879-9f7b-ee228afe3ffe"
             }
           }
         ]
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.5,
+      "func": "aniEnd",
+      "params": []
+    }
+  ]
 }

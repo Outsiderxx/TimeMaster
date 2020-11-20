@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "playerDeath",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.7,
+  "sample": 30,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "12f6545e-3e85-4dab-bfcf-bb6476473218"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "c77015d5-fc28-42ea-bc12-f35093492378"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "6a1b8280-7d21-4ba4-992d-0eb24063b2ae"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "e9e46627-b713-4fd3-8069-a2d69bd8b8f9"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "84808802-daf0-4e22-963d-a16d4191cdae"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

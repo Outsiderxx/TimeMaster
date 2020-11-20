@@ -18,17 +18,17 @@ export default class MeleeMonster extends cc.Component {
     private monsterDeathAnimation: cc.Prefab = null;
 
     @property(cc.Prefab)
-    private damageArea:cc.Prefab = null;
+    private damageArea: cc.Prefab = null;
 
     private _moveDirection: boolean = true; // true: left, false: right
     private onTheGround: boolean = false;
     private playerFounded: boolean = false;
     private reachEdge: boolean = false;
-    private player: cc.Node = null;;
+    private player: cc.Node = null;
 
     update(dt: number) {
-        this.reachEdgeCheck()
-        this.onTheGroundCheck()
+        this.reachEdgeCheck();
+        this.onTheGroundCheck();
         if (this.monsterAnimation.currentClip?.name !== 'monsterAttack' && this.onTheGround) {
             // 追蹤模式 距離保持 250，碰到邊界停下來
             if (this.playerFounded) {
@@ -39,8 +39,7 @@ export default class MeleeMonster extends cc.Component {
                     this.moveDirection = direction;
                     this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
                     this.playRunAnimation();
-                }
-                else {
+                } else {
                     this.playIdleAnimation();
                 }
             } else {
@@ -53,7 +52,7 @@ export default class MeleeMonster extends cc.Component {
                 this.playWalkAnimation();
             }
         }
-        if(!this.onTheGround) {
+        if (!this.onTheGround) {
             this.playIdleAnimation();
         }
     }
@@ -92,7 +91,7 @@ export default class MeleeMonster extends cc.Component {
         if (self.tag === 0 && other.node.name === 'Player') {
             this.playerFounded = false;
         } else if (self.tag === 2 && other.node.name === 'Player') {
-             this.unschedule(this.playAttackAnimation);
+            this.unschedule(this.playAttackAnimation);
         }
     }
 
@@ -104,47 +103,44 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private reachEdgeCheck() {
-        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
+        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const offset = this._moveDirection ? -55 : 55;
         const p1: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 50);
         const p2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const rayResults = cc.director.getPhysicsManager().rayCast(p1, p2, cc.RayCastType.All);
+        if (rayResults.length === 0) {
             this.reachEdge = true;
-        }
-        else {
-            for(let i=0;i<rayResults.length;i++) {
+        } else {
+            for (let i = 0; i < rayResults.length; i++) {
                 let result: cc.PhysicsRayCastResult = rayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
-                if(collider.node.group === 'default') {
+                if (collider.node.group === 'default') {
                     this.reachEdge = false;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if (i === rayResults.length - 1) {
                     this.reachEdge = true;
                 }
             }
         }
-       
     }
 
     private onTheGroundCheck() {
-        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
+        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const p1 = cc.v2(temp.x, temp.y - 50);
         const p2 = cc.v2(temp.x + 10, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const rayResults = cc.director.getPhysicsManager().rayCast(p1, p2, cc.RayCastType.All);
+        if (rayResults.length === 0) {
             this.onTheGround = false;
-        }
-        else {
-            for(let i=0;i<rayResults.length;i++) {
+        } else {
+            for (let i = 0; i < rayResults.length; i++) {
                 let result: cc.PhysicsRayCastResult = rayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
-                if(collider.node.group === 'default') {
+                if (collider.node.group === 'default') {
                     this.onTheGround = true;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if (i === rayResults.length - 1) {
                     this.reachEdge = false;
                 }
             }
@@ -152,7 +148,7 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private playIdleAnimation() {
-        if(this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
+        if (this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
             this.monsterAnimation.play('monsterIdle');
         }
     }
@@ -171,7 +167,7 @@ export default class MeleeMonster extends cc.Component {
 
     private playAttackAnimation() {
         this.monsterAnimation.play('monsterAttack');
-        this.schedule(this.generateDamageArea,0.5,0);
+        this.schedule(this.generateDamageArea, 0.5, 0);
     }
 
     private playDeathAnimation() {
@@ -187,5 +183,5 @@ export default class MeleeMonster extends cc.Component {
         const offset = this._moveDirection ? -90 : 90;
         newArea.setPosition(this.node.x + offset, this.node.y);
         this.node.parent.addChild(newArea);
-    } 
+    }
 }
