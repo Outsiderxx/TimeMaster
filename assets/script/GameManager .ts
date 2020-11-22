@@ -62,7 +62,7 @@ export default class GameController extends cc.Component {
             }
         });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
-            if (event.keyCode === cc.macro.KEY.r) {
+            if (event.keyCode === cc.macro.KEY.o) {
                 this.player.status = false;
                 this.transferStage(this.currentSceneIdx);
             }
@@ -84,15 +84,16 @@ export default class GameController extends cc.Component {
         this.transition.transferStage(idx);
         if (idx === this.currentSceneIdx) {
             this.currentScene.reset();
-            this.player.reset(idx);
-            this.camera.reset();
         } else {
-            const previousScene: cc.Node = this.currentScene.node;
+            this.camera.isUpdate = false;
+            this.currentScene.node.destroy();
+            this.currentScene.node.removeFromParent();
             this.currentScene = cc.instantiate(this.scenePrefabs[idx]).getComponent(SceneManager);
+            this.gameStage.addChild(this.currentScene.node);
             this.currentSceneIdx = idx;
-            this.player.reset(idx);
-            this.camera.reset();
-            previousScene.destroy();
+            this.currentScene.node.zIndex = -1;
         }
+        this.player.reset(idx);
+        this.camera.reset();
     }
 }

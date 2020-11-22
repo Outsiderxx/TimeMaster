@@ -20,12 +20,20 @@ export default class CameraController extends cc.Component {
     private sceneManager: cc.Node = null;
     private isFocus: boolean = false;
     private mode: CameraMode = 0;
+    private _isUpdate: boolean = true;
+
+    public set isUpdate(flag: boolean) {
+        this._isUpdate = flag;
+    }
 
     onLoad() {
         this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
     }
 
     update() {
+        if (!this._isUpdate) {
+            return;
+        }
         const { normal, focus, zoom } = CameraMode;
         switch (this.mode) {
             case normal:
@@ -48,6 +56,7 @@ export default class CameraController extends cc.Component {
         this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
         this.camera.node.setPosition(this.sceneManager.getComponent(SceneManager).initialCameraPosition);
         this.middleGround = this.sceneManager.getChildByName('Foreground');
+        this._isUpdate = true;
     }
 
     private updateNormalCameraPosition() {

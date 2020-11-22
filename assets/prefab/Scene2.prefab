@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Scene",
+    "_name": "Scene2",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -4791,7 +4791,7 @@
     ],
     "initialCameraPosition": {
       "__type__": "cc.Vec2",
-      "x": -1520,
+      "x": 1520,
       "y": 855
     },
     "_id": ""
