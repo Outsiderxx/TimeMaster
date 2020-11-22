@@ -1,0 +1,35 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "elevatorStaying",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 2,
+  "sample": 5,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            69.639,
+            187.638,
+            0
+          ]
+        }
+      ],
+      "opacity": [
+        {
+          "frame": 0,
+          "value": 255
+        },
+        {
+          "frame": 2,
+          "value": 255
+        }
+      ]
+    }
+  },
+  "events": []
+}

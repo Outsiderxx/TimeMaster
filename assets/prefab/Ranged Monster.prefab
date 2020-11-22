@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Ranged Monster(working)",
+    "_name": "Ranged Monster",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -24,7 +24,7 @@
         "__id__": 6
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 9
@@ -225,7 +225,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "9ad0bbdd-33dd-4b2c-8142-e93fef6840a5"
     },
     "fileId": "78OxY3EchFbrQK8VNiUr27",
     "sync": false
@@ -332,7 +332,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "9ad0bbdd-33dd-4b2c-8142-e93fef6840a5"
     },
     "fileId": "0363PbKdhClLVHJ0yUHlZZ",
     "sync": false
@@ -370,12 +370,12 @@
     "_offset": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -20
+      "y": 35.6
     },
     "_size": {
       "__type__": "cc.Size",
       "width": 800,
-      "height": 150
+      "height": 262.2
     },
     "_id": ""
   },
@@ -408,9 +408,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_type": 1,
+    "_type": 2,
     "_allowSleep": false,
-    "_gravityScale": 1,
+    "_gravityScale": 1.5,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -446,7 +446,7 @@
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 80,
       "height": 130
     },
     "_id": ""
@@ -457,7 +457,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "9ad0bbdd-33dd-4b2c-8142-e93fef6840a5"
     },
     "fileId": "daUZ/4h7pOt5lgykhgUA2O",
     "sync": false

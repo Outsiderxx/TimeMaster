@@ -1,0 +1,45 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "EnergyRockEmpty",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.016666666666666666,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": -0.06666666666666667,
+            "value": {
+              "__uuid__": "a72c3a01-4b0d-4524-a351-23686c41cb03"
+            }
+          },
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "a72c3a01-4b0d-4524-a351-23686c41cb03"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "height": [
+        {
+          "frame": -0.06666666666666667,
+          "value": 101
+        }
+      ],
+      "width": [
+        {
+          "frame": -0.06666666666666667,
+          "value": 101
+        }
+      ]
+    }
+  },
+  "events": []
+}

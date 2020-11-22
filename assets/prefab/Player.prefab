@@ -268,7 +268,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
     "fileId": "b263NYfflMV6AUJVTwrbhm",
     "sync": false
@@ -375,7 +375,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
     "fileId": "0dWM0vgdRGfZQ4XHJFelcS",
     "sync": false
@@ -482,7 +482,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
     "fileId": "d40dOtdKVC2Z4a8plh8oRk",
     "sync": false
@@ -525,7 +525,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
     "fileId": "bbKdHpP2FC7aeJIFFB5lWA",
     "sync": false
@@ -596,9 +596,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
-    "fileId": "80oGjVhmFJRb4K2kbpTJ7z",
+    "fileId": "e8sjE5Mr1LRY2fk8SMGSGl",
     "sync": false
   },
   {
@@ -769,9 +769,6 @@
     "feetRayPoint": {
       "__id__": 14
     },
-    "animationEvent": {
-      "__id__": 19
-    },
     "healthPoint": 5,
     "moveAccel": 250,
     "jumpFroce": 400,
@@ -784,9 +781,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
-    "fileId": "fa57llwKVCVprzoe2LEapG",
+    "fileId": "e01YC4SsRLI5uw9ddwmxAM",
     "sync": false
   },
   {
@@ -867,9 +864,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "01005c0a-0205-4f4a-88d7-8c27397eed31"
+      "__id__": 0
     },
-    "fileId": "28ETuX2dREj4JK1k7OIB9e",
+    "fileId": "3c1YkmF39GQrPwRcuNuLBl",
     "sync": false
   }
 ]

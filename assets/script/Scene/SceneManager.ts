@@ -30,6 +30,7 @@ export default class SceneManager extends cc.Component {
     }
 
     public reset() {
+        this.node.active = true;
         this.mechanisms.forEach((mechanism) => mechanism.reset());
 
         // 清除剩餘怪物

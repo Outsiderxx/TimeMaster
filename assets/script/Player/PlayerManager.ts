@@ -9,6 +9,9 @@ export default class PlayerManager extends cc.Component {
     @property(cc.Animation)
     private playerAnimation: cc.Animation = null;
 
+    @property([cc.Vec2])
+    private playerPosition: cc.Vec2[] = [];
+
     @property(cc.Node)
     private skillRange: cc.Node = null;
 
@@ -20,7 +23,6 @@ export default class PlayerManager extends cc.Component {
     @property(cc.Node)
     private feetRayPoint: cc.Node = null;
 
-    @property(AnimationEvent)
     private animationEvent: AnimationEvent = null;
     @property
     private healthPoint: number = 5;
@@ -41,16 +43,15 @@ export default class PlayerManager extends cc.Component {
     private isClimbing: boolean = false;
     private isAlive: boolean = true;
     private isInvincible: boolean = false;
-    private playerPosition: cc.Vec2[] = [new cc.Vec2(-517, -168)];
     private currentSceneIdx: number = null; // current scene idx
-    public playerState: number = null;
+    public playerState: number = -1;
     public get status() {
         return this.isAlive;
     }
 
     onLoad() {
         // 技能切換
-        this.playerState = StateSet.none;
+        this.animationEvent = this.node.getChildByName('Appearance').getComponent('AnimationEvent');
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             if ((event.keyCode === cc.macro.KEY.q || event.keyCode === cc.macro.KEY.e || event.keyCode === cc.macro.KEY.r) && !this.input[event.keyCode]) {
                 this.toggleSkill(event.keyCode, true);
@@ -104,7 +105,8 @@ export default class PlayerManager extends cc.Component {
         }
         //碰地判斷
         this.onTheGroundCheck();
-        if (this.onTheGround) {
+
+        if (this.onTheGround && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
             let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
             //左右移動
             if (this.input[cc.macro.KEY.a]) {
@@ -117,18 +119,13 @@ export default class PlayerManager extends cc.Component {
                 this.speed.x = 0;
             }
 
-            if (this.speed.x) {
+            if (this.speed.x !== 0) {
                 lv.x = this.speed.x * this.moveAccel;
-                if (this.playerAnimation.currentClip?.name !== 'playerRun') {
-                    this.playerState = StateSet.none;
-                    this.finiteState(StateSet.run);
-                }
+                this.finiteState(StateSet.run);
             } else {
                 lv.x = 0;
-                if (this.playerAnimation.currentClip?.name !== 'playerIdle') {
-                    this.playerState = StateSet.none;
-                    this.finiteState(StateSet.idle);
-                }
+
+                this.finiteState(StateSet.idle);
             }
 
             if (this.isClimbing) {
@@ -176,7 +173,7 @@ export default class PlayerManager extends cc.Component {
 
         // input
         this.input = {};
-
+        this.playerState = StateSet.none;
         // skill range
         this.skillRange.active = false;
         this.skillRange.children.forEach((node) => (node.active = false));
@@ -213,8 +210,11 @@ export default class PlayerManager extends cc.Component {
         }
         // 通關
         else if (other.node.name === 'Endpoint') {
-            this.node.emit('success');
             this.isAlive = false;
+            this.node.emit('success');
+        } else if (other.node.name === 'TransferPoint') {
+            this.isAlive = false;
+            this.node.emit('transfer');
         }
     }
 
@@ -285,10 +285,10 @@ export default class PlayerManager extends cc.Component {
     private onTheGroundCheck() {
         const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
         const leftP1 = cc.v2(tempPoint.x - 10, tempPoint.y);
-        const leftP2 = cc.v2(tempPoint.x - 10, tempPoint.y - 50);
+        const leftP2 = cc.v2(tempPoint.x - 10, tempPoint.y - 10);
 
         const rightP1 = cc.v2(tempPoint.x + 10, tempPoint.y);
-        const rightP2 = cc.v2(tempPoint.x + 10, tempPoint.y - 50);
+        const rightP2 = cc.v2(tempPoint.x + 10, tempPoint.y - 10);
 
         const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
@@ -297,62 +297,46 @@ export default class PlayerManager extends cc.Component {
             this.onTheGround = false;
         } else {
             this.onTheGround = true;
-            // if (leftRayResult[0].collider.node.group === 'default' || rightRayResult[0].collider.node.group === 'default') {
-            //     this.onTheGround = true;
-            // }
         }
+        //攀爬=碰地
+        if (this.isClimbing == true) this.onTheGround = true;
     }
 
     private finiteState(nextState: number) {
-        if (nextState == StateSet.hurt || nextState == StateSet.die) {
-            this.StateChange(nextState);
+        if (nextState == StateSet.die) {
+            this.playerState = StateSet.die;
+            this.playerAnimation.play('playerDeath');
+            return;
+        }
+        if (nextState == StateSet.hurt) {
+            this.playerState = StateSet.hurt;
+            this.playerAnimation.play('playerHurt');
             return;
         }
         if (nextState == StateSet.useSkill && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
-            this.StateChange(nextState);
+            this.playerState = StateSet.useSkill;
+            this.playerAnimation.play('playerUseSkill');
             return;
         }
         if (nextState == StateSet.jump && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
-            this.StateChange(nextState);
+            this.playerState = StateSet.jump;
+            this.playerAnimation.play('playerJump');
+            return;
+        }
+        if (nextState == StateSet.climbing && (this.playerState == StateSet.none || this.playerState == StateSet.run)) {
+            this.playerState = StateSet.climbing;
+            this.playerAnimation.play('playerClimbing');
             return;
         }
         if (nextState == StateSet.run && (this.playerState == StateSet.none || this.playerState == StateSet.idle)) {
-            this.StateChange(nextState);
+            this.playerState = StateSet.run;
+            this.playerAnimation.play('playerRun');
             return;
         }
-        if (nextState == StateSet.idle && this.playerState == StateSet.none) {
-            this.StateChange(nextState);
+        if (nextState == StateSet.idle && (this.playerState == StateSet.none || this.playerState == StateSet.run)) {
+            this.playerState = StateSet.idle;
+            this.playerAnimation.play('playerIdle');
             return;
-        }
-    }
-
-    private StateChange(state: number) {
-        switch (state) {
-            case StateSet.idle:
-                this.playerAnimation.play('playerIdle');
-                this.playerState = StateSet.idle;
-                break;
-            case StateSet.run:
-                this.playerAnimation.play('playerRun');
-                this.playerState = StateSet.run;
-                break;
-            case StateSet.jump:
-                this.playerAnimation.play('playerJump');
-                this.playerState = StateSet.jump;
-                break;
-            case StateSet.useSkill:
-                this.playerAnimation.play('playerUseSkill');
-                this.playerState = StateSet.useSkill;
-                break;
-            case StateSet.hurt:
-                this.playerAnimation.play('playerHurt');
-                this.playerState = StateSet.hurt;
-                break;
-            case StateSet.die:
-                this.playerAnimation.play('playerDeath');
-                console.log('die');
-                this.playerState = StateSet.die;
-                break;
         }
     }
 }
@@ -368,6 +352,7 @@ export enum StateSet {
     none = -1,
     idle,
     run,
+    climbing,
     jump,
     useSkill,
     hurt,

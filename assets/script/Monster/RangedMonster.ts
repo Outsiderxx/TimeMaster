@@ -30,11 +30,13 @@ export default class RangedMonster extends cc.Component {
 
     update(dt: number) {
         this.onTheGroundCheck();
-        if(this.monsterAnimation.currentClip?.name !== 'monsterShoot') {
+        if (this.monsterAnimation.currentClip?.name !== 'monsterShoot') {
         if (this.onTheGround) {
                 this.reachEdgeCheck()
                 // 追蹤模式 距離保持 250，碰到邊界停下來
                 if (this.playerFounded) {
+                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                    rigidBody.type = cc.RigidBodyType.Kinematic;
                     if (!this.reachEdge) {
                         const monsterWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
                         const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(monsterWorldPos).x;
@@ -61,6 +63,8 @@ export default class RangedMonster extends cc.Component {
                     }
                     this.node.x += this.moveSpeed * dt * (this.moveDirection ? -1 : 1);
                     this.playWalkAnimation();
+                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                    rigidBody.type = cc.RigidBodyType.Dynamic;
                 }
             }else {
                 this.playIdleAnimation();
@@ -130,22 +134,39 @@ export default class RangedMonster extends cc.Component {
 
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const p1 = cc.v2(temp.x, temp.y - 50);
-        const p2 = cc.v2(temp.x + 10, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const leftP1 = cc.v2(temp.x - 35, temp.y);
+        const leftP2 = cc.v2(temp.x - 35, temp.y - 100);
+        const rightP1 = cc.v2(temp.x + 35, temp.y);
+        const rightP2 = cc.v2(temp.x + 35, temp.y - 100);
+        const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1,leftP2,cc.RayCastType.All);
+        const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1,rightP2,cc.RayCastType.All);
+
+        if(rayResultsLeft.length === 0 && rayResultsRight.length === 0) {
             this.onTheGround = false;
         }
         else {
-            for(let i=0;i<rayResults.length;i++) {
-                let result: cc.PhysicsRayCastResult = rayResults[i];
+            for(let i = 0; i < rayResultsLeft.length; i++) {
+                let result: cc.PhysicsRayCastResult = rayResultsLeft[i];
                 let collider: cc.PhysicsCollider = result.collider;
                 if(collider.node.group === 'default') {
                     this.onTheGround = true;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if(i === rayResultsLeft.length - 1) {
                     this.reachEdge = false;
+                }
+            }
+            if(this.onTheGround === false) {
+                for(let i = 0; i < rayResultsRight.length; i++) {
+                    let result: cc.PhysicsRayCastResult = rayResultsRight[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if(collider.node.group === 'default') {
+                        this.onTheGround = true;
+                        break;
+                    }
+                    if(i === rayResultsRight.length - 1) {
+                        this.reachEdge = false;
+                    }
                 }
             }
         }
@@ -205,6 +226,6 @@ export default class RangedMonster extends cc.Component {
             angle += 180;
         }
         //將子彈射擊(移動)速度和角度傳參數給子彈節點
-        bullet.children[0].getComponent(Bullet).setBulletParameter(350, angle);
+        bullet.children[0].getComponent(Bullet).setBulletParameter(500, angle);
     }
 }

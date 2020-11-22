@@ -40,6 +40,8 @@ export default class MeleeMonster extends cc.Component {
             if (this.monsterAnimation.currentClip?.name !== 'monsterAttack' && this.onTheGround) {
                 // 追蹤模式 距離保持 250，碰到邊界停下來
                 if (this.playerFounded) {
+                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                    rigidBody.type = cc.RigidBodyType.Kinematic;
                     if (!this.reachEdge) {
                         const worldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
                         const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(worldPos).x;
@@ -59,6 +61,8 @@ export default class MeleeMonster extends cc.Component {
                     }
                     this.node.x += this.moveSpeed * dt * (this._moveDirection ? -1 : 1);
                     this.playWalkAnimation();
+                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
+                    rigidBody.type = cc.RigidBodyType.Dynamic;
                 }
             }
             if(!this.onTheGround) {
@@ -138,22 +142,39 @@ export default class MeleeMonster extends cc.Component {
 
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const p1 = cc.v2(temp.x, temp.y - 50);
-        const p2 = cc.v2(temp.x + 10, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const leftP1 = cc.v2(temp.x - 35, temp.y);
+        const leftP2 = cc.v2(temp.x - 35, temp.y - 100);
+        const rightP1 = cc.v2(temp.x + 35, temp.y);
+        const rightP2 = cc.v2(temp.x + 35, temp.y - 100);
+        const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1,leftP2,cc.RayCastType.All);
+        const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1,rightP2,cc.RayCastType.All);
+
+        if(rayResultsLeft.length === 0 && rayResultsRight.length === 0) {
             this.onTheGround = false;
         }
         else {
-            for(let i=0;i<rayResults.length;i++) {
-                let result: cc.PhysicsRayCastResult = rayResults[i];
+            for(let i = 0; i < rayResultsLeft.length; i++) {
+                let result: cc.PhysicsRayCastResult = rayResultsLeft[i];
                 let collider: cc.PhysicsCollider = result.collider;
                 if(collider.node.group === 'default') {
                     this.onTheGround = true;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if(i === rayResultsLeft.length - 1) {
                     this.reachEdge = false;
+                }
+            }
+            if(this.onTheGround === false) {
+                for(let i = 0; i < rayResultsRight.length; i++) {
+                    let result: cc.PhysicsRayCastResult = rayResultsRight[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if(collider.node.group === 'default') {
+                        this.onTheGround = true;
+                        break;
+                    }
+                    if(i === rayResultsRight.length - 1) {
+                        this.reachEdge = false;
+                    }
                 }
             }
         }

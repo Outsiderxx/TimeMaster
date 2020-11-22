@@ -39,11 +39,5 @@
       }
     }
   },
-  "events": [
-    {
-      "frame": 0.5,
-      "func": "aniEnd",
-      "params": []
-    }
-  ]
+  "events": []
 }

@@ -8,9 +8,13 @@ export default class TransitionController extends cc.Component {
     @property(cc.Label)
     private hint: cc.Label = null;
 
+    @property(cc.Node)
+    private mask: cc.Node = null;
+
     private tween: cc.Tween = null;
 
     public showGameResult(isWin: boolean) {
+        this.mask.opacity = 150;
         this.node.active = true;
         if (isWin) {
             this.message.string = 'CONGRATULATION';
@@ -36,5 +40,25 @@ export default class TransitionController extends cc.Component {
                 });
             })
             .start();
+    }
+
+    public transferStage(idx: number) {
+        this.node.active = true;
+        this.mask.opacity = 255;
+        this.node.opacity = 255;
+        this.message.string = `Chapter ${idx + 1}`;
+        this.message.node.color = new cc.Color(255, 255, 255);
+        this.tween = cc
+            .tween(this.hint.node)
+            .then(cc.tween().to(0.5, { opacity: 255 }).to(0.5, { opacity: 0 }))
+            .repeatForever()
+            .start();
+        this.node.once(cc.Node.EventType.TOUCH_END, () => {
+            this.node.opacity = 0;
+            this.node.active = false;
+            this.hint.node.opacity = 0;
+            this.tween.stop();
+            this.node.emit('plotEnd');
+        });
     }
 }

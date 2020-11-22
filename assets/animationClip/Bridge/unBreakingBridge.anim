@@ -1,0 +1,83 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "unBreakingBridge",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.2,
+  "sample": 5,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "5df0960a-8929-4610-8f02-455316d056c1"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "21f0f3bc-6938-4048-99d2-170c9387fc59"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "91e4b501-a503-43e1-b2d7-7627741f8c3f"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "c4422f9b-80ab-4216-b2c2-ea4cdc700f33"
+            }
+          },
+          {
+            "frame": 0.8,
+            "value": {
+              "__uuid__": "e3722024-69a7-41d1-897e-bd63311d3c77"
+            }
+          },
+          {
+            "frame": 1,
+            "value": {
+              "__uuid__": "454a647a-131b-4bd6-bc87-8ac3fefa091d"
+            }
+          }
+        ]
+      }
+    },
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            725,
+            -200,
+            0
+          ]
+        },
+        {
+          "frame": 1,
+          "value": [
+            725,
+            241,
+            0
+          ]
+        },
+        {
+          "frame": 1.2,
+          "value": [
+            725,
+            241.4,
+            0
+          ]
+        }
+      ]
+    }
+  },
+  "events": []
+}

@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "5bc1b4ba-5ae9-498d-b0c1-cdaba2b67d03",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 94,
+  "height": 446,
+  "platformSettings": {},
+  "subMetas": {
+    "vine-ani2.1-f5": {
+      "ver": "1.0.4",
+      "uuid": "78b25e43-8eb4-4890-b9a4-7b7e824d3fb3",
+      "rawTextureUuid": "5bc1b4ba-5ae9-498d-b0c1-cdaba2b67d03",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 142.5,
+      "trimX": 0,
+      "trimY": 1,
+      "width": 94,
+      "height": 159,
+      "rawWidth": 94,
+      "rawHeight": 446,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

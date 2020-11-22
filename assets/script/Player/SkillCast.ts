@@ -56,8 +56,8 @@ export default class SkillCast extends cc.Component {
     }
 
     private addCameraOffset() {
-        this.userPointer.node.x = this.originalPointerPosition.x + this.camera.x;
-        this.userPointer.node.y = this.originalPointerPosition.y + this.camera.y;
+        this.userPointer.node.x = this.originalPointerPosition.x / this.camera.getComponent(cc.Camera).zoomRatio + this.camera.x;
+        this.userPointer.node.y = this.originalPointerPosition.y / this.camera.getComponent(cc.Camera).zoomRatio + this.camera.y;
     }
 
     private rangeCheck(): boolean {
