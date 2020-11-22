@@ -24,8 +24,11 @@ export default class GameController extends cc.Component {
     @property(CameraController)
     private camera: CameraController = null;
 
-    @property([SceneManager])
-    private scene: SceneManager[] = [];
+    @property([cc.Prefab])
+    private scenePrefabs: cc.Prefab[] = [];
+
+    @property(SceneManager)
+    private currentScene: SceneManager = null;
 
     @property(TransitionController)
     private transition: TransitionController = null;
@@ -34,10 +37,12 @@ export default class GameController extends cc.Component {
 
     onLoad() {
         this.menu.node.on('back', () => {
+            this.player.status = false;
             this.transferStage(0);
             this.mainMenu.node.active = true;
         });
         this.transition.node.on('back', () => {
+            this.player.status = false;
             this.transferStage(0);
             this.mainMenu.node.active = true;
         });
@@ -50,20 +55,44 @@ export default class GameController extends cc.Component {
         this.player.node.on('transfer', () => {
             this.transferStage(this.currentSceneIdx + 1);
         });
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.tab) {
+                this.player.status = false;
+                this.transferStage(this.currentSceneIdx + 1);
+            }
+        });
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.r) {
+                this.player.status = false;
+                this.transferStage(this.currentSceneIdx);
+            }
+        });
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.i) {
+                this.player.status = false;
+                this.transferStage(0);
+            }
+        });
     }
 
     start() {
         this.mainMenu.node.active = true;
-        this.scene.slice(1).forEach((each) => (each.node.active = false));
         this.transition.transferStage(this.currentSceneIdx);
     }
 
     private transferStage(idx: number) {
-        this.scene[this.currentSceneIdx].node.active = false;
         this.transition.transferStage(idx);
-        this.scene[idx].reset();
-        this.player.reset(idx);
-        this.camera.reset();
-        this.currentSceneIdx = idx;
+        if (idx === this.currentSceneIdx) {
+            this.currentScene.reset();
+            this.player.reset(idx);
+            this.camera.reset();
+        } else {
+            const previousScene: cc.Node = this.currentScene.node;
+            this.currentScene = cc.instantiate(this.scenePrefabs[idx]).getComponent(SceneManager);
+            this.currentSceneIdx = idx;
+            this.player.reset(idx);
+            this.camera.reset();
+            previousScene.destroy();
+        }
     }
 }

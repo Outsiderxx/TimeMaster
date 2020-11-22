@@ -45,8 +45,13 @@ export default class PlayerManager extends cc.Component {
     private isInvincible: boolean = false;
     private currentSceneIdx: number = null; // current scene idx
     public playerState: number = -1;
+
     public get status() {
         return this.isAlive;
+    }
+
+    public set status(flag: boolean) {
+        this.isAlive = flag;
     }
 
     onLoad() {

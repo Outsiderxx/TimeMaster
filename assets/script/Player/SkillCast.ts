@@ -1,3 +1,5 @@
+import SceneManager from '../Scene/SceneManager';
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -27,7 +29,7 @@ export default class SkillCast extends cc.Component {
     }
 
     public changeScene() {
-        this.scene = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
+        this.scene = this.node.parent.getComponentInChildren(SceneManager).node;
         this.scene.on(cc.Node.EventType.TOUCH_START, (event: cc.Event.EventTouch) => {
             this.userPointer.node.active = true;
             const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());

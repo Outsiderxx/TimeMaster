@@ -1,6 +1,4 @@
 import TimeEffect from '../TimeEffect';
-import RangedMonster from '../Monster/RangedMonster';
-import MeleeMonster from '../Monster/MeleeMonster';
 
 const { ccclass, property } = cc._decorator;
 
@@ -21,16 +19,36 @@ export default class SceneManager extends cc.Component {
     @property(cc.Prefab)
     private meleeMonsterPrefab: cc.Prefab = null;
 
+    @property([cc.Vec2])
+    private floorWidthEdgeOffset: cc.Vec2[] = []; // x: top, y: down
+
+    @property([cc.Node])
+    private floorDetected: cc.Node[] = [];
+
+    @property(cc.Vec2)
+    public initialCameraPosition: cc.Vec2 = null;
+
     private rangedMonsterPositions: cc.Vec2[] = [];
     private meleeMonsterPositions: cc.Vec2[] = [];
+    private currentFloor: number = 0;
 
     onLoad() {
         this.rangedMonsterPositions = this.rangedMonsters.map((monster) => monster.getPosition());
         this.meleeMonsterPositions = this.meleeMonsters.map((monster) => monster.getPosition());
+        this.floorDetected.forEach((node, idx) => {
+            node.on('crossFloor', () => {
+                this.currentFloor = idx;
+            });
+        });
+    }
+
+    public getCurrentFloorEdgeOffset() {
+        return this.floorWidthEdgeOffset[this.currentFloor];
     }
 
     public reset() {
         this.node.active = true;
+        this.currentFloor = 0;
         this.mechanisms.forEach((mechanism) => mechanism.reset());
 
         // 清除剩餘怪物

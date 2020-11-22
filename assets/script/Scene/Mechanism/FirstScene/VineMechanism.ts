@@ -11,7 +11,6 @@ export default class VineMechanism extends TimeEffect {
     // TODO: need to add joint point at the root
 
     onLoad() {
-        
         this.status = this.vineStatus === true ? 'triggered' : 'original';
         this.vineAnimation.on('play', () => {
             this.status = 'transforming';
@@ -23,22 +22,13 @@ export default class VineMechanism extends TimeEffect {
             climbCollider.size.height = this.vineAnimation.node.height;
             climbCollider.offset.y = -this.vineAnimation.node.height / 2;
             if (this.vineAnimation.currentClip.name === 'vineGrows') {
-                skillCollider.size.height = this.vineAnimation.node.height * 0.8;   //animation size's problem
+                skillCollider.size.height = this.vineAnimation.node.height * 0.8; //animation size's problem
                 skillCollider.offset.y = -this.vineAnimation.node.height / 2;
             } else {
                 skillCollider.size.height = 150;
                 skillCollider.offset.y = -75;
             }
         });
-    }
-
-    update() {
-        // if (this.status === 'transforming') {
-        //     let collider = this.vineAnimation.getComponent(cc.BoxCollider);
-        //     collider.size.width = this.node.width * 1.8;
-        //     collider.size.height = this.node.height * 1.8;
-        //     collider.apply();
-        // }
     }
 
     public rollback() {
@@ -52,13 +42,12 @@ export default class VineMechanism extends TimeEffect {
     public slowdown() {}
 
     public reset() {
-        // const climbCollider: cc.BoxCollider = this.vineAnimation.getComponent(cc.BoxCollider);
-        // const skillCollider: cc.BoxCollider = this.getComponent(cc.BoxCollider);
-        this.vineAnimation.play('vineGrownBack');
-        this.status = this.vineStatus === true ? 'triggered' : 'original';
-        // climbCollider.size.height = this.vineAnimation.node.height;
-        // climbCollider.offset.y = -this.vineAnimation.node.height / 2;
-        // skillCollider.size.height = 300;
-        // skillCollider.offset.y = -150;
+        if (this.vineStatus) {
+            this.status = 'triggered';
+            this.accelerate();
+        } else {
+            this.status = 'original';
+            this.rollback();
+        }
     }
 }

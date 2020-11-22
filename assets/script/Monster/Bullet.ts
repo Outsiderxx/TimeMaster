@@ -25,32 +25,6 @@ export default class Bullet extends TimeEffect {
         this.node.y += this.bulletYSpeed * dt;
         this.damagePart.x += this.bulletXSpeed * dt; // 節點在有RigidBody Component的情況下，Position、angle不會隨著 Parent改變
         this.damagePart.y += this.bulletYSpeed * dt;
-        // TODO: 重寫判斷bullet消失條件
-        // //判斷是否出畫面 可能要再調整
-        // if (
-        //     this.node.y >= this.node.parent.height / 2 ||
-        //     this.node.y <= -this.node.parent.height / 2 ||
-        //     this.node.x >= this.node.parent.width / 2 ||
-        //     this.node.x <= -this.node.parent.width / 2
-        // ) {
-        //     this.node.destroy();
-        // }
-        // //判斷是否已回到原射擊點
-        // if (this.reverseApply) {
-        //     if (this.bulletXSpeed > 0 && this.node.x > this.shootPosX) {
-        //         if (this.bulletYSpeed > 0 && this.node.y > this.shootPosY) {
-        //             this.node.destroy();
-        //         } else if (this.node.y < this.shootPosY) {
-        //             this.node.destroy();
-        //         }
-        //     } else if (this.node.x < this.shootPosX) {
-        //         if (this.bulletYSpeed > 0 && this.node.y > this.shootPosY) {
-        //             this.node.destroy();
-        //         } else if (this.node.y < this.shootPosY) {
-        //             this.node.destroy();
-        //         }
-        //     }
-        // }
     }
 
     //調整子彈射擊的速度(speed)和角度(angle)

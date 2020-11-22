@@ -6,11 +6,6 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class MeleeMonster extends cc.Component {
-    @property
-    private moveSpeed: number = 0;
-
-    @property
-    private freezeTime = 0;
 
     @property(cc.Animation)
     private monsterAnimation: cc.Animation = null;
@@ -20,6 +15,12 @@ export default class MeleeMonster extends cc.Component {
 
     @property(cc.Prefab)
     private damageArea:cc.Prefab = null;
+
+    @property
+    private moveSpeed: number = 0;
+
+    @property
+    private freezeTime = 0;
 
     private _moveDirection: boolean = true; // true: left, false: right
     private onTheGround: boolean = false;
@@ -76,7 +77,7 @@ export default class MeleeMonster extends cc.Component {
     private set moveDirection(isLeft: boolean) {
         if (this._moveDirection !== isLeft) {
             this._moveDirection = isLeft;
-            this.node.scaleX = this._moveDirection ? -1 : 1;
+            this.node.scaleX = this._moveDirection ? -0.7 : 0.7;
         }
     }
 
@@ -116,36 +117,80 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private reachEdgeCheck() {
+        let offset = this._moveDirection ? -55 : 55;
+        offset = offset * Math.abs(this.node.scaleX);
+        
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const offset = this._moveDirection ? -55 : 55;
-        const p1: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 50);
-        const p2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
+        const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100 * Math.abs(this.node.scaleX));
+        const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 20 * Math.abs(this.node.scaleX));
+        const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 20 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 30 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 30 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP1: cc.Vec2 = cc.v2(temp.x, temp.y - 95 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 95 * Math.abs(this.node.scaleX));
+        
+
+        const edgeRayResults = cc.director.getPhysicsManager().rayCast(edgeCheckP1, edgeCheckP2, cc.RayCastType.All);
+        const wallTopRayResults = cc.director.getPhysicsManager().rayCast(wallCheckTopP1, wallCheckTopP2, cc.RayCastType.All);
+        const wallMediumRayResults = cc.director.getPhysicsManager().rayCast(wallCheckMediumP1, wallCheckMediumP2, cc.RayCastType.All);
+        const wallBottomRayResults = cc.director.getPhysicsManager().rayCast(wallCheckBottomP1, wallCheckBottomP2, cc.RayCastType.All);
+        
+
+        if (edgeRayResults.length === 0) {
             this.reachEdge = true;
         }
         else {
-            for(let i=0;i<rayResults.length;i++) {
-                let result: cc.PhysicsRayCastResult = rayResults[i];
+            for(let i = 0; i < edgeRayResults.length; i++) {
+                let result: cc.PhysicsRayCastResult = edgeRayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
-                if(collider.node.group === 'default') {
+                if (collider.node.group === 'default') {
                     this.reachEdge = false;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if (i === edgeRayResults.length - 1) {
                     this.reachEdge = true;
                 }
             }
         }
-       
+        if (!this.reachEdge && this.onTheGround) {
+            for(let i = 0; i < wallTopRayResults.length; i++) {
+                let result: cc.PhysicsRayCastResult = wallTopRayResults[i];
+                let collider: cc.PhysicsCollider = result.collider;
+                if (collider.node.group === 'default') {
+                    this.reachEdge = true;
+                    break;
+                }
+            }
+            if (!this.reachEdge) {
+                for(let i = 0; i < wallMediumRayResults.length; i++) {
+                    let result: cc.PhysicsRayCastResult = wallMediumRayResults[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if (collider.node.group === 'default') {
+                        this.reachEdge = true;
+                        break;
+                    }
+                }
+            }
+            if (!this.reachEdge) {
+                for(let i = 0; i < wallBottomRayResults.length; i++) {
+                    let result: cc.PhysicsRayCastResult = wallBottomRayResults[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if (collider.node.group === 'default') {
+                        this.reachEdge = true;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const leftP1 = cc.v2(temp.x - 35, temp.y);
-        const leftP2 = cc.v2(temp.x - 35, temp.y - 100);
-        const rightP1 = cc.v2(temp.x + 35, temp.y);
-        const rightP2 = cc.v2(temp.x + 35, temp.y - 100);
+        const leftP1 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y);
+        const leftP2 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
+        const rightP1 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y);
+        const rightP2 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
         const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1,leftP2,cc.RayCastType.All);
         const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1,rightP2,cc.RayCastType.All);
 
@@ -160,9 +205,6 @@ export default class MeleeMonster extends cc.Component {
                     this.onTheGround = true;
                     break;
                 }
-                if(i === rayResultsLeft.length - 1) {
-                    this.reachEdge = false;
-                }
             }
             if(this.onTheGround === false) {
                 for(let i = 0; i < rayResultsRight.length; i++) {
@@ -171,9 +213,6 @@ export default class MeleeMonster extends cc.Component {
                     if(collider.node.group === 'default') {
                         this.onTheGround = true;
                         break;
-                    }
-                    if(i === rayResultsRight.length - 1) {
-                        this.reachEdge = false;
                     }
                 }
             }

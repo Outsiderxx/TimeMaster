@@ -25,18 +25,15 @@ export default class RangedMonster extends cc.Component {
     private onTheGround: boolean = false;
     private playerFounded: boolean = false;
     private reachEdge: boolean = false;
-
     private player: cc.Node = null; // 透過碰撞測試取得
 
     update(dt: number) {
         this.onTheGroundCheck();
         if (this.monsterAnimation.currentClip?.name !== 'monsterShoot') {
-        if (this.onTheGround) {
+            if (this.onTheGround) {
                 this.reachEdgeCheck()
                 // 追蹤模式 距離保持 250，碰到邊界停下來
                 if (this.playerFounded) {
-                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
-                    rigidBody.type = cc.RigidBodyType.Kinematic;
                     if (!this.reachEdge) {
                         const monsterWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
                         const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(monsterWorldPos).x;
@@ -44,7 +41,7 @@ export default class RangedMonster extends cc.Component {
                             const direction: boolean = distance < 0; // true: player在怪物右邊 false: player在怪物右邊
                             this.moveDirection = direction;
                             this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
-                            this.node.scaleX = direction ? -1 : 1;
+                            this.node.scaleX = this.moveDirection ? -0.7 : 0.7;
                             this.playRunAnimation();
                         }
                         else {
@@ -59,17 +56,13 @@ export default class RangedMonster extends cc.Component {
                     if (this.reachEdge) {
                         this.moveDirection = !this.moveDirection;
                         this.reachEdge = false;
-                        this.node.scaleX = this.moveDirection ? -1 : 1;
+                        this.node.scaleX = this.moveDirection ? -0.7 : 0.7;
                     }
                     this.node.x += this.moveSpeed * dt * (this.moveDirection ? -1 : 1);
                     this.playWalkAnimation();
-                    const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
-                    rigidBody.type = cc.RigidBodyType.Dynamic;
                 }
             }else {
                 this.playIdleAnimation();
-                const rigidBody: cc.RigidBody = this.node.getComponent(cc.RigidBody);
-                rigidBody.type = cc.RigidBodyType.Dynamic;
             }
         }
     }
@@ -84,12 +77,14 @@ export default class RangedMonster extends cc.Component {
             this.playerFounded = true;
             this.player = other.node;
             this.schedule(this.playShootAnimation, 3, cc.macro.REPEAT_FOREVER, 1);
-        } else if (self.tag === 1) {
+        }
+        if (self.tag === 1) {
             if (other.node.name === 'Deadline') {
                 // 怪物掉落
                 this.node.destroy();
             }
         }
+        
     }
 
     private onCollisionExit(other: cc.Collider, self: cc.Collider) {
@@ -108,64 +103,102 @@ export default class RangedMonster extends cc.Component {
     }
 
     private reachEdgeCheck() {
+        let offset = this.moveDirection ? -55 : 55;
+        offset = offset * Math.abs(this.node.scaleX);
+        
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const offset = this.moveDirection ? -55 : 55
-        const p1: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 50);
-        const p2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100);
-        const rayResults = cc.director.getPhysicsManager().rayCast(p1,p2,cc.RayCastType.All);
-        if(rayResults.length === 0) {
+        const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
+        const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100 * Math.abs(this.node.scaleX));
+        const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 20 * Math.abs(this.node.scaleX));
+        const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 20 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 30 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 30 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP1: cc.Vec2 = cc.v2(temp.x, temp.y - 95 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 95 * Math.abs(this.node.scaleX));
+        
+
+        const edgeRayResults = cc.director.getPhysicsManager().rayCast(edgeCheckP1, edgeCheckP2, cc.RayCastType.All);
+        const wallTopRayResults = cc.director.getPhysicsManager().rayCast(wallCheckTopP1, wallCheckTopP2, cc.RayCastType.All);
+        const wallMediumRayResults = cc.director.getPhysicsManager().rayCast(wallCheckMediumP1, wallCheckMediumP2, cc.RayCastType.All);
+        const wallBottomRayResults = cc.director.getPhysicsManager().rayCast(wallCheckBottomP1, wallCheckBottomP2, cc.RayCastType.All);
+        
+
+        if (edgeRayResults.length === 0) {
             this.reachEdge = true;
         }
         else {
-            for(let i=0;i<rayResults.length;i++) {
-                let result: cc.PhysicsRayCastResult = rayResults[i];
+            for(let i = 0; i < edgeRayResults.length; i++) {
+                let result: cc.PhysicsRayCastResult = edgeRayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
-                if(collider.node.group === 'default') {
+                if (collider.node.group === 'default') {
                     this.reachEdge = false;
                     break;
                 }
-                if(i === rayResults.length - 1) {
+                if (i === edgeRayResults.length - 1) {
                     this.reachEdge = true;
                 }
             }
         }
-       
+        if (!this.reachEdge && this.onTheGround) {
+            for(let i = 0; i < wallTopRayResults.length; i++) {
+                let result: cc.PhysicsRayCastResult = wallTopRayResults[i];
+                let collider: cc.PhysicsCollider = result.collider;
+                if (collider.node.group === 'default') {
+                    this.reachEdge = true;
+                    break;
+                }
+            }
+            if (!this.reachEdge) {
+                for(let i = 0; i < wallMediumRayResults.length; i++) {
+                    let result: cc.PhysicsRayCastResult = wallMediumRayResults[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if (collider.node.group === 'default') {
+                        this.reachEdge = true;
+                        break;
+                    }
+                }
+            }
+            if (!this.reachEdge) {
+                for(let i = 0; i < wallBottomRayResults.length; i++) {
+                    let result: cc.PhysicsRayCastResult = wallBottomRayResults[i];
+                    let collider: cc.PhysicsCollider = result.collider;
+                    if (collider.node.group === 'default') {
+                        this.reachEdge = true;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
-        const leftP1 = cc.v2(temp.x - 35, temp.y);
-        const leftP2 = cc.v2(temp.x - 35, temp.y - 100);
-        const rightP1 = cc.v2(temp.x + 35, temp.y);
-        const rightP2 = cc.v2(temp.x + 35, temp.y - 100);
+        const leftP1 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y);
+        const leftP2 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
+        const rightP1 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y);
+        const rightP2 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
         const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1,leftP2,cc.RayCastType.All);
         const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1,rightP2,cc.RayCastType.All);
 
-        if(rayResultsLeft.length === 0 && rayResultsRight.length === 0) {
+        if (rayResultsLeft.length === 0 && rayResultsRight.length === 0) {
             this.onTheGround = false;
         }
         else {
             for(let i = 0; i < rayResultsLeft.length; i++) {
                 let result: cc.PhysicsRayCastResult = rayResultsLeft[i];
                 let collider: cc.PhysicsCollider = result.collider;
-                if(collider.node.group === 'default') {
+                if (collider.node.group === 'default') {
                     this.onTheGround = true;
                     break;
                 }
-                if(i === rayResultsLeft.length - 1) {
-                    this.reachEdge = false;
-                }
             }
-            if(this.onTheGround === false) {
+            if (!this.onTheGround) {
                 for(let i = 0; i < rayResultsRight.length; i++) {
                     let result: cc.PhysicsRayCastResult = rayResultsRight[i];
                     let collider: cc.PhysicsCollider = result.collider;
-                    if(collider.node.group === 'default') {
+                    if (collider.node.group === 'default') {
                         this.onTheGround = true;
                         break;
-                    }
-                    if(i === rayResultsRight.length - 1) {
-                        this.reachEdge = false;
                     }
                 }
             }
@@ -173,7 +206,7 @@ export default class RangedMonster extends cc.Component {
     }
 
     private playIdleAnimation() {
-        if(this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
+        if (this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
             this.monsterAnimation.play('monsterIdle');
         }
     }
@@ -191,7 +224,7 @@ export default class RangedMonster extends cc.Component {
     }
 
     private playShootAnimation() {
-        if(this.onTheGround) {   
+        if (this.onTheGround) {   
             this.monsterAnimation.play('monsterShoot');
             this.schedule(this.shootBullet,0.5,0);
         }

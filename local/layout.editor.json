@@ -5,10 +5,10 @@
       "main": true,
       "url": "app://editor/index.html",
       "windowType": "dockable",
-      "x": -8,
-      "y": -8,
-      "width": 1936,
-      "height": 1056,
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1040,
       "layout": {
         "children": [
           {
@@ -18,9 +18,9 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 468.984375,
+                "height": 461,
                 "type": "panel",
-                "width": 333
+                "width": 330
               },
               {
                 "active": 0,
@@ -28,23 +28,23 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 466,
+                "height": 458,
                 "type": "panel",
-                "width": 333
+                "width": 330
               }
             ],
-            "height": 938,
+            "height": 922,
             "type": "dock-v",
-            "width": 333
+            "width": 330
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 938,
+            "height": 922,
             "type": "panel",
-            "width": 383
+            "width": 380
           },
           {
             "children": [
@@ -53,25 +53,25 @@
                 "children": [
                   "scene"
                 ],
-                "height": 468.984375,
+                "height": 461,
                 "type": "panel",
-                "width": 1198
+                "width": 1188
               },
               {
-                "active": 0,
+                "active": 2,
                 "children": [
                   "console",
                   "timeline",
                   "game-window"
                 ],
-                "height": 466,
+                "height": 458,
                 "type": "panel",
-                "width": 1198
+                "width": 1188
               }
             ],
-            "height": 938,
+            "height": 922,
             "type": "dock-v",
-            "width": 1198
+            "width": 1188
           }
         ],
         "type": "dock-h"
@@ -108,7 +108,7 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 752,
+      "x": 777,
       "y": 230,
       "width": 420,
       "height": 585

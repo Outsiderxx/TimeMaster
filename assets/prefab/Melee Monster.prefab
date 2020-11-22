@@ -67,16 +67,16 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        1036.261,
-        300.675,
+        977.703,
+        273,
         0,
         0,
         0,
         0,
         1,
-        -1,
-        1,
-        -1
+        -0.7,
+        0.7,
+        1
       ]
     },
     "_eulerAngles": {
@@ -187,7 +187,7 @@
     },
     "_fillStart": 0,
     "_fillRange": 0,
-    "_isTrimmedMode": true,
+    "_isTrimmedMode": false,
     "_atlas": null,
     "_id": ""
   },
@@ -199,21 +199,19 @@
       "__id__": 2
     },
     "_enabled": true,
-    "_defaultClip": {
-      "__uuid__": "82d6df56-26d8-4ba0-bbd0-39d6ef493a83"
-    },
+    "_defaultClip": null,
     "_clips": [
       {
-        "__uuid__": "82d6df56-26d8-4ba0-bbd0-39d6ef493a83"
+        "__uuid__": "fee70534-5754-4b1f-ba51-50628376359a"
       },
       {
-        "__uuid__": "49285a39-f877-4398-be40-1ed230f27e6c"
+        "__uuid__": "7a010372-6d4d-4c3d-bb7d-a948bdba193c"
       },
       {
-        "__uuid__": "baf6b688-93e3-4da8-af4a-9bb7930a703c"
+        "__uuid__": "e4cc2d05-ea87-4863-a1f0-4d3ad594ec1a"
       },
       {
-        "__uuid__": "149abf4d-60c0-47d8-a8f1-574f77c4db21"
+        "__uuid__": "ea2a9258-71b3-444f-b6ae-befa12e6bf46"
       }
     ],
     "playOnLoad": true,
@@ -225,7 +223,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "750fb28c-76c0-4afb-8fba-430bdcd918dd"
+      "__uuid__": "47d58010-0768-4d56-b341-43aca833736a"
     },
     "fileId": "03qmnPscxH5b+0VADfNzwy",
     "sync": false
@@ -238,8 +236,6 @@
       "__id__": 1
     },
     "_enabled": true,
-    "moveSpeed": 100,
-    "freezeTime": 1,
     "monsterAnimation": {
       "__id__": 4
     },
@@ -249,6 +245,8 @@
     "damageArea": {
       "__uuid__": "d9afb950-c08d-42e6-9eca-9d718f7a7477"
     },
+    "moveSpeed": 100,
+    "freezeTime": 1,
     "_id": ""
   },
   {
@@ -263,12 +261,12 @@
     "_offset": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 35.6
+      "y": 109
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 500,
-      "height": 262.2
+      "width": 650,
+      "height": 409
     },
     "_id": ""
   },
@@ -371,7 +369,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "750fb28c-76c0-4afb-8fba-430bdcd918dd"
+      "__uuid__": "47d58010-0768-4d56-b341-43aca833736a"
     },
     "fileId": "50wrfNUDJOJLSP0vb58Vys",
     "sync": false

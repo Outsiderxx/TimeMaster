@@ -9,10 +9,7 @@ export default class CameraController extends cc.Component {
     private camera: cc.Camera = null;
 
     @property(cc.Node)
-    private mask: cc.Node = null;
-
-    @property(cc.Node)
-    private adapter: cc.Node = null;
+    private gameStage: cc.Node = null;
 
     @property(cc.Node)
     private middleGround: cc.Node = null;
@@ -20,16 +17,12 @@ export default class CameraController extends cc.Component {
     @property(PlayerManager)
     private player: PlayerManager = null;
 
-    @property([cc.Vec2])
-    private floorWidthEdgeOffset: cc.Vec2[] = []; // x: top, y: down
-
     private sceneManager: cc.Node = null;
     private isFocus: boolean = false;
     private mode: CameraMode = 0;
-    private currentFloor: number = 0;
 
     onLoad() {
-        this.sceneManager = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
+        this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
     }
 
     update() {
@@ -47,15 +40,13 @@ export default class CameraController extends cc.Component {
             default:
                 break;
         }
-        this.mask.setPosition(this.camera.node.x, this.camera.node.y);
-        this.adapter.setPosition(-this.mask.x, -this.mask.y);
         this.middleGround.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
     }
 
     public reset() {
         this.mode = CameraMode.normal;
-        this.camera.node.setPosition(new cc.Vec2(-240, -100));
-        this.sceneManager = cc.find('Canvas/GameStage/Mask/Adapter/Scene');
+        this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
+        this.camera.node.setPosition(this.sceneManager.getComponent(SceneManager).initialCameraPosition);
         this.middleGround = this.sceneManager.getChildByName('Foreground');
     }
 
@@ -63,8 +54,8 @@ export default class CameraController extends cc.Component {
         // x coordinate
         const cameraLeftEnd: number = this.player.node.x - this.camera.node.width / 2;
         const cameraRightEnd: number = this.player.node.x + this.camera.node.width / 2;
-        const sceneLeftEnd: number = this.sceneManager.x + this.floorWidthEdgeOffset[this.currentFloor].x;
-        const sceneRightEnd: number = this.sceneManager.x + this.sceneManager.width + this.floorWidthEdgeOffset[this.currentFloor].y;
+        const sceneLeftEnd: number = this.sceneManager.x + this.sceneManager.getComponent(SceneManager).getCurrentFloorEdgeOffset().x;
+        const sceneRightEnd: number = this.sceneManager.x + this.sceneManager.width + this.sceneManager.getComponent(SceneManager).getCurrentFloorEdgeOffset().y;
         if (cameraLeftEnd >= sceneLeftEnd && cameraRightEnd <= sceneRightEnd) {
             this.camera.node.x = this.player.node.x;
         }
