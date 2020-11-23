@@ -36,7 +36,7 @@ export default class TransitionController extends cc.Component {
                     this.node.active = false;
                     this.hint.node.opacity = 0;
                     this.tween.stop();
-                    this.node.emit('back');
+                    this.node.emit('back', isWin);
                 });
             })
             .start();

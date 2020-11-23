@@ -1,14 +1,9 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
+import TimeEffect from '../TimeEffect';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ElevatorManager extends cc.Component {
+export default class ElevatorManager extends TimeEffect {
     @property([cc.Node])
     private chains: cc.Node[] = [];
 
@@ -42,8 +37,15 @@ export default class ElevatorManager extends cc.Component {
             (this.chainTwoTween as any)._finalAction._speedMethod = true;
             this.onChangeSpeed('normal');
             this.isWorking = true;
+        } else {
+            this.reset();
         }
     }
+
+    // 為了能讓 sceneManager call reset 所以要繼承 TimeEffect
+    public accelerate() {}
+    public slowdown() {}
+    public rollback() {}
 
     public reset() {
         this.node.getComponent(cc.Animation).stop();
@@ -52,6 +54,7 @@ export default class ElevatorManager extends cc.Component {
         this.node.position.y = 235;
         this.chains[0].y = 830;
         this.chains[1].y = 830;
+        this.isWorking = false;
     }
 
     private elevatorControl() {
@@ -117,6 +120,4 @@ export default class ElevatorManager extends cc.Component {
             this.currentSpeedRatio = originSpeedRatio;
         }
     }
-
-    // update (dt) {}
 }

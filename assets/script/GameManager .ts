@@ -41,10 +41,14 @@ export default class GameController extends cc.Component {
             this.transferStage(0);
             this.mainMenu.node.active = true;
         });
-        this.transition.node.on('back', () => {
+        this.transition.node.on('back', (isWin: boolean) => {
             this.player.status = false;
-            this.transferStage(0);
-            this.mainMenu.node.active = true;
+            if (isWin) {
+                this.transferStage(0);
+                this.mainMenu.node.active = true;
+            } else {
+                this.transferStage(this.currentSceneIdx);
+            }
         });
         this.player.node.on('dead', () => {
             this.transition.showGameResult(false);

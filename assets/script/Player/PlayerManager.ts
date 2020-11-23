@@ -218,7 +218,7 @@ export default class PlayerManager extends cc.Component {
             this.updateHearts(0);
         }
         // 通關
-        else if (other.node.name === 'Endpoint') {
+        else if (other.node.name === 'EndPoint') {
             this.isAlive = false;
             this.node.emit('success');
         } else if (other.node.name === 'TransferPoint') {
