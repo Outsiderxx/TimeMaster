@@ -40,7 +40,7 @@ export default class NewClass extends cc.Component {
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         if(other.node.name === "EnergyRockSkillArea") {
-            this.animationState.speed = 0.1;
+            this.animationState.speed = 1/15;
         }
     }
 
