@@ -28,6 +28,11 @@ export default class CameraController extends cc.Component {
 
     onLoad() {
         this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.escape) {
+                this.reset();
+            }
+        });
     }
 
     update() {

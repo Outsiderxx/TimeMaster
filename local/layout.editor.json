@@ -7,8 +7,8 @@
       "windowType": "dockable",
       "x": 0,
       "y": 0,
-      "width": 1536,
-      "height": 824,
+      "width": 1920,
+      "height": 1040,
       "layout": {
         "children": [
           {
@@ -18,9 +18,9 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 352.8500061035156,
+                "height": 463,
                 "type": "panel",
-                "width": 264.0625
+                "width": 330
               },
               {
                 "active": 0,
@@ -28,23 +28,23 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 349.8500061035156,
+                "height": 456,
                 "type": "panel",
-                "width": 264.0625
+                "width": 330
               }
             ],
-            "height": 705.7000122070312,
+            "height": 922,
             "type": "dock-v",
-            "width": 264.0625
+            "width": 330
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 705.7000122070312,
+            "height": 922,
             "type": "panel",
-            "width": 304.07501220703125
+            "width": 381
           },
           {
             "children": [
@@ -53,9 +53,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 352.8500061035156,
+                "height": 463,
                 "type": "panel",
-                "width": 948.2374877929688
+                "width": 1187
               },
               {
                 "active": 1,
@@ -64,14 +64,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 349.8500061035156,
+                "height": 456,
                 "type": "panel",
-                "width": 948.2374877929688
+                "width": 1187
               }
             ],
-            "height": 705.7000122070312,
+            "height": 922,
             "type": "dock-v",
-            "width": 948.2374877929688
+            "width": 1187
           }
         ],
         "type": "dock-h"
@@ -86,8 +86,7 @@
         "timeline",
         "game-window"
       ]
-    },
-    "worker": {}
+    }
   },
   "panels": {
     "project-settings": {
@@ -117,6 +116,12 @@
     "sprite-editor": {
       "x": 713,
       "y": 259,
+      "width": 516,
+      "height": 539
+    },
+    "game-window": {
+      "x": 702,
+      "y": 240,
       "width": 516,
       "height": 539
     }

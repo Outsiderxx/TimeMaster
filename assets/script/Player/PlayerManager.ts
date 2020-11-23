@@ -12,6 +12,9 @@ export default class PlayerManager extends cc.Component {
     @property([cc.Vec2])
     private playerPosition: cc.Vec2[] = [];
 
+    @property([cc.Boolean])
+    private playerDirection: boolean[] = [];
+
     @property(cc.Node)
     private skillRange: cc.Node = null;
 
@@ -20,10 +23,10 @@ export default class PlayerManager extends cc.Component {
 
     @property(cc.Node)
     private heartGroup: cc.Node = null;
+
     @property(cc.Node)
     private feetRayPoint: cc.Node = null;
 
-    private animationEvent: AnimationEvent = null;
     @property
     private healthPoint: number = 5;
 
@@ -37,6 +40,7 @@ export default class PlayerManager extends cc.Component {
     private invincibleTime: number = 0;
 
     private input = {};
+    private animationEvent: AnimationEvent = null;
     private onTheGround: boolean = false;
     private speed: cc.Vec2 = cc.v2(0, 0);
     private currentUsingSkill: SkillSet = -1;
@@ -174,7 +178,7 @@ export default class PlayerManager extends cc.Component {
         this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
 
         // direction
-        this.node.scaleX = 0.5;
+        this.node.scaleX = this.playerDirection[this.currentSceneIdx] ? -0.5 : 0.5;
 
         // input
         this.input = {};

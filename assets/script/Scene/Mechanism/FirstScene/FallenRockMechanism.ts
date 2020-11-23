@@ -6,12 +6,18 @@ const { ccclass, property } = cc._decorator;
 export default class FallenRockMechanism extends TimeEffect {
     @property
     private dropSpeed: number = 0;
+
     @property
     private intial_y: number = 0;
+
     @property
     private target_y: number = 0;
+
     @property
     private active: boolean = true;
+
+    @property
+    private isColliderMoving: boolean = false;
 
     @property(cc.Sprite)
     private rock: cc.Sprite = null;
@@ -20,8 +26,13 @@ export default class FallenRockMechanism extends TimeEffect {
         this.status = 'transforming';
         this.rock.node.active = true;
         cc.tween(this.rock.node)
-            .to(this.dropSpeed, { y: this.intial_y})
-            .call(() => (this.status = 'original'))
+            .to(this.dropSpeed, { y: this.intial_y })
+            .call(() => {
+                this.status = 'original';
+                if (this.isColliderMoving) {
+                    this.node.getComponent(cc.BoxCollider).offset.y = this.intial_y;
+                }
+            })
             .start();
     }
 
@@ -32,6 +43,9 @@ export default class FallenRockMechanism extends TimeEffect {
             .call(() => {
                 this.rock.node.active = this.active;
                 this.status = 'triggered';
+                if (this.isColliderMoving) {
+                    this.node.getComponent(cc.BoxCollider).offset.y = this.target_y;
+                }
             })
             .start();
     }
@@ -39,8 +53,7 @@ export default class FallenRockMechanism extends TimeEffect {
     public slowdown() {}
 
     public reset() {
-        this.status = 'original';
         this.rock.node.active = true;
-        this.rock.node.y = this.intial_y;
+        this.rollback();
     }
 }

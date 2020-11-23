@@ -40,6 +40,11 @@ export default class SceneManager extends cc.Component {
                 this.currentFloor = idx;
             });
         });
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.escape) {
+                this.currentFloor = 0;
+            }
+        });
     }
 
     public getCurrentFloorEdgeOffset() {

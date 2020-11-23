@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "a9604771-e918-4c1e-9e9d-a77eb081b725",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 188,
+  "height": 322,
+  "platformSettings": {},
+  "subMetas": {
+    "電梯-地板": {
+      "ver": "1.0.4",
+      "uuid": "1ad11512-7ca5-403a-88e2-55587b36acad",
+      "rawTextureUuid": "a9604771-e918-4c1e-9e9d-a77eb081b725",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -153,
+      "trimX": 0,
+      "trimY": 306,
+      "width": 188,
+      "height": 16,
+      "rawWidth": 188,
+      "rawHeight": 322,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
