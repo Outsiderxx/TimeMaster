@@ -14,7 +14,10 @@ export default class FallenRockMechanism extends TimeEffect {
     private target_y: number = 0;
 
     @property
-    private active: boolean = true;
+    private needRemainDisplaying: boolean = false;
+
+    @property
+    private isTriggered: boolean = false;
 
     @property
     private isColliderMoving: boolean = false;
@@ -23,7 +26,7 @@ export default class FallenRockMechanism extends TimeEffect {
     private rock: cc.Sprite = null;
 
     onLoad() {
-        this.status = 'triggered';
+        this.status = this.isTriggered ? 'triggered' : 'original';
     }
 
     public rollback() {
@@ -45,7 +48,7 @@ export default class FallenRockMechanism extends TimeEffect {
         cc.tween(this.rock.node)
             .to(this.dropSpeed, { y: this.target_y })
             .call(() => {
-                this.rock.node.active = this.active;
+                this.rock.node.active = this.needRemainDisplaying;
                 this.status = 'triggered';
                 if (this.isColliderMoving) {
                     this.node.getComponent(cc.BoxCollider).offset.y = this.target_y;

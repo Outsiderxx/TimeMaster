@@ -1519,7 +1519,8 @@
     "dropSpeed": 0.8,
     "intial_y": 203,
     "target_y": 0,
-    "active": true,
+    "needRemainDisplaying": true,
+    "isTriggered": true,
     "isColliderMoving": true,
     "rock": {
       "__id__": 36
@@ -5655,11 +5656,15 @@
     ],
     "rangedMonsters": [],
     "meleeMonsters": [],
+    "climbMonsters": [],
     "rangedMonsterPrefab": {
       "__uuid__": "747aad0c-1dbd-4f03-9c24-8680aa735ced"
     },
     "meleeMonsterPrefab": {
       "__uuid__": "47d58010-0768-4d56-b341-43aca833736a"
+    },
+    "climbMonsterPrefab": {
+      "__uuid__": "4df7404d-ae45-48d5-8b1e-e8c393f785a4"
     },
     "floorWidthEdgeOffset": [
       {

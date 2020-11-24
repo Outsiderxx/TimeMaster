@@ -87,7 +87,7 @@
         "game-window"
       ]
     },
-    "window-1606205149015": {}
+    "window-1606205268313": {}
   },
   "panels": {
     "project-settings": {
@@ -109,10 +109,10 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 604,
-      "y": 182,
+      "x": 556,
+      "y": 120,
       "width": 421,
-      "height": 586
+      "height": 585
     },
     "sprite-editor": {
       "x": 713,
