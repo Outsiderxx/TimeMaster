@@ -10,7 +10,6 @@ export default class ElevatorManager extends TimeEffect {
     @property(cc.Node)
     private test: cc.Node = null;
 
-    private isWorking: boolean = false;
     private downAnimationState: cc.AnimationState = null;
     private upAnimationState: cc.AnimationState = null;
     private stayAnimationState: cc.AnimationState = null;
@@ -29,17 +28,13 @@ export default class ElevatorManager extends TimeEffect {
     }
 
     public elevatorTriggered() {
-        if (!this.isWorking) {
-            this.node.getComponent(cc.Animation).play('elevatorDown');
-            this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 593 }).start();
-            this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 593 }).start();
-            (this.chainOneTween as any)._finalAction._speedMethod = true;
-            (this.chainTwoTween as any)._finalAction._speedMethod = true;
-            this.onChangeSpeed('normal');
-            this.isWorking = true;
-        } else {
-            this.reset();
-        }
+        this.reset();
+        this.node.getComponent(cc.Animation).play('elevatorDown');
+        this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 593 }).start();
+        this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 593 }).start();
+        (this.chainOneTween as any)._finalAction._speedMethod = true;
+        (this.chainTwoTween as any)._finalAction._speedMethod = true;
+        this.onChangeSpeed('normal');
     }
 
     // 為了能讓 sceneManager call reset 所以要繼承 TimeEffect
@@ -54,7 +49,6 @@ export default class ElevatorManager extends TimeEffect {
         this.node.position.y = 235;
         this.chains[0].y = 830;
         this.chains[1].y = 830;
-        this.isWorking = false;
     }
 
     private elevatorControl() {
@@ -72,7 +66,6 @@ export default class ElevatorManager extends TimeEffect {
             this.onChangeSpeed('set');
         } else if (this.node.getComponent(cc.Animation).currentClip?.name === 'elevatorReturn') {
             // 電梯向上結束
-            this.isWorking = false;
         }
     }
 

@@ -7,7 +7,7 @@ export default class ThornMechanism extends TimeEffect {
     @property(cc.Animation)
     private vineAnimation: cc.Animation = null;
     @property(cc.Node)
-    private thorn: cc.Node = null; 
+    private thorn: cc.Node = null;
     // TODO: need to add joint point at the root
 
     onLoad() {
@@ -19,7 +19,6 @@ export default class ThornMechanism extends TimeEffect {
             this.status = this.vineAnimation.currentClip.name === 'thornGrows' ? 'triggered' : 'original';
         });
     }
-
 
     public rollback() {
         this.vineAnimation.play('thornGrownback');
@@ -41,7 +40,7 @@ export default class ThornMechanism extends TimeEffect {
         this.status = 'triggered';
         let hurtCollider = this.thorn.getComponent(cc.PhysicsBoxCollider);
         hurtCollider.enabled = true;
-        this.vineAnimation.play('thornGrownback');
+        this.vineAnimation.play('thornGrows');
         // climbCollider.size.height = this.vineAnimation.node.height;
         // climbCollider.offset.y = -this.vineAnimation.node.height / 2;
         // skillCollider.size.height = 300;

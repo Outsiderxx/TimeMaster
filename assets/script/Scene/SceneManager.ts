@@ -41,7 +41,7 @@ export default class SceneManager extends cc.Component {
             });
         });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
-            if (event.keyCode === cc.macro.KEY.escape) {
+            if (event.keyCode === cc.macro.KEY.z) {
                 this.currentFloor = 0;
             }
         });

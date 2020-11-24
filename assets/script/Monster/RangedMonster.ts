@@ -31,24 +31,22 @@ export default class RangedMonster extends cc.Component {
         this.onTheGroundCheck();
         if (this.monsterAnimation.currentClip?.name !== 'monsterShoot') {
             if (this.onTheGround) {
-                this.reachEdgeCheck()
+                this.reachEdgeCheck();
                 // 追蹤模式 距離保持 250，碰到邊界停下來
                 if (this.playerFounded) {
+                    const monsterWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
+                    const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(monsterWorldPos).x;
+                    const direction: boolean = distance < 0; // true: player在怪物右邊 false: player在怪物右邊
+                    this.moveDirection = direction;
+                    this.node.scaleX = this.moveDirection ? -0.7 : 0.7;
                     if (!this.reachEdge) {
-                        const monsterWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
-                        const distance: number = this.player.x - this.player.parent.convertToNodeSpaceAR(monsterWorldPos).x;
                         if (Math.abs(distance) >= this.attackDistance) {
-                            const direction: boolean = distance < 0; // true: player在怪物右邊 false: player在怪物右邊
-                            this.moveDirection = direction;
                             this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
-                            this.node.scaleX = this.moveDirection ? -0.7 : 0.7;
                             this.playRunAnimation();
-                        }
-                        else {
+                        } else {
                             this.playIdleAnimation();
                         }
-                    }
-                    else {
+                    } else {
                         this.playIdleAnimation();
                     }
                 } else {
@@ -61,7 +59,7 @@ export default class RangedMonster extends cc.Component {
                     this.node.x += this.moveSpeed * dt * (this.moveDirection ? -1 : 1);
                     this.playWalkAnimation();
                 }
-            }else {
+            } else {
                 this.playIdleAnimation();
             }
         }
@@ -84,7 +82,6 @@ export default class RangedMonster extends cc.Component {
                 this.node.destroy();
             }
         }
-        
     }
 
     private onCollisionExit(other: cc.Collider, self: cc.Collider) {
@@ -105,8 +102,8 @@ export default class RangedMonster extends cc.Component {
     private reachEdgeCheck() {
         let offset = this.moveDirection ? -55 : 55;
         offset = offset * Math.abs(this.node.scaleX);
-        
-        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
+
+        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
         const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100 * Math.abs(this.node.scaleX));
         const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 20 * Math.abs(this.node.scaleX));
@@ -115,19 +112,16 @@ export default class RangedMonster extends cc.Component {
         const wallCheckMediumP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 30 * Math.abs(this.node.scaleX));
         const wallCheckBottomP1: cc.Vec2 = cc.v2(temp.x, temp.y - 95 * Math.abs(this.node.scaleX));
         const wallCheckBottomP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 95 * Math.abs(this.node.scaleX));
-        
 
         const edgeRayResults = cc.director.getPhysicsManager().rayCast(edgeCheckP1, edgeCheckP2, cc.RayCastType.All);
         const wallTopRayResults = cc.director.getPhysicsManager().rayCast(wallCheckTopP1, wallCheckTopP2, cc.RayCastType.All);
         const wallMediumRayResults = cc.director.getPhysicsManager().rayCast(wallCheckMediumP1, wallCheckMediumP2, cc.RayCastType.All);
         const wallBottomRayResults = cc.director.getPhysicsManager().rayCast(wallCheckBottomP1, wallCheckBottomP2, cc.RayCastType.All);
-        
 
         if (edgeRayResults.length === 0) {
             this.reachEdge = true;
-        }
-        else {
-            for(let i = 0; i < edgeRayResults.length; i++) {
+        } else {
+            for (let i = 0; i < edgeRayResults.length; i++) {
                 let result: cc.PhysicsRayCastResult = edgeRayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
                 if (collider.node.group === 'default') {
@@ -140,7 +134,7 @@ export default class RangedMonster extends cc.Component {
             }
         }
         if (!this.reachEdge && this.onTheGround) {
-            for(let i = 0; i < wallTopRayResults.length; i++) {
+            for (let i = 0; i < wallTopRayResults.length; i++) {
                 let result: cc.PhysicsRayCastResult = wallTopRayResults[i];
                 let collider: cc.PhysicsCollider = result.collider;
                 if (collider.node.group === 'default') {
@@ -149,7 +143,7 @@ export default class RangedMonster extends cc.Component {
                 }
             }
             if (!this.reachEdge) {
-                for(let i = 0; i < wallMediumRayResults.length; i++) {
+                for (let i = 0; i < wallMediumRayResults.length; i++) {
                     let result: cc.PhysicsRayCastResult = wallMediumRayResults[i];
                     let collider: cc.PhysicsCollider = result.collider;
                     if (collider.node.group === 'default') {
@@ -159,7 +153,7 @@ export default class RangedMonster extends cc.Component {
                 }
             }
             if (!this.reachEdge) {
-                for(let i = 0; i < wallBottomRayResults.length; i++) {
+                for (let i = 0; i < wallBottomRayResults.length; i++) {
                     let result: cc.PhysicsRayCastResult = wallBottomRayResults[i];
                     let collider: cc.PhysicsCollider = result.collider;
                     if (collider.node.group === 'default') {
@@ -172,19 +166,18 @@ export default class RangedMonster extends cc.Component {
     }
 
     private onTheGroundCheck() {
-        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR((this.node.position));
+        const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const leftP1 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y);
         const leftP2 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
         const rightP1 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y);
         const rightP2 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
-        const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1,leftP2,cc.RayCastType.All);
-        const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1,rightP2,cc.RayCastType.All);
+        const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
+        const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
 
         if (rayResultsLeft.length === 0 && rayResultsRight.length === 0) {
             this.onTheGround = false;
-        }
-        else {
-            for(let i = 0; i < rayResultsLeft.length; i++) {
+        } else {
+            for (let i = 0; i < rayResultsLeft.length; i++) {
                 let result: cc.PhysicsRayCastResult = rayResultsLeft[i];
                 let collider: cc.PhysicsCollider = result.collider;
                 if (collider.node.group === 'default') {
@@ -193,7 +186,7 @@ export default class RangedMonster extends cc.Component {
                 }
             }
             if (!this.onTheGround) {
-                for(let i = 0; i < rayResultsRight.length; i++) {
+                for (let i = 0; i < rayResultsRight.length; i++) {
                     let result: cc.PhysicsRayCastResult = rayResultsRight[i];
                     let collider: cc.PhysicsCollider = result.collider;
                     if (collider.node.group === 'default') {
@@ -224,9 +217,9 @@ export default class RangedMonster extends cc.Component {
     }
 
     private playShootAnimation() {
-        if (this.onTheGround) {   
+        if (this.onTheGround) {
             this.monsterAnimation.play('monsterShoot');
-            this.schedule(this.shootBullet,0.5,0);
+            this.schedule(this.shootBullet, 0.5, 0);
         }
     }
 

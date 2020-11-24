@@ -5,9 +5,6 @@ export default class MenuController extends cc.Component {
     @property(cc.Node)
     private menuPanel: cc.Node = null;
 
-    @property(cc.Node)
-    private menuBackground: cc.Node = null;
-
     @property(cc.Button)
     private helpBtn: cc.Button = null;
 
@@ -23,14 +20,21 @@ export default class MenuController extends cc.Component {
     @property(cc.Button)
     private closeBtn: cc.Button = null;
 
+    private isOpen: boolean = false;
+
     onLoad() {
-        this.node.on(cc.Node.EventType.TOUCH_END, () => {
-            cc.director.pause();
-            this.menuPanel.active = true;
-        });
-        this.menuBackground.on(cc.Node.EventType.TOUCH_END, () => {
-            this.menuPanel.active = false;
-            cc.director.resume();
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
+            if (event.keyCode === cc.macro.KEY.escape) {
+                if (this.isOpen) {
+                    this.isOpen = false;
+                    this.menuPanel.active = false;
+                    cc.director.resume();
+                } else {
+                    this.isOpen = true;
+                    cc.director.pause();
+                    this.menuPanel.active = true;
+                }
+            }
         });
         this.helpBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.menuPanel.active = false;

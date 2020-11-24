@@ -1,36 +1,37 @@
 import TimeEffect from '../../../TimeEffect';
+import FakeRock from './FakeRock';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class TouchedMechanism extends TimeEffect {
-    @property
-    private dropSpeed: number = 0;
-    @property
-    private intial_y: number = 0;
-    @property
-    private target_y: number = 0;
+    @property(FakeRock)
+    private fakeRock: FakeRock = null;
 
-    onLoad(){
-        this.node.y = this.intial_y;
+    private hasReturn: boolean = false;
+
+    onLoad() {
+        this.status = 'triggered';
     }
-    onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider){
-        
-        if (other.node.group === 'default') {
-            cc.tween(this.node)
-            .to(this.dropSpeed, { y: this.target_y })
-            .start();
+
+    update() {
+        this.node.getComponent(cc.BoxCollider).offset.y = 381 + this.fakeRock.node.y;
+    }
+
+    public rollback() {
+        if (!this.hasReturn && this.fakeRock.isDrop) {
+            this.hasReturn = true;
+            this.fakeRock.rollback();
         }
     }
-    //============================================
-    public rollback() {}
 
     public accelerate() {}
 
     public slowdown() {}
-    
+
     public reset() {
-        this.node.y = this.intial_y;
+        this.fakeRock.reset();
+        this.hasReturn = false;
+        this.node.getComponent(cc.BoxCollider).offset.y = 381;
     }
 }
-

@@ -22,6 +22,10 @@ export default class FallenRockMechanism extends TimeEffect {
     @property(cc.Sprite)
     private rock: cc.Sprite = null;
 
+    onLoad() {
+        this.status = 'triggered';
+    }
+
     public rollback() {
         this.status = 'transforming';
         this.rock.node.active = true;

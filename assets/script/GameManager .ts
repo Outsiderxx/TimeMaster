@@ -60,7 +60,7 @@ export default class GameController extends cc.Component {
             this.transferStage(this.currentSceneIdx + 1);
         });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
-            if (event.keyCode === cc.macro.KEY.tab) {
+            if (event.keyCode === cc.macro.KEY.tab && this.scenePrefabs.length > this.currentSceneIdx + 1) {
                 this.player.status = false;
                 this.transferStage(this.currentSceneIdx + 1);
             }

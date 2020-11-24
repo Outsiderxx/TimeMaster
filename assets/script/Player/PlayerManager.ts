@@ -77,7 +77,7 @@ export default class PlayerManager extends cc.Component {
         // debug用 重置角色位置狀態
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             this.input[event.keyCode] = true;
-            if (event.keyCode === cc.macro.KEY.escape) {
+            if (event.keyCode === cc.macro.KEY.z) {
                 this.reset();
             }
         });
