@@ -24,8 +24,8 @@ export default class GameController extends cc.Component {
     @property(CameraController)
     private camera: CameraController = null;
 
-    @property([cc.Prefab])
-    private scenePrefabs: cc.Prefab[] = [];
+    @property([cc.Node])
+    private sceneNodes: cc.Node[] = [];
 
     @property(SceneManager)
     private currentScene: SceneManager = null;
@@ -36,6 +36,7 @@ export default class GameController extends cc.Component {
     private currentSceneIdx: number = 0;
 
     onLoad() {
+        cc.game.setFrameRate(30);
         this.menu.node.on('back', () => {
             this.player.status = false;
             this.transferStage(0);
@@ -60,7 +61,7 @@ export default class GameController extends cc.Component {
             this.transferStage(this.currentSceneIdx + 1);
         });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
-            if (event.keyCode === cc.macro.KEY.tab && this.scenePrefabs.length > this.currentSceneIdx + 1) {
+            if (event.keyCode === cc.macro.KEY.tab && this.sceneNodes.length > this.currentSceneIdx + 1) {
                 this.player.status = false;
                 this.transferStage(this.currentSceneIdx + 1);
             }
@@ -81,6 +82,7 @@ export default class GameController extends cc.Component {
 
     start() {
         this.mainMenu.node.active = true;
+        this.sceneNodes[1].active = false;
         this.transition.transferStage(this.currentSceneIdx);
     }
 
@@ -90,12 +92,14 @@ export default class GameController extends cc.Component {
             this.currentScene.reset();
         } else {
             this.camera.isUpdate = false;
-            this.currentScene.node.destroy();
-            this.currentScene.node.removeFromParent();
-            this.currentScene = cc.instantiate(this.scenePrefabs[idx]).getComponent(SceneManager);
-            this.gameStage.addChild(this.currentScene.node);
+            // this.currentScene.node.destroy();
+            // this.currentScene.node.removeFromParent();
+            // this.currentScene = cc.instantiate(this.scenePrefabs[idx]).getComponent(SceneManager);
+            // this.gameStage.addChild(this.currentScene.node);
+            this.currentScene.node.active = false;
+            this.currentScene = this.sceneNodes[idx].getComponent(SceneManager);
+            this.currentScene.node.active = true;
             this.currentSceneIdx = idx;
-            this.currentScene.node.zIndex = -1;
         }
         this.player.reset(idx);
         this.camera.reset();

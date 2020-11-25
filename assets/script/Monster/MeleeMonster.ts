@@ -113,13 +113,14 @@ export default class MeleeMonster extends cc.Component {
 
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
-        const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 100 * Math.abs(this.node.scaleX));
-        const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 20 * Math.abs(this.node.scaleX));
-        const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 20 * Math.abs(this.node.scaleX));
-        const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 30 * Math.abs(this.node.scaleX));
-        const wallCheckMediumP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 30 * Math.abs(this.node.scaleX));
-        const wallCheckBottomP1: cc.Vec2 = cc.v2(temp.x, temp.y - 95 * Math.abs(this.node.scaleX));
-        const wallCheckBottomP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 95 * Math.abs(this.node.scaleX));
+        const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 110 * Math.abs(this.node.scaleX));
+        
+        const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 10 * Math.abs(this.node.scaleX));
+        const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 10 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 40 * Math.abs(this.node.scaleX));
+        const wallCheckMediumP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 40 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP1: cc.Vec2 = cc.v2(temp.x, temp.y - 85 * Math.abs(this.node.scaleX));
+        const wallCheckBottomP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y - 85 * Math.abs(this.node.scaleX));
 
         const edgeRayResults = cc.director.getPhysicsManager().rayCast(edgeCheckP1, edgeCheckP2, cc.RayCastType.All);
         const wallTopRayResults = cc.director.getPhysicsManager().rayCast(wallCheckTopP1, wallCheckTopP2, cc.RayCastType.All);
@@ -176,9 +177,9 @@ export default class MeleeMonster extends cc.Component {
     private onTheGroundCheck() {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const leftP1 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y);
-        const leftP2 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
+        const leftP2 = cc.v2(temp.x - 35 * Math.abs(this.node.scaleX), temp.y - 110 * Math.abs(this.node.scaleX));
         const rightP1 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y);
-        const rightP2 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y - 100 * Math.abs(this.node.scaleX));
+        const rightP2 = cc.v2(temp.x + 35 * Math.abs(this.node.scaleX), temp.y - 110 * Math.abs(this.node.scaleX));
         const rayResultsLeft = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rayResultsRight = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
 

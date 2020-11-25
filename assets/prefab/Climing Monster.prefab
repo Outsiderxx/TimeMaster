@@ -222,7 +222,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "4df7404d-ae45-48d5-8b1e-e8c393f785a4"
     },
     "fileId": "73nEHtiXlMmYtH+AlWZWt8",
     "sync": false
@@ -348,7 +348,7 @@
     "_offset": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -30
+      "y": -20
     },
     "_size": {
       "__type__": "cc.Size",
@@ -363,7 +363,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "4df7404d-ae45-48d5-8b1e-e8c393f785a4"
     },
     "fileId": "f7qtHUTwFIDIPaJKiVPZos",
     "sync": false

@@ -58,7 +58,7 @@ export default class CameraController extends cc.Component {
 
     public reset() {
         this.mode = CameraMode.normal;
-        this.sceneManager = this.gameStage.getComponentInChildren(SceneManager).node;
+        this.sceneManager = this.gameStage.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
         this.camera.node.setPosition(this.sceneManager.getComponent(SceneManager).initialCameraPosition);
         this.middleGround = this.sceneManager.getChildByName('Foreground');
         this._isUpdate = true;

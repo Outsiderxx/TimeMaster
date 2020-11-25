@@ -16,7 +16,7 @@ export default class SkillCast extends cc.Component {
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
         this.node.active = false;
         this.changeScene();
@@ -29,7 +29,7 @@ export default class SkillCast extends cc.Component {
     }
 
     public changeScene() {
-        this.scene = this.node.parent.getComponentInChildren(SceneManager).node;
+        this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
         this.scene.on(cc.Node.EventType.TOUCH_START, (event: cc.Event.EventTouch) => {
             this.userPointer.node.active = true;
             const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());

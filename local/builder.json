@@ -1,9 +1,9 @@
 {
-  "platform": "web-mobile",
-  "actualPlatform": "web-mobile",
+  "platform": "win32",
+  "actualPlatform": "win32",
   "template": "link",
   "buildPath": "./build",
-  "debug": false,
+  "debug": true,
   "sourceMaps": true,
   "embedWebDebugger": false,
   "previewWidth": "1280",
