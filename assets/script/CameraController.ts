@@ -21,6 +21,7 @@ export default class CameraController extends cc.Component {
     private isFocus: boolean = false;
     private mode: CameraMode = 0;
     private _isUpdate: boolean = true;
+    private middleGroundOffset: boolean = false;
 
     public set isUpdate(flag: boolean) {
         this._isUpdate = flag;
@@ -53,7 +54,19 @@ export default class CameraController extends cc.Component {
             default:
                 break;
         }
-        this.middleGround.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
+        this.middleGround.setPosition(this.camera.node.x + (this.middleGroundOffset ? 0 : 640), this.camera.node.y + (this.middleGroundOffset ? 0 : 360));
+    }
+
+    public finalSceneSetUp() {
+        this.camera.zoomRatio = 1;
+        this.camera.node.setContentSize(new cc.Size(1280, 720));
+        this.middleGroundOffset = true;
+    }
+
+    public normalSceneSetUp() {
+        this.camera.zoomRatio = 1.6;
+        this.camera.node.setContentSize(new cc.Size(800, 450));
+        this.middleGroundOffset = false;
     }
 
     public reset() {

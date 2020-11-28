@@ -82,7 +82,11 @@ export default class GameController extends cc.Component {
 
     start() {
         this.mainMenu.node.active = true;
-        this.sceneNodes[1].active = false;
+        this.sceneNodes.forEach((scene, idx) => {
+            if (idx !== 0) {
+                scene.active = false;
+            }
+        });
         this.transition.transferStage(this.currentSceneIdx);
     }
 
@@ -92,10 +96,6 @@ export default class GameController extends cc.Component {
             this.currentScene.reset();
         } else {
             this.camera.isUpdate = false;
-            // this.currentScene.node.destroy();
-            // this.currentScene.node.removeFromParent();
-            // this.currentScene = cc.instantiate(this.scenePrefabs[idx]).getComponent(SceneManager);
-            // this.gameStage.addChild(this.currentScene.node);
             this.currentScene.node.active = false;
             this.currentScene = this.sceneNodes[idx].getComponent(SceneManager);
             this.currentScene.node.active = true;
@@ -103,5 +103,11 @@ export default class GameController extends cc.Component {
         }
         this.player.reset(idx);
         this.camera.reset();
+        if (this.currentSceneIdx === 2) {
+            // TODO: 新增其他場景後需修改
+            this.camera.finalSceneSetUp();
+        } else {
+            this.camera.normalSceneSetUp();
+        }
     }
 }

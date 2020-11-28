@@ -22,6 +22,9 @@ export default class FallenRockMechanism extends TimeEffect {
     @property
     private isColliderMoving: boolean = false;
 
+    @property
+    private isResetTriggered: boolean = false;
+
     @property(cc.Sprite)
     private rock: cc.Sprite = null;
 
@@ -60,7 +63,11 @@ export default class FallenRockMechanism extends TimeEffect {
     public slowdown() {}
 
     public reset() {
-        this.rock.node.active = true;
-        this.rollback();
+        if (this.isResetTriggered) {
+            this.accelerate();
+        } else {
+            this.rock.node.active = true;
+            this.rollback();
+        }
     }
 }
