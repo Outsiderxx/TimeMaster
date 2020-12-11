@@ -1,4 +1,5 @@
 import elevatorManager from './ElevatorManager';
+import NormalElevatorMechanism from './Mechanism/NormalElevatorMechanism';
 import gateManager from './Mechanism/FirstScene/GateMechanism';
 const { ccclass, property } = cc._decorator;
 
@@ -10,9 +11,10 @@ export default class Button extends cc.Component {
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         if (other.node.name === 'Player') {
             for (let i = 0; i < this.target.length; i++) {
-                if (this.target[i].name === 'Elevator Body') {
+                if (this.target[i].name === 'Elevator') {
                     this.node.getComponent(cc.Animation).play('clickBtn');
-                    this.target[i].getComponent(elevatorManager).elevatorTriggered();
+                    this.target[i].getComponent(elevatorManager)?.elevatorTriggered();
+                    this.target[i].getComponent(NormalElevatorMechanism)?.elevatorTriggered();
                 }
                 if (this.target[i].name === 'Gate' && !this.target[i].getComponent(gateManager).buttonFirstTriggered) {
                     this.target[i].getComponent(gateManager).buttonFirstTriggered = true;

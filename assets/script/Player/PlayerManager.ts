@@ -61,7 +61,7 @@ export default class PlayerManager extends cc.Component {
 
     onLoad() {
         //
-        this.effectsAnimation = this.node.getChildByName("SkillArea").getChildByName("Effects").getComponent(cc.Animation);
+        this.effectsAnimation = this.node.getChildByName('SkillArea').getChildByName('Effects').getComponent(cc.Animation);
         // 技能切換
         this.animationEvent = this.node.getChildByName('Appearance').getComponent('AnimationEvent');
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
@@ -138,9 +138,7 @@ export default class PlayerManager extends cc.Component {
                     this.effectsAnimation.node.scaleX = -this.effectsAnimation.node.scaleX;
                     this.node.scaleX = -0.5;
                 }
-
             } else if (this.input[cc.macro.KEY.d]) {
-
                 this.speed.x = 1;
                 if (this.node.scaleX !== 0.5) {
                     // 固定特效Scale
@@ -161,17 +159,17 @@ export default class PlayerManager extends cc.Component {
                 // 攀爬
                 if (this.input[cc.macro.KEY.w]) {
                     lv.y = this.moveAccel;
-                    this.playerAnimation.resume("playerClimb");
+                    this.playerAnimation.resume('playerClimb');
                 } else if (this.input[cc.macro.KEY.s]) {
                     lv.y = -this.moveAccel;
-                    this.playerAnimation.resume("playerClimb");
+                    this.playerAnimation.resume('playerClimb');
                 } else if (this.input[cc.macro.KEY.a]) {
-                    this.playerAnimation.resume("playerClimb");
+                    this.playerAnimation.resume('playerClimb');
                 } else if (this.input[cc.macro.KEY.d]) {
-                    this.playerAnimation.resume("playerClimb");
+                    this.playerAnimation.resume('playerClimb');
                 } else {
                     lv.y = 0;
-                    this.playerAnimation.pause("playerClimb");
+                    this.playerAnimation.pause('playerClimb');
                 }
             } else {
                 //跳躍
@@ -231,9 +229,9 @@ export default class PlayerManager extends cc.Component {
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         // 攀爬
-        if (other.node.name === 'VineBody') {
+        if (other.node.name === 'VineBody' || other.node.name === 'SilkBody') {
             // 避免觸發其他觸發器
-            this.playerAnimation.play("playerClimb");
+            this.playerAnimation.play('playerClimb');
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             this.onTheGround = true;
             this.isClimbing = true;
@@ -257,12 +255,12 @@ export default class PlayerManager extends cc.Component {
 
     private onCollisionExit(other: cc.Collider, self: cc.Collider) {
         // 結束攀爬
-        if (other.node.name === 'VineBody') {
+        if (other.node.name === 'VineBody' || other.node.name === 'SilkBody') {
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             rigidBody.type = cc.RigidBodyType.Dynamic;
             this.onTheGround = false;
             this.isClimbing = false;
-            this.playerAnimation.play("playerJump");
+            this.playerAnimation.play('playerJump');
         }
     }
 
@@ -277,31 +275,31 @@ export default class PlayerManager extends cc.Component {
             switch (keyCode) {
                 case cc.macro.KEY.q:
                     if (this.currentUsingSkill === 0) {
-                        this.effectsAnimation.play("reverseAccel");
+                        this.effectsAnimation.play('reverseAccel');
                         this.currentUsingSkill = -1;
                         break;
                     }
-                    this.effectsAnimation.play("accelExpend");
+                    this.effectsAnimation.play('accelExpend');
                     this.currentUsingSkill = 0;
                     skillIndex = accelerate;
                     break;
                 case cc.macro.KEY.e:
                     if (this.currentUsingSkill === 1) {
-                        this.effectsAnimation.play("reverseSlow");
+                        this.effectsAnimation.play('reverseSlow');
                         this.currentUsingSkill = -1;
                         break;
                     }
-                    this.effectsAnimation.play("slowExpend");
+                    this.effectsAnimation.play('slowExpend');
                     this.currentUsingSkill = 1;
                     skillIndex = slowdown;
                     break;
                 case cc.macro.KEY.r:
                     if (this.currentUsingSkill === 2) {
-                        this.effectsAnimation.play("reverseRollBack");
+                        this.effectsAnimation.play('reverseRollBack');
                         this.currentUsingSkill = -1;
                         break;
                     }
-                    this.effectsAnimation.play("rollBackExpend");
+                    this.effectsAnimation.play('rollBackExpend');
                     this.currentUsingSkill = 2;
                     skillIndex = rollback;
                     break;

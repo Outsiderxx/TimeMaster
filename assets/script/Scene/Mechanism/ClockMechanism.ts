@@ -1,4 +1,5 @@
 import TimeEffect from '../../TimeEffect';
+import ClockButtonMechanism from './ClockButtonMechanism';
 
 const { ccclass, property } = cc._decorator;
 
@@ -10,85 +11,62 @@ export default class ClockMechanism extends TimeEffect {
     @property(cc.Node)
     private minuteHand: cc.Node = null;
 
+    @property([ClockButtonMechanism])
+    private clockButtons: ClockButtonMechanism[] = [];
+
     @property
     private secondPerCircle: number = 0;
 
     @property
     private isClockWise: boolean = true;
 
-    @property
-    private whichMethod: boolean = false;
-
     private hourHandTween: cc.Tween = null;
     private minuteHandTween: cc.Tween = null;
-
-    private isMoving: boolean = false;
+    private speedOptions: number[] = [1 / 243, 1, 5];
+    private currentSpeedIdx: number = 1;
 
     onLoad() {
         this.status = 'normal';
-        if (this.whichMethod) {
-        } else {
-            this.clockStart();
-        }
+        this.clockButtons.forEach((button) => {
+            button.node.on('active', () => {
+                if (this.clockButtons.filter((button) => button.isActived === true).length === 3) {
+                    // 開門
+                }
+            });
+        });
+        this.clockStart();
     }
 
     public accelerate() {
-        if (this.whichMethod) {
-            if (this.isMoving && (this.hourHandTween as any)._finalAction._speed === 1) {
-                (this.hourHandTween as any)._finalAction._speed = 5;
-                (this.minuteHandTween as any)._finalAction._speed = 5;
-            } else if (!this.isMoving) {
-                this.isClockWise = true;
-                this.clockStart(5);
-            } else if (!this.isClockWise && this.isMoving && (this.hourHandTween as any)._finalAction._speed === 5) {
-                this.clockStop();
-            }
-        } else {
-            (this.hourHandTween as any)._finalAction._speed *= 3;
-            (this.minuteHandTween as any)._finalAction._speed *= 3;
+        if (this.currentSpeedIdx !== 2) {
+            this.currentSpeedIdx++;
+            (this.hourHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];
+            (this.minuteHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];
         }
     }
 
     public slowdown() {
-        if (this.whichMethod) {
-            if (this.isMoving && (this.hourHandTween as any)._finalAction._speed === 5) {
-                (this.hourHandTween as any)._finalAction._speed = 1;
-                (this.minuteHandTween as any)._finalAction._speed = 1;
-            }
-        } else {
-            (this.hourHandTween as any)._finalAction._speed /= 3;
-            (this.minuteHandTween as any)._finalAction._speed /= 3;
+        if (this.currentSpeedIdx !== 0) {
+            this.currentSpeedIdx--;
+            (this.hourHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];
+            (this.minuteHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];
         }
     }
 
     public rollback() {
-        if (this.whichMethod) {
-            if (this.isClockWise && this.isMoving) {
-                this.clockStop();
-            } else if (!this.isMoving) {
-                this.isClockWise = false;
-                this.clockStart(5);
-            }
-        } else {
-            const currentSpeed: number = (this.hourHandTween as any)._finalAction._speed;
-            this.isClockWise = !this.isClockWise;
-            this.clockStop();
-            this.clockStart(currentSpeed);
-        }
+        this.isClockWise = !this.isClockWise;
+        this.clockStop();
+        this.clockStart(this.speedOptions[this.currentSpeedIdx]);
     }
 
     public reset() {
         this.clockStop();
         this.hourHand.angle = 0;
         this.minuteHand.angle = 0;
-        if (this.whichMethod) {
-        } else {
-            this.clockStart();
-        }
+        this.clockStart();
     }
 
     private clockStart(speed?: number) {
-        this.isMoving = true;
         this.hourHandTween = cc
             .tween(this.hourHand)
             .by(this.secondPerCircle * 60, { angle: 360 * (this.isClockWise ? -1 : 1) })
@@ -106,7 +84,6 @@ export default class ClockMechanism extends TimeEffect {
     }
 
     private clockStop() {
-        this.isMoving = false;
         this.hourHandTween.stop();
         this.minuteHandTween.stop();
     }

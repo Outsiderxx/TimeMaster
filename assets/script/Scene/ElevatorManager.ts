@@ -46,7 +46,7 @@ export default class ElevatorManager extends TimeEffect {
         this.node.getComponent(cc.Animation).stop();
         this.chainOneTween?.stop();
         this.chainTwoTween?.stop();
-        this.node.position.y = 235;
+        this.node.position.y = 605;
         this.chains[0].y = 830;
         this.chains[1].y = 830;
     }

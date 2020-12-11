@@ -20,7 +20,7 @@
                 ],
                 "height": 470,
                 "type": "panel",
-                "width": 334
+                "width": 331
               },
               {
                 "active": 0,
@@ -30,12 +30,12 @@
                 ],
                 "height": 465,
                 "type": "panel",
-                "width": 334
+                "width": 331
               }
             ],
             "height": 938,
             "type": "dock-v",
-            "width": 334
+            "width": 331
           },
           {
             "active": 0,
@@ -44,7 +44,7 @@
             ],
             "height": 938,
             "type": "panel",
-            "width": 387
+            "width": 390
           },
           {
             "children": [
@@ -53,7 +53,7 @@
                 "children": [
                   "scene"
                 ],
-                "height": 477,
+                "height": 385,
                 "type": "panel",
                 "width": 1193
               },
@@ -64,7 +64,7 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 458,
+                "height": 550,
                 "type": "panel",
                 "width": 1193
               }
@@ -86,9 +86,7 @@
         "timeline",
         "game-window"
       ]
-    },
-    "window-1607699861743": {},
-    "worker": {}
+    }
   },
   "panels": {
     "project-settings": {
