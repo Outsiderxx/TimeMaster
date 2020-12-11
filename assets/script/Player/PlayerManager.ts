@@ -39,6 +39,7 @@ export default class PlayerManager extends cc.Component {
     @property
     private invincibleTime: number = 0;
 
+    private effectsAnimation: cc.Animation = null;
     private input = {};
     private animationEvent: AnimationEvent = null;
     private onTheGround: boolean = false;
@@ -59,6 +60,8 @@ export default class PlayerManager extends cc.Component {
     }
 
     onLoad() {
+        //
+        this.effectsAnimation = this.node.getChildByName("SkillArea").getChildByName("Effects").getComponent(cc.Animation);
         // 技能切換
         this.animationEvent = this.node.getChildByName('Appearance').getComponent('AnimationEvent');
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
@@ -89,18 +92,28 @@ export default class PlayerManager extends cc.Component {
             const { none, accelerate, slowdown, rollback } = SkillSet;
             if (this.currentUsingSkill !== none && mechanism.checkStatus(this.currentUsingSkill)) {
                 this.finiteState(StateSet.useSkill);
+                //this.node.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
                 switch (this.currentUsingSkill) {
                     case accelerate:
                         console.log(`Accelerate ${target.name}`);
                         mechanism.accelerate();
+                        //施法結束
+                        // this.effectsAnimation.play("reverseAccel");
+                        // this.currentUsingSkill = -1;
                         break;
                     case slowdown:
                         console.log(`Slowdown ${target.name}`);
                         mechanism.slowdown();
+                        //施法結束
+                        // this.effectsAnimation.play("reverseSlow");
+                        // this.currentUsingSkill = -1;
                         break;
                     case rollback:
                         console.log(`Rollback ${target.name}`);
                         mechanism.rollback();
+                        //施法結束
+                        // this.effectsAnimation.play("reverseRollBack");
+                        // this.currentUsingSkill = -1;
                         break;
                 }
             }
@@ -120,31 +133,45 @@ export default class PlayerManager extends cc.Component {
             //左右移動
             if (this.input[cc.macro.KEY.a]) {
                 this.speed.x = -1;
-                this.node.scaleX = -0.5;
+                if (this.node.scaleX !== -0.5) {
+                    // 固定特效Scale
+                    this.effectsAnimation.node.scaleX = -this.effectsAnimation.node.scaleX;
+                    this.node.scaleX = -0.5;
+                }
+
             } else if (this.input[cc.macro.KEY.d]) {
+
                 this.speed.x = 1;
-                this.node.scaleX = 0.5;
+                if (this.node.scaleX !== 0.5) {
+                    // 固定特效Scale
+                    this.effectsAnimation.node.scaleX = -this.effectsAnimation.node.scaleX;
+                    this.node.scaleX = 0.5;
+                }
             } else {
                 this.speed.x = 0;
             }
-
             if (this.speed.x !== 0) {
                 lv.x = this.speed.x * this.moveAccel;
                 this.finiteState(StateSet.run);
             } else {
                 lv.x = 0;
-
                 this.finiteState(StateSet.idle);
             }
-
             if (this.isClimbing) {
                 // 攀爬
                 if (this.input[cc.macro.KEY.w]) {
                     lv.y = this.moveAccel;
+                    this.playerAnimation.resume("playerClimb");
                 } else if (this.input[cc.macro.KEY.s]) {
                     lv.y = -this.moveAccel;
+                    this.playerAnimation.resume("playerClimb");
+                } else if (this.input[cc.macro.KEY.a]) {
+                    this.playerAnimation.resume("playerClimb");
+                } else if (this.input[cc.macro.KEY.d]) {
+                    this.playerAnimation.resume("playerClimb");
                 } else {
                     lv.y = 0;
+                    this.playerAnimation.pause("playerClimb");
                 }
             } else {
                 //跳躍
@@ -184,8 +211,8 @@ export default class PlayerManager extends cc.Component {
         this.input = {};
         this.playerState = StateSet.none;
         // skill range
-        this.skillRange.active = false;
-        this.skillRange.children.forEach((node) => (node.active = false));
+        this.skillRange.active = true;
+        this.skillRange.children.forEach((node) => (node.active = true));
 
         //pointer
         this.userPointer.changeScene();
@@ -206,6 +233,7 @@ export default class PlayerManager extends cc.Component {
         // 攀爬
         if (other.node.name === 'VineBody') {
             // 避免觸發其他觸發器
+            this.playerAnimation.play("playerClimb");
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             this.onTheGround = true;
             this.isClimbing = true;
@@ -234,6 +262,7 @@ export default class PlayerManager extends cc.Component {
             rigidBody.type = cc.RigidBodyType.Dynamic;
             this.onTheGround = false;
             this.isClimbing = false;
+            this.playerAnimation.play("playerJump");
         }
     }
 
@@ -244,27 +273,41 @@ export default class PlayerManager extends cc.Component {
         }
         const { none, accelerate, slowdown, rollback } = SkillSet;
         let skillIndex: number = none;
-        switch (keyCode) {
-            case cc.macro.KEY.q:
-                skillIndex = accelerate;
-                break;
-            case cc.macro.KEY.e:
-                skillIndex = slowdown;
-                break;
-            case cc.macro.KEY.r:
-                skillIndex = rollback;
-                break;
-        }
-        this.skillRange.children.forEach((area, idx) => {
-            if (idx === skillIndex) {
-                area.active = isOpen;
-                if (isOpen) {
-                    this.currentUsingSkill = idx;
-                }
-            } else {
-                area.active = false;
+        if (isOpen) {
+            switch (keyCode) {
+                case cc.macro.KEY.q:
+                    if (this.currentUsingSkill === 0) {
+                        this.effectsAnimation.play("reverseAccel");
+                        this.currentUsingSkill = -1;
+                        break;
+                    }
+                    this.effectsAnimation.play("accelExpend");
+                    this.currentUsingSkill = 0;
+                    skillIndex = accelerate;
+                    break;
+                case cc.macro.KEY.e:
+                    if (this.currentUsingSkill === 1) {
+                        this.effectsAnimation.play("reverseSlow");
+                        this.currentUsingSkill = -1;
+                        break;
+                    }
+                    this.effectsAnimation.play("slowExpend");
+                    this.currentUsingSkill = 1;
+                    skillIndex = slowdown;
+                    break;
+                case cc.macro.KEY.r:
+                    if (this.currentUsingSkill === 2) {
+                        this.effectsAnimation.play("reverseRollBack");
+                        this.currentUsingSkill = -1;
+                        break;
+                    }
+                    this.effectsAnimation.play("rollBackExpend");
+                    this.currentUsingSkill = 2;
+                    skillIndex = rollback;
+                    break;
             }
-        });
+        }
+
         this.skillRange.active = this.skillRange.children.some((area) => area.active);
         if (!this.skillRange.active) {
             this.currentUsingSkill = SkillSet.none;
@@ -293,11 +336,11 @@ export default class PlayerManager extends cc.Component {
 
     private onTheGroundCheck() {
         const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
-        const leftP1 = cc.v2(tempPoint.x - 10, tempPoint.y);
-        const leftP2 = cc.v2(tempPoint.x - 10, tempPoint.y - 10);
+        const leftP1 = cc.v2(tempPoint.x - 12, tempPoint.y);
+        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 19);
 
-        const rightP1 = cc.v2(tempPoint.x + 10, tempPoint.y);
-        const rightP2 = cc.v2(tempPoint.x + 10, tempPoint.y - 10);
+        const rightP1 = cc.v2(tempPoint.x + 17, tempPoint.y);
+        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 19);
 
         const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);
@@ -322,30 +365,27 @@ export default class PlayerManager extends cc.Component {
             this.playerAnimation.play('playerHurt');
             return;
         }
-        if (nextState == StateSet.useSkill && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
-            this.playerState = StateSet.useSkill;
-            this.playerAnimation.play('playerUseSkill');
-            return;
-        }
-        if (nextState == StateSet.jump && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
-            this.playerState = StateSet.jump;
-            this.playerAnimation.play('playerJump');
-            return;
-        }
-        if (nextState == StateSet.climbing && (this.playerState == StateSet.none || this.playerState == StateSet.run)) {
-            this.playerState = StateSet.climbing;
-            this.playerAnimation.play('playerClimbing');
-            return;
-        }
-        if (nextState == StateSet.run && (this.playerState == StateSet.none || this.playerState == StateSet.idle)) {
-            this.playerState = StateSet.run;
-            this.playerAnimation.play('playerRun');
-            return;
-        }
-        if (nextState == StateSet.idle && (this.playerState == StateSet.none || this.playerState == StateSet.run)) {
-            this.playerState = StateSet.idle;
-            this.playerAnimation.play('playerIdle');
-            return;
+        if (!this.isClimbing) {
+            if (nextState == StateSet.jump && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
+                this.playerState = StateSet.jump;
+                this.playerAnimation.play('playerJump');
+                return;
+            }
+            if (nextState == StateSet.useSkill && !(this.playerState == StateSet.hurt || this.playerState == StateSet.die)) {
+                this.playerState = StateSet.useSkill;
+                this.playerAnimation.play('playerUseSkill');
+                return;
+            }
+            if (nextState == StateSet.run && (this.playerState == StateSet.none || this.playerState == StateSet.idle)) {
+                this.playerState = StateSet.run;
+                this.playerAnimation.play('playerRun');
+                return;
+            }
+            if (nextState == StateSet.idle && (this.playerState == StateSet.none || this.playerState == StateSet.run)) {
+                this.playerState = StateSet.idle;
+                this.playerAnimation.play('playerIdle');
+                return;
+            }
         }
     }
 }

@@ -103,8 +103,7 @@ export default class GameController extends cc.Component {
         }
         this.player.reset(idx);
         this.camera.reset();
-        if (this.currentSceneIdx === 2) {
-            // TODO: 新增其他場景後需修改
+        if (this.currentSceneIdx >= this.sceneNodes.length - 2) {
             this.camera.finalSceneSetUp();
         } else {
             this.camera.normalSceneSetUp();

@@ -16,7 +16,7 @@ export default class SkillCast extends cc.Component {
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
-        // cc.director.getCollisionManager().enabledDebugDraw = true;
+        cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
         this.node.active = false;
         this.changeScene();
@@ -66,7 +66,7 @@ export default class SkillCast extends cc.Component {
         const skillRangeWorldPosition: cc.Vec3 = this.skillRange.parent.convertToWorldSpaceAR(this.skillRange.position);
         return cc.Intersection.polygonCircle(this.userPointer.world.points, {
             position: new cc.Vec2(skillRangeWorldPosition.x, skillRangeWorldPosition.y),
-            radius: (this.skillRange.width / 2 / 2) * this.skillRange.scale, // width / 2, parent scale, self scale
+            radius: (this.skillRange.width / 2 / 2.2) * this.skillRange.scale, // width / 2, parent scale, self scale
         });
     }
 }

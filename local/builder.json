@@ -1,6 +1,6 @@
 {
-  "platform": "win32",
-  "actualPlatform": "win32",
+  "platform": "web-mobile",
+  "actualPlatform": "web-mobile",
   "template": "link",
   "buildPath": "./build",
   "debug": true,

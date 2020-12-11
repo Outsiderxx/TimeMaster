@@ -60,7 +60,7 @@ export default class CameraController extends cc.Component {
     public finalSceneSetUp() {
         this.camera.zoomRatio = 1;
         this.camera.node.setContentSize(new cc.Size(1280, 720));
-        this.middleGroundOffset = true;
+        // this.middleGroundOffset = true;
     }
 
     public normalSceneSetUp() {

@@ -3,8 +3,8 @@
   "_name": "playerUseSkill",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.275,
-  "sample": 40,
+  "_duration": 0.55,
+  "sample": 20,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,13 +18,13 @@
             }
           },
           {
-            "frame": 0.125,
+            "frame": 0.25,
             "value": {
               "__uuid__": "8c4240a2-3582-4204-a177-eeacff7eca2a"
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.5,
             "value": {
               "__uuid__": "8ea4bf06-0170-4736-82c9-ae1087d7e889"
             }
@@ -35,7 +35,7 @@
   },
   "events": [
     {
-      "frame": 0.25,
+      "frame": 0.5,
       "func": "endSkill",
       "params": []
     }
