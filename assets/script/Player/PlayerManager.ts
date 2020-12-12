@@ -211,6 +211,7 @@ export default class PlayerManager extends cc.Component {
         // skill range
         this.skillRange.active = true;
         this.skillRange.children.forEach((node) => (node.active = true));
+        this.currentUsingSkill = -1;
 
         //pointer
         this.userPointer.changeScene();
@@ -304,6 +305,30 @@ export default class PlayerManager extends cc.Component {
                     skillIndex = rollback;
                     break;
             }
+        } else if (!isOpen) {
+            switch (keyCode) {
+                case cc.macro.KEY.q:
+                    if (this.currentUsingSkill === 0) {
+                        this.effectsAnimation.play('reverseAccel');
+                        this.currentUsingSkill = -1;
+                        skillIndex = none;
+                    }
+                    break;
+                case cc.macro.KEY.e:
+                    if (this.currentUsingSkill === 1) {
+                        this.effectsAnimation.play('reverseSlow');
+                        this.currentUsingSkill = -1;
+                        skillIndex = none;
+                    }
+                    break;
+                case cc.macro.KEY.r:
+                    if (this.currentUsingSkill === 2) {
+                        this.effectsAnimation.play('reverseRollBack');
+                        this.currentUsingSkill = -1;
+                        skillIndex = none;
+                    }
+                    break;
+            }
         }
 
         this.skillRange.active = this.skillRange.children.some((area) => area.active);
@@ -335,10 +360,10 @@ export default class PlayerManager extends cc.Component {
     private onTheGroundCheck() {
         const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
         const leftP1 = cc.v2(tempPoint.x - 12, tempPoint.y);
-        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 19);
+        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 20);
 
         const rightP1 = cc.v2(tempPoint.x + 17, tempPoint.y);
-        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 19);
+        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 20);
 
         const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);

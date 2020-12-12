@@ -18,9 +18,9 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 470,
+                "height": 444,
                 "type": "panel",
-                "width": 331
+                "width": 328
               },
               {
                 "active": 0,
@@ -28,23 +28,23 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 465,
+                "height": 475,
                 "type": "panel",
-                "width": 331
+                "width": 328
               }
             ],
-            "height": 938,
+            "height": 922,
             "type": "dock-v",
-            "width": 331
+            "width": 328
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 938,
+            "height": 922,
             "type": "panel",
-            "width": 390
+            "width": 387
           },
           {
             "children": [
@@ -53,9 +53,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 385,
+                "height": 540,
                 "type": "panel",
-                "width": 1193
+                "width": 1183
               },
               {
                 "active": 0,
@@ -64,14 +64,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 550,
+                "height": 379,
                 "type": "panel",
-                "width": 1193
+                "width": 1183
               }
             ],
-            "height": 938,
+            "height": 922,
             "type": "dock-v",
-            "width": 1193
+            "width": 1183
           }
         ],
         "type": "dock-h"
@@ -86,7 +86,8 @@
         "timeline",
         "game-window"
       ]
-    }
+    },
+    "window-1607784574787": {}
   },
   "panels": {
     "project-settings": {
@@ -108,8 +109,8 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 686,
-      "y": 291,
+      "x": 752,
+      "y": 230,
       "width": 420,
       "height": 585
     },
@@ -120,8 +121,8 @@
       "height": 539
     },
     "game-window": {
-      "x": 702,
-      "y": 240,
+      "x": 1173,
+      "y": 503,
       "width": 516,
       "height": 539
     }

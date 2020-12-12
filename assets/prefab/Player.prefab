@@ -67,8 +67,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        581.591,
-        921.778,
+        2531.164,
+        -107.008,
         0,
         0,
         0,
@@ -336,13 +336,23 @@
     "playerPosition": [
       {
         "__type__": "cc.Vec2",
-        "x": 581,
-        "y": 921
+        "x": 2531.164,
+        "y": -107.008
       },
       {
         "__type__": "cc.Vec2",
         "x": 1800,
         "y": 793
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -424,
+        "y": 875
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -450,
+        "y": -325
       },
       {
         "__type__": "cc.Vec2",
@@ -531,7 +541,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "e01YC4SsRLI5uw9ddwmxAM",
+    "fileId": "9flhclY2lOZ7C62De11Wgo",
     "sync": false
   },
   {
@@ -570,7 +580,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -67,
+        -64,
         0,
         0,
         0,
@@ -602,7 +612,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "e8sjE5Mr1LRY2fk8SMGSGl",
+    "fileId": "42p/XegRNHqZOMFRAM1jvS",
     "sync": false
   },
   {
@@ -613,7 +623,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "c72vC08NBKHZDVbAYQtXXK",
+    "fileId": "efLLT4oP9HlJ8h6sMTwDC3",
     "sync": false
   },
   {
@@ -654,7 +664,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "bbKdHpP2FC7aeJIFFB5lWA",
+    "fileId": "8cyzR8i7tKQLKywT+6vaGM",
     "sync": false
   },
   {
@@ -737,7 +747,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "3c1YkmF39GQrPwRcuNuLBl",
+    "fileId": "9b/da9JphBBLJU+f9aUuit",
     "sync": false
   }
 ]
