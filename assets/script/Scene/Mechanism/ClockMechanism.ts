@@ -9,13 +9,19 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class ClockMechanism extends TimeEffect {
     @property(cc.Node)
-    private hourHand: cc.Node = null;
+    public hourHand: cc.Node = null;
 
     @property(cc.Node)
-    private minuteHand: cc.Node = null;
+    public minuteHand: cc.Node = null;
 
     @property(cc.Node)
     private stair: cc.Node = null;
+
+    @property(cc.Label)
+    private timeTxt: cc.Label = null;
+
+    @property(cc.Node)
+    private transferPoint: cc.Node = null;
 
     @property(VineMechanism)
     private vine: VineMechanism = null;
@@ -39,8 +45,8 @@ export default class ClockMechanism extends TimeEffect {
     private minuteHandTween: cc.Tween = null;
     private speedOptions: number[] = [1 / 243, 1, 5];
     private currentSpeedIdx: number = 1;
-    public currentHour: number = 9;
-    public currentMinute: number = 0;
+    private currentHour: number = 9;
+    private currentMinute: number = 0;
 
     public reset() {
         // Clock
@@ -64,12 +70,13 @@ export default class ClockMechanism extends TimeEffect {
         this.clockButtons.forEach((button) => {
             button.node.on('active', () => {
                 if (this.clockButtons.filter((button) => button.isActived === true).length === 3) {
-                    // 開門
+                    this.transferPoint.name = 'TransferPoint';
                 }
             });
         });
         this.directionStone.on('onClick', (skill: 'accelerate' | 'slowdown' | 'rollback') => this.onMultiFuncionDirectionStoneClick(skill));
         this.clockStart();
+        this.transferPoint.name = 'UnActivedTransferPoint';
         this.node.emit('reset');
     }
 
@@ -189,7 +196,7 @@ export default class ClockMechanism extends TimeEffect {
                         }
                     }
                 }
-                console.log(`${this.currentHour}:${this.currentMinute}`);
+                this.timeTxt.string = `${this.currentHour >= 10 ? '' : '0'}${this.currentHour} : ${this.currentMinute >= 10 ? '' : '0'}${this.currentMinute}`;
             })
             .union()
             .repeatForever()

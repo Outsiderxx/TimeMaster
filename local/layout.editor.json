@@ -5,10 +5,10 @@
       "main": true,
       "url": "app://editor/index.html",
       "windowType": "dockable",
-      "x": 0,
-      "y": 0,
-      "width": 1920,
-      "height": 1040,
+      "x": -8,
+      "y": -8,
+      "width": 1936,
+      "height": 1056,
       "layout": {
         "children": [
           {
@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 469.984375,
+                "height": 633,
                 "type": "panel",
                 "width": 328
               },
@@ -28,7 +28,7 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 449,
+                "height": 286,
                 "type": "panel",
                 "width": 328
               }

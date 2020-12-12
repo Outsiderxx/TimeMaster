@@ -8,11 +8,10 @@
 import Bullet from './Bullet';
 import PlayerManager from '../Player/PlayerManager';
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class NewClass extends cc.Component {
-
     @property(cc.Prefab)
     private bullet: cc.Prefab = null;
 
@@ -29,8 +28,8 @@ export default class NewClass extends cc.Component {
     private player: cc.Node = null; // 透過碰撞測試取得
     private jumpLocker: boolean = true;
 
-    update (dt: number) {
-        if(this.jump && this.jumpLocker) {
+    update(dt: number) {
+        if (this.jump && this.jumpLocker) {
             this.jumpLocker = false;
             this.playJumpAnimation();
             let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
@@ -40,17 +39,24 @@ export default class NewClass extends cc.Component {
         }
     }
 
+    private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
+        if (self.tag === 0 && other.node.group === 'Damage') {
+            this.playDeathAnimation();
+            this.node.destroy();
+        }
+    }
+
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         if (self.tag === 0 && other.node.name === 'Player') {
             this.jump = true;
             this.player = other.node;
             this.schedule(this.playShootAnimation, 3, cc.macro.REPEAT_FOREVER, 1);
         }
-        if (self.tag === 1 &&　other.node.name === 'Deadline') {
+        if (self.tag === 1 && other.node.name === 'Deadline') {
             this.playDeathAnimation();
             this.node.destroy();
         }
-        if(self.tag === 2 && other.node.name === 'VineBody') {
+        if (self.tag === 2 && other.node.name === 'VineBody') {
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             rigidBody.type = cc.RigidBodyType.Kinematic;
             rigidBody.linearVelocity = new cc.Vec2(0, 0);
@@ -74,14 +80,14 @@ export default class NewClass extends cc.Component {
     }
 
     private playJumpAnimation() {
-        if(this.monsterAnimation.currentClip?.name !== 'monsterJump') {
+        if (this.monsterAnimation.currentClip?.name !== 'monsterJump') {
             this.monsterAnimation.play('monsterJump');
         }
     }
 
-    private playShootAnimation() {  
+    private playShootAnimation() {
         this.monsterAnimation.play('monsterShoot');
-        this.schedule(this.shootBullet,0.5,0);
+        this.schedule(this.shootBullet, 0.5, 0);
     }
 
     private playDeathAnimation() {
