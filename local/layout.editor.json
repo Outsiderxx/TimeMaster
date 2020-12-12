@@ -5,10 +5,10 @@
       "main": true,
       "url": "app://editor/index.html",
       "windowType": "dockable",
-      "x": -8,
-      "y": -8,
-      "width": 1936,
-      "height": 1056,
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1040,
       "layout": {
         "children": [
           {
@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 444,
+                "height": 469.984375,
                 "type": "panel",
                 "width": 328
               },
@@ -28,7 +28,7 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 475,
+                "height": 449,
                 "type": "panel",
                 "width": 328
               }
@@ -58,7 +58,7 @@
                 "width": 1183
               },
               {
-                "active": 0,
+                "active": 2,
                 "children": [
                   "console",
                   "timeline",
@@ -86,8 +86,7 @@
         "timeline",
         "game-window"
       ]
-    },
-    "window-1607784574787": {}
+    }
   },
   "panels": {
     "project-settings": {

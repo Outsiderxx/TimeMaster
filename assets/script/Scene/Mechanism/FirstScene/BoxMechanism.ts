@@ -4,6 +4,9 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class BoxMechanism extends TimeEffect {
+    @property
+    private initPosition: cc.Vec2 = new cc.Vec2();
+
     private rigidBody: cc.RigidBody = null;
     private path: cc.Vec2[] = new Array();
     private angle: number[] = new Array();
@@ -73,5 +76,13 @@ export default class BoxMechanism extends TimeEffect {
         console.log(this.rigidBody.linearVelocity.x, this.rigidBody.linearVelocity.y);
     }
 
-    public reset() {}
+    public reset() {
+        this.node.parent.setPosition(this.initPosition);
+        this.node.parent.angle = 0;
+        this.path.length = 0;
+        this.angle.length = 0;
+        this.path.push(cc.v2(this.parent.x, this.parent.y));
+        this.angle.push(this.parent.angle);
+        this.distances = 0;
+    }
 }
