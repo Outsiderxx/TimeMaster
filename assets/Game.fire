@@ -12820,7 +12820,7 @@
         "__id__": 503
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 643
@@ -24125,8 +24125,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -604.758,
-        2052.503,
+        -595.721,
+        2130.817,
         0,
         0,
         0,
@@ -24469,8 +24469,8 @@
     "minutePlatform": {
       "__id__": 624
     },
-    "hourHandRadius": 500,
-    "minuteHandRadius": 225,
+    "hourHandRadius": 550,
+    "minuteHandRadius": 450,
     "_id": "05HTe3zHBEpILHGOGpA7hI"
   },
   {
@@ -24487,7 +24487,7 @@
       "x": 0,
       "y": 0
     },
-    "_radius": 500,
+    "_radius": 600,
     "_id": "87MATlhndNMJfSIz0+e7D9"
   },
   {
@@ -27839,8 +27839,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -546,
-        -137,
+        -346.779,
+        1210.674,
         0,
         0,
         0,
@@ -27898,7 +27898,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -67,
+        -63,
         0,
         0,
         0,
@@ -28099,8 +28099,8 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": -197,
-        "y": 873
+        "x": -346,
+        "y": 1210
       },
       {
         "__type__": "cc.Vec2",
