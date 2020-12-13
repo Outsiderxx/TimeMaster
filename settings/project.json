@@ -5,8 +5,8 @@
     "Skill",
     "Damage",
     "Functionality",
-    "Monster",
-    "MonsterDamage"
+    "MonsterDamage",
+    "Monster"
   ],
   "collision-matrix": [
     [
@@ -33,6 +33,16 @@
       false,
       false,
       null,
+      false,
+      true
+    ],
+    [
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
       true
     ],
     [
@@ -41,14 +51,6 @@
       false,
       false,
       false,
-      true
-    ],
-    [
-      true,
-      false,
-      false,
-      true,
-      true,
       false,
       false
     ],
@@ -56,8 +58,8 @@
       true,
       false,
       false,
-      false,
-      false,
+      true,
+      true,
       false,
       false
     ]
