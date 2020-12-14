@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 455,
+                "height": 455.078125,
                 "type": "panel",
                 "width": 328.234375
               },
@@ -28,7 +28,7 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 464,
+                "height": 463.921875,
                 "type": "panel",
                 "width": 328.234375
               }
@@ -53,7 +53,7 @@
                 "children": [
                   "scene"
                 ],
-                "height": 590,
+                "height": 589.734375,
                 "type": "panel",
                 "width": 1183.03125
               },
@@ -64,7 +64,7 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 329,
+                "height": 329.265625,
                 "type": "panel",
                 "width": 1183.03125
               }
@@ -108,8 +108,8 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 614,
-      "y": 247,
+      "x": 752,
+      "y": 230,
       "width": 420,
       "height": 585
     },

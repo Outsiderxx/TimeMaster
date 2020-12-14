@@ -42,7 +42,7 @@ export default class RangedMonster extends cc.Component {
                     if (!this.reachEdge) {
                         if (Math.abs(distance) >= this.attackDistance) {
                             this.node.x += this.moveSpeed * dt * (direction ? -1 : 1);
-                            this.playRunAnimation();
+                            this.playWalkAnimation();
                         } else {
                             this.playIdleAnimation();
                         }
@@ -199,20 +199,14 @@ export default class RangedMonster extends cc.Component {
     }
 
     private playIdleAnimation() {
-        if (this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
-            this.monsterAnimation.play('monsterIdle');
+        if (this.monsterAnimation.currentClip?.name !== 'RangedMonsterIdle') {
+            this.monsterAnimation.play('RangedMonsterIdle');
         }
     }
 
     private playWalkAnimation() {
-        if (this.monsterAnimation.currentClip?.name !== 'monsterWalk') {
-            this.monsterAnimation.play('monsterWalk');
-        }
-    }
-
-    private playRunAnimation() {
-        if (this.monsterAnimation.currentClip?.name !== 'monsterRun') {
-            this.monsterAnimation.play('monsterRun');
+        if (this.monsterAnimation.currentClip?.name !== 'RangedMonsterWalk') {
+            this.monsterAnimation.play('RangedMonsterWalk');
         }
     }
 
@@ -228,7 +222,7 @@ export default class RangedMonster extends cc.Component {
         anim.setPosition(this.node.getPosition());
         anim.scaleX = this.node.scaleX;
         this.node.parent.addChild(anim);
-        anim.getComponent(cc.Animation).play('monsterDeath');
+        anim.getComponent(cc.Animation).play('RangedMonsterDeath');
     }
 
     //射子彈

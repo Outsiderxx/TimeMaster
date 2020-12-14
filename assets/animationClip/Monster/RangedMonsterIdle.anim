@@ -1,0 +1,25 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "RangedMonsterIdle",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.0625,
+  "sample": 16,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "f5488457-36c4-49ec-aacd-16e8b180cd9e"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
