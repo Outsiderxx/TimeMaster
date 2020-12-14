@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "rockBreak",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.75,
+  "sample": 8,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "59c31efa-adca-439b-be2e-02df220b0bee"
+            }
+          },
+          {
+            "frame": 0.125,
+            "value": {
+              "__uuid__": "0ee1fca3-4bb1-49e1-a5f5-e0b29f062372"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "168c0da2-351b-4f21-ac2e-70086fe4a457"
+            }
+          },
+          {
+            "frame": 0.375,
+            "value": {
+              "__uuid__": "bc0f7040-291a-4427-96ab-f88f3b422a95"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "b6ae83f5-27ea-4402-bb5a-b0b86d3afc9e"
+            }
+          },
+          {
+            "frame": 0.625,
+            "value": {
+              "__uuid__": "b6ae83f5-27ea-4402-bb5a-b0b86d3afc9e"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

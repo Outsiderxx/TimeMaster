@@ -1,0 +1,55 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "MapBuild",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.6,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "7a14c3da-3822-4512-ae11-30688de8e9d8"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "c2df5e0f-b54e-44e2-8cf3-f2f7af4c294e"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "ad44745f-808d-4d16-922e-7433c4863803"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "79ca1747-abcf-4851-ba62-e4d68f003dd8"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "5d130910-138a-4c9a-930b-b9cbc39f82ef"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "64cbebd3-a35c-4f92-92fd-16f177d8aab4"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

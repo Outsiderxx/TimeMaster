@@ -1,0 +1,67 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "StairBuild",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.8,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "660586f9-8bf0-47ef-9138-99a71b28640c"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "806948a3-6581-4390-a025-ff1cf044a0fa"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "b47746a0-669e-47f9-964b-35c9e80ccf18"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "fabeea98-725d-452c-9c1c-046ee6c52620"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "51aa2d95-6ecf-4507-b1cb-ec2afb7e75a5"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "24518fb3-3e2f-41a8-83e8-2d750ae8032c"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "dc6d07b5-0b72-4094-b804-a570846fcee5"
+            }
+          },
+          {
+            "frame": 0.7,
+            "value": {
+              "__uuid__": "60ca76a9-5ce3-45e2-9775-c1a687e3962f"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

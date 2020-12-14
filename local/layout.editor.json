@@ -5,10 +5,10 @@
       "main": true,
       "url": "app://editor/index.html",
       "windowType": "dockable",
-      "x": -8,
-      "y": -8,
-      "width": 1936,
-      "height": 1056,
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 1040,
       "layout": {
         "children": [
           {
@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 637.796875,
+                "height": 455,
                 "type": "panel",
                 "width": 328.234375
               },
@@ -28,12 +28,12 @@
                   "assets",
                   "node-library"
                 ],
-                "height": 288.203125,
+                "height": 464,
                 "type": "panel",
                 "width": 328.234375
               }
             ],
-            "height": 929,
+            "height": 922,
             "type": "dock-v",
             "width": 328.234375
           },
@@ -42,7 +42,7 @@
             "children": [
               "inspector"
             ],
-            "height": 929,
+            "height": 922,
             "type": "panel",
             "width": 386.734375
           },
@@ -53,7 +53,7 @@
                 "children": [
                   "scene"
                 ],
-                "height": 543.71875,
+                "height": 590,
                 "type": "panel",
                 "width": 1183.03125
               },
@@ -64,12 +64,12 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 382.28125,
+                "height": 329,
                 "type": "panel",
                 "width": 1183.03125
               }
             ],
-            "height": 929,
+            "height": 922,
             "type": "dock-v",
             "width": 1183.03125
           }
@@ -108,8 +108,8 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 752,
-      "y": 230,
+      "x": 614,
+      "y": 247,
       "width": 420,
       "height": 585
     },

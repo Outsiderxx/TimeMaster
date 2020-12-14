@@ -4,7 +4,7 @@ const { ccclass, property } = cc._decorator;
 export default class TerrainGenerator extends cc.Component {
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-        // cc.director.getPhysicsManager().debugDrawFlags = 1; // for collider debug
+        //cc.director.getPhysicsManager().debugDrawFlags = 1; // for collider debug
         // 獲取 tiledMap 資訊
         const tiledmap: cc.TiledMap = this.node.getComponent(cc.TiledMap);
         const tiledSize = tiledmap.getTileSize();
@@ -18,7 +18,7 @@ export default class TerrainGenerator extends cc.Component {
                 if (tiled.gid != 0) {
                     const body: cc.RigidBody = tiled.node.addComponent(cc.RigidBody);
                     const physicsCollider: cc.PhysicsBoxCollider = tiled.node.addComponent(cc.PhysicsBoxCollider);
-
+                    
                     tiled.node.group = 'default';
                     body.type = cc.RigidBodyType.Static;
                     physicsCollider.offset = cc.v2(tiledSize.width / 2, tiledSize.height / 2);

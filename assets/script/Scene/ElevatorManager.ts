@@ -38,15 +38,15 @@ export default class ElevatorManager extends TimeEffect {
     }
 
     // 為了能讓 sceneManager call reset 所以要繼承 TimeEffect
-    public accelerate() {}
-    public slowdown() {}
-    public rollback() {}
+    public accelerate() { }
+    public slowdown() { }
+    public rollback() { }
 
     public reset() {
         this.node.getComponent(cc.Animation).stop();
         this.chainOneTween?.stop();
         this.chainTwoTween?.stop();
-        this.node.position.y = 605;
+        this.node.position.y = 235;
         this.chains[0].y = 830;
         this.chains[1].y = 830;
     }

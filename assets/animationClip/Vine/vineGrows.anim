@@ -3,8 +3,8 @@
   "_name": "vineGrows",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.8235294117647058,
-  "sample": 17,
+  "_duration": 0.7,
+  "sample": 20,
   "speed": 1,
   "wrapMode": 1,
   "curveData": {
@@ -18,79 +18,79 @@
             }
           },
           {
-            "frame": 0.058823529411764705,
+            "frame": 0.05,
             "value": {
               "__uuid__": "e9fe6c27-ba7e-4670-85af-14b4cc072594"
             }
           },
           {
-            "frame": 0.11764705882352941,
+            "frame": 0.1,
             "value": {
               "__uuid__": "bdde91ba-d32d-4f26-9b7f-1a0a1a373ca6"
             }
           },
           {
-            "frame": 0.17647058823529413,
+            "frame": 0.15,
             "value": {
               "__uuid__": "f5701d2c-fce6-4790-9ce6-78cb6692039c"
             }
           },
           {
-            "frame": 0.23529411764705882,
+            "frame": 0.2,
             "value": {
               "__uuid__": "e959c40b-c0b7-4262-bbc5-326458fb2069"
             }
           },
           {
-            "frame": 0.29411764705882354,
+            "frame": 0.25,
             "value": {
               "__uuid__": "65f89a50-a843-4d98-abf1-b3eb6a511e80"
             }
           },
           {
-            "frame": 0.35294117647058826,
+            "frame": 0.3,
             "value": {
               "__uuid__": "f43e07cc-dc00-42b9-8e0d-752ff1f0221d"
             }
           },
           {
-            "frame": 0.4117647058823529,
+            "frame": 0.35,
             "value": {
               "__uuid__": "79267eac-0d04-46a8-8f98-cc473f14b3f7"
             }
           },
           {
-            "frame": 0.47058823529411764,
+            "frame": 0.4,
             "value": {
               "__uuid__": "b7c4b97d-9e5e-4c3b-8422-ffd8f733c3e4"
             }
           },
           {
-            "frame": 0.5294117647058824,
+            "frame": 0.45,
             "value": {
               "__uuid__": "c9cd7179-ba54-4ae1-bb56-d665c616fab6"
             }
           },
           {
-            "frame": 0.5882352941176471,
+            "frame": 0.5,
             "value": {
               "__uuid__": "c8827dff-98b0-42c2-8b66-7dbc4abe1ff6"
             }
           },
           {
-            "frame": 0.6470588235294118,
+            "frame": 0.55,
             "value": {
               "__uuid__": "17bce02f-9baa-49c8-bcba-52c966cd160b"
             }
           },
           {
-            "frame": 0.7058823529411765,
+            "frame": 0.6,
             "value": {
               "__uuid__": "a291529d-60b6-4558-966e-70d1c9ae1cf6"
             }
           },
           {
-            "frame": 0.7647058823529411,
+            "frame": 0.65,
             "value": {
               "__uuid__": "4a7e2112-a2f4-437a-a41a-be1a9d06279d"
             }

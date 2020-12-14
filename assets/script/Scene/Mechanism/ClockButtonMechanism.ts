@@ -1,9 +1,7 @@
-import TimeEffect from '../../TimeEffect';
-
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ClockButtonMechanism extends TimeEffect {
+export default class ClockButtonMechanism extends cc.Component {
     public isActived: boolean = false;
 
     public active() {
@@ -11,10 +9,6 @@ export default class ClockButtonMechanism extends TimeEffect {
         this.node.getComponent(cc.Animation).play('buttonActive');
         this.node.emit('active');
     }
-
-    public accelerate() {}
-    public rollback() {}
-    public slowdown() {}
 
     public reset() {
         this.node.getComponent(cc.Animation).play('buttonDisable');

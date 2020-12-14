@@ -1,0 +1,61 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "CannonFlyBack",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.375,
+  "sample": 8,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "props": {
+      "position": [
+        {
+          "frame": 0,
+          "value": [
+            1580,
+            180,
+            0
+          ]
+        },
+        {
+          "frame": 1.25,
+          "value": [
+            50,
+            5,
+            0
+          ]
+        }
+      ],
+      "scale": [
+        {
+          "frame": 0,
+          "value": {
+            "__type__": "cc.Vec2",
+            "x": 0.8,
+            "y": 0.8
+          }
+        }
+      ]
+    },
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "bc250a0b-da05-483f-86bd-e35be8f647ad"
+            }
+          },
+          {
+            "frame": 1.25,
+            "value": {
+              "__uuid__": "3ee4f3f5-a6f3-4d1c-9007-e8baedbd9186"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
