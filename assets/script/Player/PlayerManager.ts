@@ -220,6 +220,12 @@ export default class PlayerManager extends cc.Component {
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         // 受到傷害
         if (self.tag === 0 && (other.node.group === 'Damage' || other.node.group === 'MonsterDamage') && !this.isInvincible) {
+            if (other.node.name === 'rollingRock') {
+                //滾石即死
+                this.finiteState(StateSet.die);
+                this.updateHearts(0);
+                return;
+            }
             if (this.healthPoint > 1) {
                 this.finiteState(StateSet.hurt);
             }
@@ -360,10 +366,10 @@ export default class PlayerManager extends cc.Component {
     private onTheGroundCheck() {
         const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
         const leftP1 = cc.v2(tempPoint.x - 12, tempPoint.y);
-        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 22);
+        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 24);
 
         const rightP1 = cc.v2(tempPoint.x + 17, tempPoint.y);
-        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 22);
+        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 24);
 
         const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);

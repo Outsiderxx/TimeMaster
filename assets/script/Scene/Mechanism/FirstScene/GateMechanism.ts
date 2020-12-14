@@ -13,8 +13,10 @@ export default class GateMechanism extends TimeEffect {
     private forerUsedSkill: "accelerate" | "rollback" | "none" = "none";
 
     @property(cc.Boolean)
-    isOpened: boolean = false;
+    initialOpened: boolean = false;
     public buttonFirstTriggered = false;
+
+    private isOpened: boolean = false;
     private initialized: boolean = false;
     private upClosedOffset: cc.Vec2 = cc.v2(0, 45.7);
     private upClosedSize: cc.Size = cc.size(61.4, 131.6);
@@ -31,12 +33,10 @@ export default class GateMechanism extends TimeEffect {
         this.boxColliderUp = this.node.getChildByName("boxColliderUp").getComponent(cc.PhysicsBoxCollider);
         this.boxColliderDown = this.node.getChildByName("boxColliderDown").getComponent(cc.PhysicsBoxCollider);
 
-        if (this.isOpened) {
+        if (this.initialOpened) {
             this.open();
-
         } else {
             this.close();
-
         }
 
         this.gateAnimation.on('play', () => {
@@ -55,7 +55,9 @@ export default class GateMechanism extends TimeEffect {
 
 
     public buttonTrigger() {
-
+        //console.log(this.isOpened);
+        if (this.buttonFirstTriggered === false)
+            this.buttonFirstTriggered = true;
         if (this.isOpened) {
             this.close();
         } else {
@@ -125,6 +127,16 @@ export default class GateMechanism extends TimeEffect {
     public slowdown() { }
 
     public reset() {
+        this.buttonFirstTriggered = false;
+        this.status = "normal";
+        this.forerUsedSkill = "none";
+        this.gateStatus = "default";
+        if (this.initialOpened) {
+            this.open();
+        } else {
+            this.close();
+        }
+
 
     }
 }
