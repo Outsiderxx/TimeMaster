@@ -255,8 +255,10 @@ export default class PlayerManager extends cc.Component {
             this.isAlive = false;
             this.node.emit('success');
         } else if (other.node.name === 'TransferPoint') {
-            this.isAlive = false;
-            this.node.emit('transfer');
+            if (this.isAlive) {
+                this.isAlive = false;
+                this.node.emit('transfer');
+            }
         }
     }
 

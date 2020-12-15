@@ -30,6 +30,7 @@ export default class BossWeapon extends TimeEffect {
     private attackType: attackPath = attackPath.none;
     private attackTypeThreeApply: boolean = false;
     private playerDirection: number = 1; // 1左邊, -1右邊
+    private speedPara: number = 1;
     private xSpeed: number = 0;
     private ySpeed: number = 0;
     private xAcc: number = 0;
@@ -37,13 +38,16 @@ export default class BossWeapon extends TimeEffect {
     public Boss: cc.Node = null;
     public hitWall: boolean = false;
 
+    onLoad() {
+        this.status = 'normal';
+    }
+
     public startAttack(direction: boolean) {
 
         this.playerDirection = direction ? 1 : -1;
 
         //讓update開始記錄移動狀態
         this.attacking = true;
-        
         //可能需要將之前記錄過的狀態清掉
         //this.anglePoints.length = 0
         //this.wayPoints.length = 0
@@ -113,15 +117,46 @@ export default class BossWeapon extends TimeEffect {
     }
 
 
-    public accelerate() {}
-    public slowdown() {}
+    public accelerate() {
+        if(!this.hitWall) {
+            this.changeSpeed(false);
+        }
+    }
+    public slowdown() {
+        if(!this.hitWall) {
+            this.changeSpeed(true);
+        }
+    }
+
+    private changeSpeed(slowdown: boolean, reset: boolean = false) {
+        switch (this.status) {
+            case 'normal':
+                this.speedPara = slowdown ? 0.2 : 3;
+                this.status = slowdown ? 'slowdown' : 'speedup';
+                break;
+            case 'speedup':
+                this.speedPara = slowdown ? 1 : 3;
+                this.status = slowdown ? 'normal' : 'speedup';
+                break;
+            case 'slowdown':
+                this.speedPara = slowdown ? 0.2 : 1;
+                this.status = slowdown ? 'slowdown' : 'normal';
+                break;
+            default:
+                break;
+        }
+        if (reset) {
+            this.speedPara = 1;
+            this.status = 'normal';
+        }
+    }
 
     //被倒帶時從移動紀錄最後一個元素開始跑倒帶
     public rollback() {
         if(this.hitWall) {
             this.scheduleOnce(() => {
             this.node.group = 'Damage';
-            this.node.getComponent(cc.PhysicsBoxCollider).apply();}, 0.3) 
+            this.node.getComponent(cc.PhysicsBoxCollider).apply();}, 0.1) 
         }
         this.returnToOriginPos(this.wayPoints.length - 1);
     }
@@ -135,7 +170,7 @@ export default class BossWeapon extends TimeEffect {
         if(this.attacking) {
             if(this.attackType === attackPath.typeOne) {
                 if(this.yAcc < 0) {
-                    this.yAcc += 55;
+                    this.yAcc += (55 * this.speedPara);
                 }
                 else {
                     this.yAcc = 0;
@@ -145,16 +180,16 @@ export default class BossWeapon extends TimeEffect {
                 if(this.ySpeed > 0 && this.attackTypeThreeApply) {
                     this.attackTypeThreeApply = false;
                     const temp = this.yAcc;
-                    this.yAcc /= 20;
+                    this.yAcc /= (20 * this.speedPara);
                     this.schedule(() => {this.yAcc = temp}, 0.35, 0)
                 }
             }
             this.moveingTime += dt;
             this.wayPoints.push(this.node.getPosition());
             this.anglePoints.push(this.node.angle);
-            this.node.x += this.xSpeed * dt;
-            this.node.y += this.ySpeed * dt;
-            this.node.angle += -720 * dt;
+            this.node.x += this.xSpeed * dt * this.speedPara;
+            this.node.y += this.ySpeed * dt * this.speedPara;
+            this.node.angle += -720 * dt * this.speedPara;
             if(this.node.x < -this.node.parent.width / 2) {
                 this.attacking = false;
                 this.stopMove();
@@ -174,8 +209,8 @@ export default class BossWeapon extends TimeEffect {
                 this.node.y = this.node.parent.height / 2;
             }
 
-            this.xSpeed += this.xAcc * dt;
-            this.ySpeed += this.yAcc * dt;
+            this.xSpeed += this.xAcc * dt * this.speedPara;
+            this.ySpeed += this.yAcc * dt * this.speedPara;
         }
     }
 }

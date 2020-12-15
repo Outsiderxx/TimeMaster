@@ -63,7 +63,8 @@ export default class JaggedMechanism extends TimeEffect {
     private startAttack(offset: number) {
 
         if(this.currentTween !== null) {
-            this.unschedule(this.returnToOriginalPos);
+            this.currentTween.stop();
+            this.unscheduleAllCallbacks();
         }
 
         const jaggedWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
@@ -215,14 +216,16 @@ export default class JaggedMechanism extends TimeEffect {
     }
 
     public reset() {
+        this.unscheduleAllCallbacks();
         this.isIdle = true;
         this.rollbacking = false;
         this.returning = false;
         this.lastAttackPos = null;
-        this.currentTween.stop();
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
         this.node.children[0].group = 'MonsterDamage';
         this.node.children[0].getComponent(cc.PhysicsBoxCollider).apply();
-
         this.node.setPosition(this.originalPos);
     }
 

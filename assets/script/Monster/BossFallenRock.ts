@@ -17,7 +17,6 @@ export default class BossFallenRock extends TimeEffect {
     @property
     private speed: number = 1;
 
-    private onTheGround: boolean = false;
     public boss: cc.Node = null;
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
@@ -45,7 +44,6 @@ export default class BossFallenRock extends TimeEffect {
         cc.tween(this.node)
         .to(this.dropSpeed, { y: this.target_y })
         .call(() => {
-            this.onTheGround = true;
             this.node.children[0].group = 'default';
             this.node.children[0].getComponent(cc.PhysicsBoxCollider).apply();
         })
@@ -56,11 +54,5 @@ export default class BossFallenRock extends TimeEffect {
 
     public reset() {
         this.node.destroy();
-    }
-
-    update(dt: number) {
-        if(this.boss.getComponent(bossManager).breakRock && this.onTheGround) {
-            this.node.destroy();
-        }
     }
 }

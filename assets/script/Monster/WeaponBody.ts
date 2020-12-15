@@ -17,8 +17,13 @@ export default class BossWeaponBody extends TimeEffect {
         this.status = 'normal';
     }
 
-    public accelerate() {}
-    public slowdown() {}
+    public accelerate() {
+        this.node.parent.getComponent(BossWeapon).accelerate();
+    }
+    
+    public slowdown() {
+        this.node.parent.getComponent(BossWeapon).slowdown();
+    }
 
     public rollback() {
         this.node.parent.getComponent(BossWeapon).rollback();

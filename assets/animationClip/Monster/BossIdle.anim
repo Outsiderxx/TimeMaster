@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "BossIdle",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "d3a8844b-9156-45f0-a3d2-fe7cdd804e20"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "f8e5e921-e99d-45b9-89a7-17c0ee01d014"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "9dfe1529-9f70-41c1-8356-bc069a3a5bbf"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "e1588e6f-d797-47e6-8254-5cab70c1d4e7"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "9186d7cd-eee1-4117-b9db-10c8aa4b6706"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

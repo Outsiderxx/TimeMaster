@@ -49,6 +49,9 @@ export default class Boss extends TimeEffect {
     @property(cc.Prefab)
     private bossSprintParticleSystem: cc.Prefab = null;
 
+    @property(cc.Animation)
+    private bossAnimation: cc.Animation = null;
+
     @property
     private active: boolean = false;
 
@@ -413,7 +416,7 @@ export default class Boss extends TimeEffect {
         this.nextMovePeriod = Math.random() * (this.maxMovePeriod - this.minMovePeriod) + this.minMovePeriod;
         this.nextSkillPeriod = Math.random() *(this.maxSkillPeriod - this.minSkillPeriod) + this.minMovePeriod;
         this.pickupWeaponPeriod = 1;
-
+        this.bossAnimation.play();
         this.HPDisplay.progress = 1;
         this.position = currentPosition.middleBottom;
         this.node.setPosition(this.bossPosition[this.position]);
