@@ -21,6 +21,9 @@ export default class GameController extends cc.Component {
     @property(PlayerManager)
     private player: PlayerManager = null;
 
+    @property(cc.Node)
+    private boss: cc.Node = null;
+
     @property(CameraController)
     private camera: CameraController = null;
 
@@ -53,11 +56,12 @@ export default class GameController extends cc.Component {
             }
         });
         this.transition.node.on('transitionEnd', () => this.transitionPromise(''));
+        this.boss.on('dead', () => {
+            this.player.status = false;
+            this.transition.showGameResult(true);
+        });
         this.player.node.on('dead', () => {
             this.transition.showGameResult(false);
-        });
-        this.player.node.on('success', () => {
-            this.transition.showGameResult(true);
         });
         this.player.node.on('transfer', () => {
             this.transferStage(this.currentSceneIdx + 1);
