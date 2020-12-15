@@ -38,7 +38,7 @@ export default class Boss extends TimeEffect {
     private bossPosition: cc.Vec3[] = new Array(6);
 
     @property(cc.Prefab)
-    private fallenRock: cc.Prefab = null;
+    private fallenRockPrefab: cc.Prefab = null;
 
     @property(cc.Prefab)
     private bossWeapon: cc.Prefab = null;
@@ -87,8 +87,8 @@ export default class Boss extends TimeEffect {
     private currentTween: cc.Tween = null;
     private position: currentPosition = currentPosition.middleBottom; 
     private weapon: cc.Node = null;
+    private fallenRock: cc.Node[] = new Array();
     private attackPosOffset: number[] = [20, 0, -20];
-    public breakRock: boolean = false;
 
     public getWeapon() {
         this.weaponOnHand = true;
@@ -141,6 +141,10 @@ export default class Boss extends TimeEffect {
     }
 
     private startMove(nextPos: cc.Vec3) {
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
+
         this.currentTween = cc
         .tween(this.node)
         .to(100 / this.moveSpeed, {position: nextPos}, {easing: 'quartOut'})
@@ -175,6 +179,10 @@ export default class Boss extends TimeEffect {
     }
 
     private sprintModeOne() {
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
+
         this.usingSpecialSkill = true;
         this.node.group = 'MonsterDamage';
         this.node.getComponent(cc.PhysicsBoxCollider).apply();
@@ -202,6 +210,10 @@ export default class Boss extends TimeEffect {
     }
 
     private sprintModeTwo() {
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
+
         this.usingSpecialSkill = true;
         this.node.group = 'MonsterDamage';
         this.node.getComponent(cc.PhysicsBoxCollider).apply();
@@ -244,22 +256,31 @@ export default class Boss extends TimeEffect {
     }
 
     private spawnFallenRock() {
-        this.breakRock = true;
-        this.schedule(() => {this.breakRock = false}, 0.4, 0)
-        let newRock1 = cc.instantiate(this.fallenRock);
-        let newRock2 = cc.instantiate(this.fallenRock);
+        if(this.fallenRock.length !== 0) {
+            this.fallenRock[0].getComponent(BossFallenRock).reset();
+            this.fallenRock[1].getComponent(BossFallenRock).reset();
+            this.fallenRock.length = 0;
+        }
+        let newRock1 = cc.instantiate(this.fallenRockPrefab);
+        let newRock2 = cc.instantiate(this.fallenRockPrefab);
         newRock1.setPosition(Math.random() * 640 - 640, 480);
         newRock2.setPosition(Math.random() * 640, 480);
         this.node.parent.addChild(newRock1);
-        this.node.parent.addChild(newRock2); 
+        this.node.parent.addChild(newRock2);
         newRock1.getComponent(BossFallenRock).boss = this.node;
         newRock2.getComponent(BossFallenRock).boss = this.node;
         newRock1.getComponent(BossFallenRock).accelerate();
         newRock2.getComponent(BossFallenRock).accelerate();
 
+        this.fallenRock.push(newRock1);
+        this.fallenRock.push(newRock2);
     }
 
     private throwWeapon() {
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
+
         this.usingSpecialSkill = true;
         this.weaponOnHand = false;
 
@@ -340,7 +361,7 @@ export default class Boss extends TimeEffect {
     private HPCheck(HP: number) {
         if(HP <= 0) {
             this.unscheduleAllCallbacks();
-            this.node.destroy();
+            this.node.active = false;
         }
         this.HPDisplay.progress = HP / this.bossHP;
     }
@@ -365,25 +386,37 @@ export default class Boss extends TimeEffect {
     public rollback() {}
 
     public reset() {
+        this.node.active = true;
         this.unscheduleAllCallbacks();
         if(this.weapon !== null) {
             this.weapon.destroy();
         }
-        this.breakRock = true;
+        if(this.currentTween !== null) {
+            this.currentTween.stop();
+        }
+        if(this.fallenRock.length !== 0) {
+            this.fallenRock[0].getComponent(BossFallenRock).reset();
+            this.fallenRock[1].getComponent(BossFallenRock).reset();
+            this.fallenRock.length = 0;
+        }
+
+        this.isInvincible = false;
         this.weaponOnHand = true;
+        this.usingSpecialSkill = false;
+        this.weaponWaiting = false;
+
         this.currentHP = this.bossHP;
+
         this.moveTimer = 0;
         this.skillTimer = 0;
         this.pickupWeaponTimer = 0;
         this.nextMovePeriod = Math.random() * (this.maxMovePeriod - this.minMovePeriod) + this.minMovePeriod;
         this.nextSkillPeriod = Math.random() *(this.maxSkillPeriod - this.minSkillPeriod) + this.minMovePeriod;
         this.pickupWeaponPeriod = 1;
+
         this.HPDisplay.progress = 1;
         this.position = currentPosition.middleBottom;
         this.node.setPosition(this.bossPosition[this.position]);
-        if(this.active) {
-            this.scheduleOnce(() => {this.breakRock = false;}, 0.1);
-        }
     }
 
     update (dt) {

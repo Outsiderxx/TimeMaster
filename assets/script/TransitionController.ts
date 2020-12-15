@@ -15,6 +15,9 @@ export default class TransitionController extends cc.Component {
 
     public showGameResult(isWin: boolean) {
         this.mask.opacity = 150;
+        this.message.node.scale = 1;
+        this.message.node.active = true;
+        this.message.node.setPosition(0, 60);
         this.node.active = true;
         if (isWin) {
             this.message.string = 'CONGRATULATION';
@@ -32,7 +35,6 @@ export default class TransitionController extends cc.Component {
                     .repeatForever()
                     .start();
                 this.node.once(cc.Node.EventType.TOUCH_END, () => {
-                    this.node.opacity = 0;
                     this.node.active = false;
                     this.hint.node.opacity = 0;
                     this.tween.stop();
@@ -42,23 +44,30 @@ export default class TransitionController extends cc.Component {
             .start();
     }
 
-    public transferStage(idx: number) {
+    public openTransitionferStage() {
         this.node.active = true;
-        this.mask.opacity = 255;
-        this.node.opacity = 255;
-        this.message.string = `Chapter ${idx + 1}`;
+        this.message.string = 'Loading ...';
+        // this.message.node.active = true;
         this.message.node.color = new cc.Color(255, 255, 255);
-        this.tween = cc
-            .tween(this.hint.node)
-            .then(cc.tween().to(0.5, { opacity: 255 }).to(0.5, { opacity: 0 }))
-            .repeatForever()
+        this.message.node.setPosition(435, -275);
+        this.message.node.scale = 0.2;
+        this.mask.opacity = 0;
+        cc.tween(this.mask)
+            .to(1, { opacity: 255 })
+            .call(() => {
+                this.message.node.active = true;
+                this.scheduleOnce(() => this.node.emit('transitionEnd'), 0.1);
+            })
             .start();
-        this.node.once(cc.Node.EventType.TOUCH_END, () => {
-            this.node.opacity = 0;
-            this.node.active = false;
-            this.hint.node.opacity = 0;
-            this.tween.stop();
-            this.node.emit('plotEnd');
-        });
+    }
+
+    public closeTransitionStage() {
+        this.message.node.active = false;
+        cc.tween(this.mask)
+            .to(1, { opacity: 0 })
+            .call(() => {
+                this.node.active = false;
+            })
+            .start();
     }
 }

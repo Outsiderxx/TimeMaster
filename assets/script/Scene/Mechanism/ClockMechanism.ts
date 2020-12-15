@@ -45,16 +45,16 @@ export default class ClockMechanism extends TimeEffect {
     private minuteHandTween: cc.Tween = null;
     private speedOptions: number[] = [1 / 243, 1, 5];
     private currentSpeedIdx: number = 1;
-    private currentHour: number = 9;
-    private currentMinute: number = 0;
+    private currentHour: number = 0;
+    private currentMinute: number = 15;
 
     public reset() {
         // Clock
         this.clockStop();
         this.isClockWise = true;
         this.currentSpeedIdx = 1;
-        this.currentHour = 9;
-        this.currentMinute = 0;
+        this.currentHour = 0;
+        this.currentMinute = 15;
         this.hourHand.angle = 180;
         this.minuteHand.angle = 0;
         this.clockStart();
@@ -66,6 +66,7 @@ export default class ClockMechanism extends TimeEffect {
     }
 
     onLoad() {
+        this.node.zIndex = -1;
         this.status = 'normal';
         this.clockButtons.forEach((button) => {
             button.node.on('active', () => {

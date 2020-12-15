@@ -6,13 +6,14 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import TimeEffect from '../TimeEffect';
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class EnergyRock extends TimeEffect {
-
     @property(cc.Animation)
     private energyRockAnimation: cc.Animation = null;
+
+    private isOpen: boolean = false;
 
     onLoad() {
         this.status = 'normal';
@@ -23,10 +24,14 @@ export default class EnergyRock extends TimeEffect {
     public accelerate() {}
 
     public slowdown() {
-        this.status = 'triggered';
-        this.energyRockAnimation.play('EnergyRockRecharged');
-        this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 196;
-        // this.schedule(this.reset, 10, 0);
+        if (this.isOpen) {
+            this.reset();
+        } else {
+            this.isOpen = true;
+            this.status = 'triggered';
+            this.energyRockAnimation.play('EnergyRockRecharged');
+            this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 196;
+        }
     }
 
     public reset() {
@@ -34,5 +39,4 @@ export default class EnergyRock extends TimeEffect {
         this.energyRockAnimation.play('EnergyRockEmpty');
         this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 0;
     }
-
 }

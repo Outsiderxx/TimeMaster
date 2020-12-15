@@ -34,6 +34,7 @@ export default class GameController extends cc.Component {
     private transition: TransitionController = null;
 
     private currentSceneIdx: number = 0;
+    private transitionPromise: (any) => void = null;
 
     onLoad() {
         cc.game.setFrameRate(30);
@@ -51,6 +52,7 @@ export default class GameController extends cc.Component {
                 this.transferStage(this.currentSceneIdx);
             }
         });
+        this.transition.node.on('transitionEnd', () => this.transitionPromise(''));
         this.player.node.on('dead', () => {
             this.transition.showGameResult(false);
         });
@@ -87,11 +89,11 @@ export default class GameController extends cc.Component {
                 scene.active = false;
             }
         });
-        this.transition.transferStage(this.currentSceneIdx);
     }
 
-    private transferStage(idx: number) {
-        this.transition.transferStage(idx);
+    private async transferStage(idx: number) {
+        this.transition.openTransitionferStage();
+        await new Promise((resolve) => (this.transitionPromise = resolve));
         if (idx === this.currentSceneIdx) {
             this.currentScene.reset();
         } else {
@@ -108,5 +110,6 @@ export default class GameController extends cc.Component {
         } else {
             this.camera.normalSceneSetUp();
         }
+        this.transition.closeTransitionStage();
     }
 }
