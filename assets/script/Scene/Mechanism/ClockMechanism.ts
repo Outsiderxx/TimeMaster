@@ -55,7 +55,7 @@ export default class ClockMechanism extends TimeEffect {
         this.currentSpeedIdx = 1;
         this.currentHour = 0;
         this.currentMinute = 15;
-        this.hourHand.angle = 180;
+        this.hourHand.angle = -7.5;
         this.minuteHand.angle = 0;
         this.clockStart();
         this.vine.reset();

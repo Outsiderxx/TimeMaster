@@ -24,7 +24,7 @@ export default class ClockPlatform extends cc.Component {
     }
 
     update() {
-        this.hourPlatform.setPosition(this.angleToPosition(this.clock.hourHand.angle, this.hourHandRadius));
+        this.hourPlatform.setPosition(this.angleToPosition(this.clock.hourHand.angle + 90, this.hourHandRadius));
         this.minutePlatform.setPosition(this.angleToPosition(this.clock.minuteHand.angle, this.minuteHandRadius));
     }
 

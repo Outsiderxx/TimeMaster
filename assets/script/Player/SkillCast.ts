@@ -16,7 +16,7 @@ export default class SkillCast extends cc.Component {
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
-        cc.director.getCollisionManager().enabledDebugDraw = true;
+        //cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
         this.node.active = false;
         this.changeScene();
