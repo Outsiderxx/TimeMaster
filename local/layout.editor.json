@@ -5,10 +5,10 @@
       "main": true,
       "url": "app://editor/index.html",
       "windowType": "dockable",
-      "x": -8,
-      "y": -8,
-      "width": 1936,
-      "height": 1056,
+      "x": 184,
+      "y": 100,
+      "width": 1552,
+      "height": 840,
       "layout": {
         "children": [
           {
@@ -58,7 +58,7 @@
                 "width": 1193
               },
               {
-                "active": 1,
+                "active": 0,
                 "children": [
                   "console",
                   "timeline",
