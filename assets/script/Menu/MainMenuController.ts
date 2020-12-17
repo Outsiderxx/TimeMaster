@@ -20,6 +20,7 @@ export default class MainMenuController extends cc.Component {
     onLoad() {
         this.startBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.node.active = false;
+            this.node.emit('enterFirstScene');
         });
         this.exitBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             cc.game.end();

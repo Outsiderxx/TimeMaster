@@ -14,6 +14,7 @@ export default class TransitionController extends cc.Component {
     private tween: cc.Tween = null;
 
     public showGameResult(isWin: boolean) {
+        this.node.opacity = 0;
         this.mask.opacity = 150;
         this.message.node.scale = 1;
         this.message.node.active = true;
@@ -46,11 +47,11 @@ export default class TransitionController extends cc.Component {
 
     public openTransitionferStage() {
         this.node.active = true;
-        this.message.string = 'Loading ...';
-        // this.message.node.active = true;
+        this.message.node.active = false;
         this.message.node.color = new cc.Color(255, 255, 255);
         this.message.node.setPosition(435, -275);
         this.message.node.scale = 0.2;
+        this.message.string = 'Loading ...';
         this.mask.opacity = 0;
         cc.tween(this.mask)
             .to(1, { opacity: 255 })

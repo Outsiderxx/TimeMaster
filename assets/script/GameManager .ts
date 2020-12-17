@@ -9,9 +9,6 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class GameController extends cc.Component {
-    @property(cc.Node)
-    private gameStage: cc.Node = null;
-
     @property(MainMenuController)
     private mainMenu: MainMenuController = null;
 
@@ -36,21 +33,38 @@ export default class GameController extends cc.Component {
     @property(TransitionController)
     private transition: TransitionController = null;
 
+    @property(cc.AudioClip)
+    private bgmNormal: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private bgmBoss: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private bgmMainMenu: cc.AudioClip = null;
+
+    @property
+    private soundVolume: number = 0;
+
     private currentSceneIdx: number = 0;
-    private transitionPromise: (any) => void = null;
+    private transitionPromise: (value: any) => void = null;
 
     onLoad() {
         cc.game.setFrameRate(30);
+        cc.audioEngine.setMusicVolume(this.soundVolume);
+        cc.audioEngine.setEffectsVolume(this.soundVolume);
+        this.mainMenu.node.on('enterFirstScene', () => cc.audioEngine.playMusic(this.bgmNormal, true));
         this.menu.node.on('back', () => {
             this.player.status = false;
-            this.transferStage(0);
+            this.transferStage(0, true);
             this.mainMenu.node.active = true;
+            cc.audioEngine.playMusic(this.bgmMainMenu, true);
         });
         this.transition.node.on('back', (isWin: boolean) => {
             this.player.status = false;
             if (isWin) {
-                this.transferStage(0);
+                this.transferStage(0, true);
                 this.mainMenu.node.active = true;
+                cc.audioEngine.playMusic(this.bgmMainMenu, true);
             } else {
                 this.transferStage(this.currentSceneIdx);
             }
@@ -88,6 +102,7 @@ export default class GameController extends cc.Component {
 
     start() {
         this.mainMenu.node.active = true;
+        cc.audioEngine.playMusic(this.bgmMainMenu, true);
         this.sceneNodes.forEach((scene, idx) => {
             if (idx !== 0) {
                 scene.active = false;
@@ -95,7 +110,8 @@ export default class GameController extends cc.Component {
         });
     }
 
-    private async transferStage(idx: number) {
+    private async transferStage(idx: number, isBackToMainMenu: boolean = false) {
+        cc.audioEngine.stopMusic();
         this.transition.openTransitionferStage();
         await new Promise((resolve) => (this.transitionPromise = resolve));
         if (idx === this.currentSceneIdx) {
@@ -115,5 +131,12 @@ export default class GameController extends cc.Component {
             this.camera.normalSceneSetUp();
         }
         this.transition.closeTransitionStage();
+        if (this.currentSceneIdx === this.sceneNodes.length - 1) {
+            cc.audioEngine.playMusic(this.bgmBoss, true);
+        } else if (isBackToMainMenu) {
+            cc.audioEngine.playMusic(this.bgmMainMenu, true);
+        } else {
+            cc.audioEngine.playMusic(this.bgmNormal, true);
+        }
     }
 }
