@@ -114,9 +114,8 @@ export default class GameController extends cc.Component {
         cc.audioEngine.stopMusic();
         this.transition.openTransitionferStage();
         await new Promise((resolve) => (this.transitionPromise = resolve));
-        if (idx === this.currentSceneIdx) {
-            this.currentScene.reset();
-        } else {
+        this.currentScene.reset();
+        if (idx !== this.currentSceneIdx) {
             this.camera.isUpdate = false;
             this.currentScene.node.active = false;
             this.currentScene = this.sceneNodes[idx].getComponent(SceneManager);
