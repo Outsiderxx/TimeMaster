@@ -36,6 +36,7 @@ export default class EnergyRock extends TimeEffect {
 
     public reset() {
         this.status = 'normal';
+        this.isOpen = false;
         this.energyRockAnimation.play('EnergyRockEmpty');
         this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 0;
     }
