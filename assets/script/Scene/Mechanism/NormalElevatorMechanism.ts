@@ -35,8 +35,8 @@ export default class NormalElevatorMechanism extends TimeEffect {
     private isMoving: boolean = false;
 
     onLoad() {
-        // this.chains[0].zIndex = -1;
-        // this.chains[1].zIndex = -1;
+        this.chains[0].zIndex = -1;
+        this.chains[1].zIndex = -1;
         this.testNode.on(cc.Node.EventType.TOUCH_END, () => this.elevatorTriggered());
     }
 

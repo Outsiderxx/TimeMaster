@@ -1,4 +1,5 @@
 import TimeEffect from '../TimeEffect';
+import { SkillSet } from '../Player/PlayerManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -9,15 +10,15 @@ export default class DirectionStone extends TimeEffect {
     }
 
     public accelerate() {
-        this.node.emit('onClick', 'accelerate');
+        this.node.emit('onClick', SkillSet.accelerate);
     }
 
     public slowdown() {
-        this.node.emit('onClick', 'slowdown');
+        this.node.emit('onClick', SkillSet.slowdown);
     }
 
     public rollback() {
-        this.node.emit('onClick', 'rollback');
+        this.node.emit('onClick', SkillSet.rollback);
     }
 
     public reset() {}

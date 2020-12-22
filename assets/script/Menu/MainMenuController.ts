@@ -1,3 +1,5 @@
+import SettingPage from './SettingPage';
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
@@ -7,6 +9,9 @@ export default class MainMenuController extends cc.Component {
 
     @property(cc.Button)
     private settingBtn: cc.Button = null;
+
+    @property(SettingPage)
+    private settingPage: SettingPage = null;
 
     @property(cc.Button)
     private helpBtn: cc.Button = null;
@@ -25,5 +30,6 @@ export default class MainMenuController extends cc.Component {
         this.exitBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             cc.game.end();
         });
+        this.settingBtn.node.on(cc.Node.EventType.TOUCH_END, () => this.settingPage.open());
     }
 }

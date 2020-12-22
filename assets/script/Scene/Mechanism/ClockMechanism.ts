@@ -1,5 +1,5 @@
 import TimeEffect from '../../TimeEffect';
-import AcceEnergeRock from '../AcceEnergeRock';
+import { SkillSet } from '../../Player/PlayerManager';
 import VineMechanism from '../Mechanism/FirstScene/VineMechanism';
 import ClockButtonMechanism from './ClockButtonMechanism';
 import StretchPlatformMechanism from '../StretchPlatformMechanism';
@@ -20,9 +20,6 @@ export default class ClockMechanism extends TimeEffect {
     @property(cc.Label)
     private timeTxt: cc.Label = null;
 
-    @property(cc.Node)
-    private transferPoint: cc.Node = null;
-
     @property(VineMechanism)
     private vine: VineMechanism = null;
 
@@ -34,6 +31,18 @@ export default class ClockMechanism extends TimeEffect {
 
     @property(cc.Node)
     private directionStone: cc.Node = null;
+
+    @property(cc.Node)
+    private transferPoint: cc.Node = null;
+
+    @property(cc.Sprite)
+    private door: cc.Sprite = null;
+
+    @property(cc.SpriteFrame)
+    private doorUnopened: cc.SpriteFrame = null;
+
+    @property(cc.SpriteFrame)
+    private doorOpened: cc.SpriteFrame = null;
 
     @property
     private secondPerCircle: number = 0;
@@ -63,6 +72,8 @@ export default class ClockMechanism extends TimeEffect {
         this.floors[1].getComponent(StretchPlatformMechanism).reset();
         this.floors[2].getComponent(StretchPlatformMechanism).reset();
         this.directionStone.angle = 180;
+        this.door.spriteFrame = this.doorUnopened;
+        this.transferPoint.name = 'UnActivedTransferPoint';
     }
 
     onLoad() {
@@ -71,14 +82,13 @@ export default class ClockMechanism extends TimeEffect {
         this.clockButtons.forEach((button) => {
             button.node.on('active', () => {
                 if (this.clockButtons.filter((button) => button.isActived === true).length === 3) {
+                    this.door.spriteFrame = this.doorOpened;
                     this.transferPoint.name = 'TransferPoint';
                 }
             });
         });
-        this.directionStone.on('onClick', (skill: 'accelerate' | 'slowdown' | 'rollback') => this.onMultiFuncionDirectionStoneClick(skill));
+        this.directionStone.on('onClick', (skill: SkillSet) => this.onMultiFuncionDirectionStoneClick(skill));
         this.clockStart();
-        this.transferPoint.name = 'UnActivedTransferPoint';
-        this.node.emit('reset');
     }
 
     update() {
@@ -89,14 +99,14 @@ export default class ClockMechanism extends TimeEffect {
             this.stair.active = false;
         }
         // Floor
-        this.floors[0].active = this.currentMinute >= 0 && this.currentMinute <= 25;
-        this.floors[4].active = this.currentMinute >= 0 && this.currentMinute <= 25;
-        this.floors[3].active = this.currentMinute >= 36 && this.currentMinute <= 59;
-        // StretchFloore
-        if ((this.currentMinute === 20 && this.isClockWise) || (this.currentMinute === 50 && !this.isClockWise)) {
+        this.floors[0].active = this.currentMinute >= 0 && this.currentMinute <= 30;
+        this.floors[3].active = this.currentMinute >= 31 && this.currentMinute <= 59;
+        this.floors[4].active = this.currentMinute >= 0 && this.currentMinute <= 40;
+        // StretchFloor
+        if ((this.currentMinute === 25 && this.isClockWise) || (this.currentMinute === 55 && !this.isClockWise)) {
             this.floors[1].getComponent(StretchPlatformMechanism).stretch();
             this.floors[2].getComponent(StretchPlatformMechanism).stretch();
-        } else if ((this.currentMinute === 35 && this.isClockWise) || (this.currentMinute === 35 && !this.isClockWise)) {
+        } else if ((this.currentMinute === 40 && this.isClockWise) || (this.currentMinute === 40 && !this.isClockWise)) {
             this.floors[1].getComponent(StretchPlatformMechanism).shrink();
             this.floors[2].getComponent(StretchPlatformMechanism).shrink();
         }
@@ -213,11 +223,19 @@ export default class ClockMechanism extends TimeEffect {
         this.minuteHandTween.stop();
     }
 
-    private onMultiFuncionDirectionStoneClick(skill: 'accelerate' | 'slowdown' | 'rollback') {
+    private onMultiFuncionDirectionStoneClick(skill: SkillSet) {
         switch (this.directionStone.angle) {
+            case 90:
+                break;
             case 60:
-                if (this.floors[3].active === false && this.floors[4].active === false && skill === 'accelerate') {
-                    this.vine.accelerate();
+                if (this.floors[4].active === false && this.vine.checkStatus(skill)) {
+                    if (skill === SkillSet.accelerate) {
+                        this.vine.accelerate();
+                    } else if (skill === SkillSet.rollback) {
+                        this.vine.rollback();
+                    } else if (skill === SkillSet.slowdown) {
+                        this.vine.slowdown();
+                    }
                 }
                 break;
             case 330:
@@ -225,11 +243,11 @@ export default class ClockMechanism extends TimeEffect {
             case 210:
                 break;
             case 180:
-                if (skill === 'accelerate') {
+                if (skill === SkillSet.accelerate) {
                     this.accelerate();
-                } else if (skill === 'rollback') {
+                } else if (skill === SkillSet.rollback) {
                     this.rollback();
-                } else if (skill === 'slowdown') {
+                } else if (skill === SkillSet.slowdown) {
                     this.slowdown();
                 }
                 break;

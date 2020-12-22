@@ -19,16 +19,10 @@ export default class ClockPlatform extends cc.Component {
     @property
     private minuteHandRadius: number = 0;
 
-    onLoad() {
-        this.clock.node.on('reset', () => this.reset());
-    }
-
     update() {
         this.hourPlatform.setPosition(this.angleToPosition(this.clock.hourHand.angle + 90, this.hourHandRadius));
         this.minutePlatform.setPosition(this.angleToPosition(this.clock.minuteHand.angle, this.minuteHandRadius));
     }
-
-    private reset() {}
 
     private angleToPosition(angle: number, radius: number) {
         while (angle < 360) {

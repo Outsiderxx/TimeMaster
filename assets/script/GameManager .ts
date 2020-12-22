@@ -34,7 +34,10 @@ export default class GameController extends cc.Component {
     private transition: TransitionController = null;
 
     @property(cc.AudioClip)
-    private bgmNormal: cc.AudioClip = null;
+    private bgmCave: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private bgmCastle: cc.AudioClip = null;
 
     @property(cc.AudioClip)
     private bgmBoss: cc.AudioClip = null;
@@ -52,7 +55,7 @@ export default class GameController extends cc.Component {
         cc.game.setFrameRate(30);
         cc.audioEngine.setMusicVolume(this.soundVolume);
         cc.audioEngine.setEffectsVolume(this.soundVolume);
-        this.mainMenu.node.on('enterFirstScene', () => cc.audioEngine.playMusic(this.bgmNormal, true));
+        this.mainMenu.node.on('enterFirstScene', () => cc.audioEngine.playMusic(this.bgmCave, true));
         this.menu.node.on('back', () => {
             this.player.status = false;
             this.transferStage(0, true);
@@ -134,8 +137,10 @@ export default class GameController extends cc.Component {
             cc.audioEngine.playMusic(this.bgmBoss, true);
         } else if (isBackToMainMenu) {
             cc.audioEngine.playMusic(this.bgmMainMenu, true);
+        } else if (this.currentSceneIdx <= 1) {
+            cc.audioEngine.playMusic(this.bgmCave, true);
         } else {
-            cc.audioEngine.playMusic(this.bgmNormal, true);
+            cc.audioEngine.playMusic(this.bgmCastle, true);
         }
     }
 }

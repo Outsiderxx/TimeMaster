@@ -5,8 +5,8 @@ export default class MenuController extends cc.Component {
     @property(cc.Button)
     private helpBtn: cc.Button = null;
 
-    @property(cc.Toggle)
-    private volumeToggle: cc.Toggle = null;
+    @property(cc.Node)
+    private volumeToggle: cc.Node = null;
 
     @property(cc.Button)
     private backBtn: cc.Button = null;
@@ -14,8 +14,8 @@ export default class MenuController extends cc.Component {
     @property(cc.Node)
     private helpPanel: cc.Node = null;
 
-    @property(cc.Button)
-    private closeBtn: cc.Button = null;
+    @property(cc.Node)
+    private closeBtn: cc.Node = null;
 
     private isOpen: boolean = false;
 
@@ -30,6 +30,11 @@ export default class MenuController extends cc.Component {
                 } else {
                     this.isOpen = true;
                     this.node.active = true;
+                    if (cc.audioEngine.getMusicVolume() === 0) {
+                        this.volumeToggle.getComponent(cc.Toggle).isChecked = true;
+                    } else {
+                        this.volumeToggle.getComponent(cc.Toggle).isChecked = false;
+                    }
                     cc.director.pause();
                 }
             }
@@ -37,11 +42,17 @@ export default class MenuController extends cc.Component {
         this.helpBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.helpPanel.active = true;
         });
-        this.closeBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
+        this.closeBtn.on(cc.Node.EventType.TOUCH_END, () => {
             this.helpPanel.active = false;
         });
-        this.volumeToggle.node.on('toggle', () => {
-            // TODO: Music Manager Enable / Disable
+        this.volumeToggle.on('toggle', () => {
+            if (cc.audioEngine.getMusicVolume() === 0) {
+                cc.audioEngine.setMusicVolume(0.5);
+                cc.audioEngine.setEffectsVolume(0.5);
+            } else {
+                cc.audioEngine.setMusicVolume(0);
+                cc.audioEngine.setEffectsVolume(0);
+            }
         });
         this.backBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.node.active = false;
