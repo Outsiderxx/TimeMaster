@@ -71,4 +71,18 @@ export default class TransitionController extends cc.Component {
             })
             .start();
     }
+
+    public clockSceneFailTransition() {
+        this.node.active = true;
+        this.message.node.active = false;
+        this.mask.opacity = 0;
+        cc.tween(this.mask)
+            .to(1, { opacity: 255 })
+            .delay(1)
+            .to(1, { opacity: 0 })
+            .call(() => {
+                this.node.active = false;
+            })
+            .start();
+    }
 }

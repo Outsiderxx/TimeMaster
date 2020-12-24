@@ -2,12 +2,12 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class PlotPoint extends cc.Component {
-    @property
-    private text: string = null;
+    @property([cc.String])
+    public sentences: string[] = [];
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         if (other.node.name === 'Player') {
-            this.node.emit('trigger', this.text);
+            this.node.emit('trigger');
         }
     }
 

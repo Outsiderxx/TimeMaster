@@ -1,6 +1,5 @@
 import TimeEffect from '../TimeEffect';
 import elevatorManager from './ElevatorManager';
-import NormalElevatorMechanism from './Mechanism/NormalElevatorMechanism';
 import gateManager from './Mechanism/FirstScene/GateMechanism';
 const { ccclass, property } = cc._decorator;
 
@@ -14,8 +13,7 @@ export default class Button extends TimeEffect {
             for (let i = 0; i < this.target.length; i++) {
                 if (this.target[i].name === 'Elevator') {
                     this.node.getComponent(cc.Animation).play('clickBtn');
-                    this.target[i].getComponent(elevatorManager)?.elevatorTriggered();
-                    this.target[i].getComponent(NormalElevatorMechanism)?.elevatorTriggered();
+                    this.target[i].getComponent(elevatorManager).elevatorTriggered();
                 }
                 if (this.target[i].name === 'Gate' && !this.target[i].getComponent(gateManager).buttonFirstTriggered) {
                     this.node.getComponent(cc.Animation).play('gateBtn');

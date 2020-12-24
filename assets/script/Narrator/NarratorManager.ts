@@ -1,21 +1,27 @@
+import PlotPoint from './PlotPoint';
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class NarratorManaget extends cc.Component {
-    @property(cc.Label)
-    private text: cc.Label = null;
+    @property([cc.Label])
+    private texts: cc.Label[] = [];
 
-    @property([cc.Node])
-    private plotPoints: cc.Node[] = [];
+    @property([PlotPoint])
+    private plotPoints: PlotPoint[] = [];
 
     onLoad() {
         this.plotPoints.forEach((point) => {
-            point.on('trigger', (text: string) => {
-                this.text.node.active = true;
-                this.text.string = text;
+            point.node.on('trigger', () => {
+                point.sentences.forEach((sentence, idx) => {
+                    if (idx <= 1) {
+                        this.texts[idx].string = sentence;
+                        this.texts[idx].node.active = true;
+                    }
+                });
             });
-            point.on('untrigger', () => {
-                this.text.node.active = false;
+            point.node.on('untrigger', () => {
+                this.texts.forEach((text) => (text.node.active = false));
             });
         });
     }
