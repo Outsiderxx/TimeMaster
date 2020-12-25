@@ -42,7 +42,21 @@ export default class CameraController extends cc.Component {
         this.updateNormalCameraPosition();
     }
 
-    public async sceneThreeCameraMovement() {}
+    public async sceneThreeCameraMovement() {
+        cc.tween(this.camera.node)
+            .delay(1)
+            .to(1, { y: 855 })
+            .delay(1)
+            .to(2, { x: 1800 })
+            .delay(1)
+            .to(1, { y: 350 })
+            .to(2, { x: 2800, y: -35 })
+            .delay(1)
+            .to(2, { x: -240, y: 25 })
+            .call(() => this.cameraMovementResolve())
+            .start();
+        await new Promise((resolve) => (this.cameraMovementResolve = resolve));
+    }
 
     public async sceneFourCameraMovement() {
         cc.tween(this.camera.node)

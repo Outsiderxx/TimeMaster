@@ -5,14 +5,11 @@ export default class ClockButtonMechanism extends cc.Component {
     @property(cc.SpriteFrame)
     private nonActivedSpriteFrame: cc.SpriteFrame = null;
 
-    @property(cc.SpriteFrame)
-    private activedSpriteFrame: cc.SpriteFrame = null;
-
     public isActived: boolean = false;
 
     public active() {
         this.isActived = true;
-        this.node.getComponent(cc.Sprite).spriteFrame = this.activedSpriteFrame;
+        this.node.getComponent(cc.Animation).play();
         this.node.emit('active');
     }
 
@@ -22,7 +19,7 @@ export default class ClockButtonMechanism extends cc.Component {
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
-        if (other.node.name === 'Player') {
+        if (other.node.name === 'Player' && !this.isActived) {
             this.active();
         }
     }

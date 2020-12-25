@@ -3,6 +3,7 @@ import { SkillSet } from '../../Player/PlayerManager';
 import VineMechanism from '../Mechanism/FirstScene/VineMechanism';
 import ClockButtonMechanism from './ClockButtonMechanism';
 import StretchPlatformMechanism from '../StretchPlatformMechanism';
+import AcceEnergeRockMechanism from '../AcceEnergeRock';
 
 const { ccclass, property } = cc._decorator;
 
@@ -31,6 +32,9 @@ export default class ClockMechanism extends TimeEffect {
 
     @property(cc.Node)
     private directionStone: cc.Node = null;
+
+    @property([AcceEnergeRockMechanism])
+    private energeRocks: AcceEnergeRockMechanism[] = [];
 
     @property(cc.Node)
     private transferPoint: cc.Node = null;
@@ -239,8 +243,10 @@ export default class ClockMechanism extends TimeEffect {
                 }
                 break;
             case 330:
+                this.energeRocks[0].accelerate();
                 break;
             case 210:
+                this.energeRocks[1].accelerate();
                 break;
             case 180:
                 if (skill === SkillSet.accelerate) {
