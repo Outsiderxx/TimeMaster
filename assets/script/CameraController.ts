@@ -18,10 +18,8 @@ export default class CameraController extends cc.Component {
     private player: PlayerManager = null;
 
     private sceneManager: cc.Node = null;
-    private isFocus: boolean = false;
-    private mode: CameraMode = 0;
     private _isUpdate: boolean = true;
-    private middleGroundOffset: boolean = false;
+    private cameraMovementResolve: (value: void) => void = null;
 
     public set isUpdate(flag: boolean) {
         this._isUpdate = flag;
@@ -37,40 +35,44 @@ export default class CameraController extends cc.Component {
     }
 
     update() {
+        this.middleGround.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
         if (!this._isUpdate) {
             return;
         }
-        const { normal, focus, zoom } = CameraMode;
-        switch (this.mode) {
-            case normal:
-                this.updateNormalCameraPosition();
-                break;
-            case focus:
-                this.updateFocusCameraPosition();
-                break;
-            case zoom:
-                this.updateZoomCameraPosition();
-                break;
-            default:
-                break;
-        }
-        this.middleGround.setPosition(this.camera.node.x + (this.middleGroundOffset ? 0 : 640), this.camera.node.y + (this.middleGroundOffset ? 0 : 360));
+        this.updateNormalCameraPosition();
+    }
+
+    public async sceneThreeCameraMovement() {}
+
+    public async sceneFourCameraMovement() {
+        cc.tween(this.camera.node)
+            .delay(1)
+            .to(0.5, { y: 1440 })
+            .to(1, { x: -1280, y: 1950 })
+            .delay(1)
+            .to(2, { x: 2560, y: 2160 })
+            .delay(1)
+            .to(1.25, { y: 800 })
+            .delay(1)
+            .to(0.5, { x: 1780 })
+            .delay(1)
+            .to(1.5, { x: 0, y: 873.6 })
+            .call(() => this.cameraMovementResolve())
+            .start();
+        await new Promise((resolve) => (this.cameraMovementResolve = resolve));
     }
 
     public finalSceneSetUp() {
         this.camera.zoomRatio = 1;
         this.camera.node.setContentSize(new cc.Size(1280, 720));
-        // this.middleGroundOffset = true;
     }
 
     public normalSceneSetUp() {
         this.camera.zoomRatio = 1.6;
         this.camera.node.setContentSize(new cc.Size(800, 450));
-        this.middleGroundOffset = false;
     }
 
     public reset() {
-        this.mode = CameraMode.normal;
         this.sceneManager = this.gameStage.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
         this.camera.node.setPosition(this.sceneManager.getComponent(SceneManager).initialCameraPosition);
         this.middleGround = this.sceneManager.getChildByName('Foreground');
@@ -95,10 +97,6 @@ export default class CameraController extends cc.Component {
             this.camera.node.y = this.player.node.y;
         }
     }
-
-    private updateFocusCameraPosition() {}
-
-    private updateZoomCameraPosition() {}
 }
 
 enum CameraMode {

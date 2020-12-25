@@ -142,5 +142,18 @@ export default class GameController extends cc.Component {
         } else {
             cc.audioEngine.playMusic(this.bgmCastle, true);
         }
+        if (this.currentSceneIdx === 2) {
+            this.player.status = false;
+            this.camera.isUpdate = false;
+            await this.camera.sceneThreeCameraMovement();
+            this.player.status = true;
+            this.camera.isUpdate = true;
+        } else if (this.currentSceneIdx === 3) {
+            this.player.status = false;
+            this.camera.isUpdate = false;
+            await this.camera.sceneFourCameraMovement();
+            this.player.status = true;
+            this.camera.isUpdate = true;
+        }
     }
 }
