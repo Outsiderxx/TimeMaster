@@ -137,7 +137,7 @@ export default class GameController extends cc.Component {
             cc.audioEngine.playMusic(this.bgmBoss, true);
         } else if (isBackToMainMenu) {
             cc.audioEngine.playMusic(this.bgmMainMenu, true);
-        } else if (this.currentSceneIdx <= 1) {
+        } else if (this.currentSceneIdx <= 2) {
             cc.audioEngine.playMusic(this.bgmCave, true);
         } else {
             cc.audioEngine.playMusic(this.bgmCastle, true);

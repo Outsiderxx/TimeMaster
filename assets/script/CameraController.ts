@@ -35,11 +35,11 @@ export default class CameraController extends cc.Component {
     }
 
     update() {
-        this.middleGround.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
         if (!this._isUpdate) {
             return;
         }
         this.updateNormalCameraPosition();
+        this.middleGround?.setPosition(this.camera.node.x + 640, this.camera.node.y + 360);
     }
 
     public async sceneThreeCameraMovement() {
