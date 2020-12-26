@@ -101,6 +101,11 @@
   },
   "events": [
     {
+      "frame": 0,
+      "func": "slowAudioPlay",
+      "params": []
+    },
+    {
       "frame": 1.0833333333333333,
       "func": "afterSlowExpend",
       "params": []

@@ -189,7 +189,7 @@
       "array": [
         -240,
         -10,
-        464.1219581937885,
+        464.18961642845915,
         0,
         0,
         0,
@@ -287,7 +287,7 @@
       "array": [
         0,
         0,
-        464.1219581937885,
+        464.18961642845915,
         0,
         0,
         0,
@@ -32218,7 +32218,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "458yDP9RNMXYmvVHPFyIrx"
+    "_id": "d3auICjIlMdLIEfC2IrtE3"
   },
   {
     "__type__": "cc.Node",
@@ -32284,7 +32284,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "57wfQG+ypOy7D34oQeWaBc"
+    "_id": "feUDRvg2lIZ5lWVZBuhXXl"
   },
   {
     "__type__": "cc.Node",
@@ -32352,7 +32352,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "5bznluuwtDvZvy5UrXpY8r"
+    "_id": "efY9K95lxGrIkVu1v13YNV"
   },
   {
     "__type__": "cc.Sprite",
@@ -32382,7 +32382,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "2bA6KuCBBGI4Nd5U3cbgBf"
+    "_id": "20DICtO2dMWIbb3c9knYKJ"
   },
   {
     "__type__": "cc.Animation",
@@ -32428,7 +32428,7 @@
       }
     ],
     "playOnLoad": false,
-    "_id": "aaSjq1UgtJia6+i/W2ky2E"
+    "_id": "a9pjgStdhPMpfA63lS5YL0"
   },
   {
     "__type__": "96fa90aRfdLa4/75A9dxWjv",
@@ -32441,10 +32441,34 @@
     "playerManager": {
       "__id__": 840
     },
+    "playerAnimation": {
+      "__id__": 841
+    },
     "effect": {
       "__id__": 836
     },
-    "_id": "50uV2AQ8pOxZYoyMgM67CX"
+    "accelAudio": {
+      "__uuid__": "fa205b69-263a-4087-999a-520180296703"
+    },
+    "slowAudio": {
+      "__uuid__": "c27fd729-403b-4c9d-8cd3-834114e721ed"
+    },
+    "rollBacklAudio": {
+      "__uuid__": "2eb7eddf-3fc4-4b83-8a35-8b462d4fde09"
+    },
+    "jumpAudio": {
+      "__uuid__": "6c417df0-081d-46f4-abea-b4be1df68d44"
+    },
+    "walkAudio": {
+      "__uuid__": "2ee5f64c-a989-441a-95fc-74de927e3ee3"
+    },
+    "hurtAudio": {
+      "__uuid__": "e6a83255-5b7e-40ee-bdcf-6d11fd93c5c1"
+    },
+    "deathAudio": {
+      "__uuid__": "c98df9b2-9fa3-436d-b4c7-b1f2d4adc32d"
+    },
+    "_id": "e2NduUIf1EC7Yq0XSVI1wx"
   },
   {
     "__type__": "1f2ddkKC4dLo53BVKBHYdQ8",
@@ -32502,11 +32526,20 @@
     "feetRayPoint": {
       "__id__": 886
     },
+    "triggerSkillParticle": {
+      "__uuid__": "e64c3814-4441-45e6-9ad2-c4e292c2929c"
+    },
+    "skillSuccess": {
+      "__uuid__": "479579cb-6570-49ef-b720-25b414813bdc"
+    },
+    "skillfail": {
+      "__uuid__": "730e7a11-6bf2-4a4f-8f25-4f0a5583a9ba"
+    },
     "healthPoint": 5,
     "moveAccel": 250,
     "jumpFroce": 470,
     "invincibleTime": 0.5,
-    "_id": "b1+fyMlDtP3oj1CiElUr7V"
+    "_id": "49vxlMiclIiJC57HUMratn"
   },
   {
     "__type__": "cc.Animation",
@@ -32543,7 +32576,7 @@
       }
     ],
     "playOnLoad": false,
-    "_id": "64mHgp/WBOQKk50FOXFxdy"
+    "_id": "2b2heC+JZEl4eRw+6SY18z"
   },
   {
     "__type__": "cc.Node",
@@ -32611,7 +32644,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "21CTLIL+JBnrdW1kY8zzJy"
+    "_id": "2fqikmJ/5BpIqtP0J0eTOp"
   },
   {
     "__type__": "cc.Sprite",
@@ -32643,7 +32676,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "2cMrTSgblNdL9FfDVKjZrG"
+    "_id": "d6XqlB1StPX7gYv+fwBV5D"
   },
   {
     "__type__": "96fa90aRfdLa4/75A9dxWjv",
@@ -32656,10 +32689,34 @@
     "playerManager": {
       "__id__": 840
     },
+    "playerAnimation": {
+      "__id__": 841
+    },
     "effect": {
       "__id__": 836
     },
-    "_id": "d99h1PzhZI84WDtL/j2Ktt"
+    "accelAudio": {
+      "__uuid__": "fa205b69-263a-4087-999a-520180296703"
+    },
+    "slowAudio": {
+      "__uuid__": "c27fd729-403b-4c9d-8cd3-834114e721ed"
+    },
+    "rollBacklAudio": {
+      "__uuid__": "2eb7eddf-3fc4-4b83-8a35-8b462d4fde09"
+    },
+    "jumpAudio": {
+      "__uuid__": "6c417df0-081d-46f4-abea-b4be1df68d44"
+    },
+    "walkAudio": {
+      "__uuid__": "2ee5f64c-a989-441a-95fc-74de927e3ee3"
+    },
+    "hurtAudio": {
+      "__uuid__": "e6a83255-5b7e-40ee-bdcf-6d11fd93c5c1"
+    },
+    "deathAudio": {
+      "__uuid__": "c98df9b2-9fa3-436d-b4c7-b1f2d4adc32d"
+    },
+    "_id": "65aaGCwNBEm7x8aNGC61ne"
   },
   {
     "__type__": "c59e7UjfgRMgJfJ5yGb8AUZ",
@@ -34882,7 +34939,7 @@
     "_is3DNode": false,
     "_groupIndex": 0,
     "groupIndex": 0,
-    "_id": "ef84lZ/09CqIpAFAtRBc0f"
+    "_id": "2fpXy5RCFBFY5w/64hCyE4"
   },
   {
     "__type__": "cc.Sprite",
@@ -34912,7 +34969,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "47ERRpg0ND2JPcMyux13Tz"
+    "_id": "e0/aiOKANGj6p8p48Tck9k"
   },
   {
     "__type__": "cc.RigidBody",
@@ -34937,7 +34994,7 @@
     "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
-    "_id": "6cilyyShRFUZJjR0r8m32Z"
+    "_id": "a9AZ5Sr7hP+ZMmJiD0Mzhw"
   },
   {
     "__type__": "cc.PhysicsBoxCollider",
@@ -34963,7 +35020,7 @@
       "width": 43.6,
       "height": 136.5
     },
-    "_id": "eeCWU3jhhG16ZcnolMHZbC"
+    "_id": "1dbgvVADpFa75LASy0CCCT"
   },
   {
     "__type__": "cc.BoxCollider",
@@ -34984,7 +35041,7 @@
       "width": 50.3,
       "height": 8.3
     },
-    "_id": "ae8cg1prRLLrpwlgB4qgDs"
+    "_id": "366/w6LIpPD4VhUVPKTbLk"
   },
   {
     "__type__": "cc.ProgressBar",

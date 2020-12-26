@@ -38,7 +38,7 @@ export default class MeleeMonster extends cc.Component {
     update(dt: number) {
         this.reachEdgeCheck();
         this.onTheGroundCheck();
-        if(!this.startAction) {
+        if (!this.startAction) {
             this.playIdleAnimation();
             return;
         }
@@ -90,7 +90,7 @@ export default class MeleeMonster extends cc.Component {
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         if (self.tag === 3 && other.node.name === 'Player') {
-            if(!this.startAction) {
+            if (!this.startAction) {
                 this.startAction = true;
             }
         }
@@ -101,6 +101,7 @@ export default class MeleeMonster extends cc.Component {
         } else if (self.tag === 1) {
             if (other.node.name === 'Deadline') {
                 // 怪物掉落
+                cc.audioEngine.playEffect(this.deathEffect, false);
                 this.node.destroy();
             }
         } else if (self.tag === 2 && other.node.name === 'Player') {
@@ -131,7 +132,7 @@ export default class MeleeMonster extends cc.Component {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
         const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 110 * Math.abs(this.node.scaleX));
-        
+
         const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 10 * Math.abs(this.node.scaleX));
         const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 10 * Math.abs(this.node.scaleX));
         const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 40 * Math.abs(this.node.scaleX));

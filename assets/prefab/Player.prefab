@@ -67,8 +67,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        2531.164,
-        -107.008,
+        2064.92,
+        948.06,
         0,
         0,
         0,
@@ -317,9 +317,31 @@
     "playerManager": {
       "__id__": 7
     },
+    "playerAnimation": {
+      "__id__": 8
+    },
     "effect": {
       "__id__": 3
     },
+    "accelAudio": {
+      "__uuid__": "fa205b69-263a-4087-999a-520180296703"
+    },
+    "slowAudio": {
+      "__uuid__": "c27fd729-403b-4c9d-8cd3-834114e721ed"
+    },
+    "rollBacklAudio": {
+      "__uuid__": "2eb7eddf-3fc4-4b83-8a35-8b462d4fde09"
+    },
+    "jumpAudio": {
+      "__uuid__": "6c417df0-081d-46f4-abea-b4be1df68d44"
+    },
+    "walkAudio": {
+      "__uuid__": "2ee5f64c-a989-441a-95fc-74de927e3ee3"
+    },
+    "hurtAudio": {
+      "__uuid__": "e6a83255-5b7e-40ee-bdcf-6d11fd93c5c1"
+    },
+    "deathAudio": null,
     "_id": ""
   },
   {
@@ -336,8 +358,8 @@
     "playerPosition": [
       {
         "__type__": "cc.Vec2",
-        "x": 2531.164,
-        "y": -107.008
+        "x": 2806.18,
+        "y": 553.773
       },
       {
         "__type__": "cc.Vec2",
@@ -346,23 +368,25 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": -424,
-        "y": 875
+        "x": 2064.92,
+        "y": 948.06
+      },
+      {
+        "__type__": "cc.Vec2",
+        "x": -250,
+        "y": 873
       },
       {
         "__type__": "cc.Vec2",
         "x": -450,
         "y": -325
-      },
-      {
-        "__type__": "cc.Vec2",
-        "x": -546,
-        "y": -137
       }
     ],
     "playerDirection": [
       false,
-      true
+      true,
+      false,
+      false
     ],
     "skillRange": {
       "__id__": 2
@@ -371,6 +395,15 @@
     "heartGroup": null,
     "feetRayPoint": {
       "__id__": 13
+    },
+    "triggerSkillParticle": {
+      "__uuid__": "e64c3814-4441-45e6-9ad2-c4e292c2929c"
+    },
+    "skillSuccess": {
+      "__uuid__": "479579cb-6570-49ef-b720-25b414813bdc"
+    },
+    "skillfail": {
+      "__uuid__": "730e7a11-6bf2-4a4f-8f25-4f0a5583a9ba"
     },
     "healthPoint": 5,
     "moveAccel": 250,
@@ -528,8 +561,32 @@
     "playerManager": {
       "__id__": 7
     },
+    "playerAnimation": {
+      "__id__": 8
+    },
     "effect": {
       "__id__": 3
+    },
+    "accelAudio": {
+      "__uuid__": "fa205b69-263a-4087-999a-520180296703"
+    },
+    "slowAudio": {
+      "__uuid__": "c27fd729-403b-4c9d-8cd3-834114e721ed"
+    },
+    "rollBacklAudio": {
+      "__uuid__": "2eb7eddf-3fc4-4b83-8a35-8b462d4fde09"
+    },
+    "jumpAudio": {
+      "__uuid__": "6c417df0-081d-46f4-abea-b4be1df68d44"
+    },
+    "walkAudio": {
+      "__uuid__": "2ee5f64c-a989-441a-95fc-74de927e3ee3"
+    },
+    "hurtAudio": {
+      "__uuid__": "e6a83255-5b7e-40ee-bdcf-6d11fd93c5c1"
+    },
+    "deathAudio": {
+      "__uuid__": "c98df9b2-9fa3-436d-b4c7-b1f2d4adc32d"
     },
     "_id": ""
   },
@@ -541,7 +598,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "9flhclY2lOZ7C62De11Wgo",
+    "fileId": "21CTLIL+JBnrdW1kY8zzJy",
     "sync": false
   },
   {
@@ -580,7 +637,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        -64,
+        -63,
         0,
         0,
         0,
@@ -612,7 +669,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "42p/XegRNHqZOMFRAM1jvS",
+    "fileId": "ef84lZ/09CqIpAFAtRBc0f",
     "sync": false
   },
   {
@@ -623,7 +680,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "efLLT4oP9HlJ8h6sMTwDC3",
+    "fileId": "5bznluuwtDvZvy5UrXpY8r",
     "sync": false
   },
   {
@@ -664,7 +721,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "8cyzR8i7tKQLKywT+6vaGM",
+    "fileId": "57wfQG+ypOy7D34oQeWaBc",
     "sync": false
   },
   {
@@ -747,7 +804,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "9b/da9JphBBLJU+f9aUuit",
+    "fileId": "458yDP9RNMXYmvVHPFyIrx",
     "sync": false
   }
 ]

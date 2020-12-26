@@ -47,6 +47,11 @@
   },
   "events": [
     {
+      "frame": 0,
+      "func": "accelAudioPlay",
+      "params": []
+    },
+    {
       "frame": 0.3333333333333333,
       "func": "afterAccelExpend",
       "params": []

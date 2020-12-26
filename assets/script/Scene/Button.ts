@@ -15,7 +15,7 @@ export default class Button extends TimeEffect {
         if (other.node.name === 'Player') {
             for (let i = 0; i < this.target.length; i++) {
                 if (this.target[i].name === 'Elevator') {
-                    const id: number = cc.audioEngine.playEffect(this.sound, true);
+                    const id: number = cc.audioEngine.playEffect(this.sound, false);
                     cc.audioEngine.setVolume(id, 1);
                     this.node.getComponent(cc.Animation).play('clickBtn');
                     this.target[i].getComponent(elevatorManager).elevatorTriggered();

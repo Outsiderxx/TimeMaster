@@ -27,6 +27,13 @@ export default class PlayerManager extends cc.Component {
     @property(cc.Node)
     private feetRayPoint: cc.Node = null;
 
+    @property(cc.Prefab)
+    private triggerSkillParticle: cc.Prefab = null;
+
+    @property(cc.AudioClip)
+    private skillSuccess: cc.AudioClip = null;
+    @property(cc.AudioClip)
+    private skillfail: cc.AudioClip = null;
     @property
     private healthPoint: number = 5;
 
@@ -49,12 +56,18 @@ export default class PlayerManager extends cc.Component {
     private isAlive: boolean = true;
     private isInvincible: boolean = false;
     private currentSceneIdx: number = null; // current scene idx
+    private climbPauseCount: number = 0;
     public playerState: number = -1;
 
     public get status() {
         return this.isAlive;
     }
-
+    public GetIsClimbing() {
+        return this.isClimbing;
+    }
+    public resetClimbCount() {
+        this.climbPauseCount = 0;
+    }
     public set status(flag: boolean) {
         this.isAlive = flag;
     }
@@ -91,31 +104,27 @@ export default class PlayerManager extends cc.Component {
             const mechanism: TimeEffect = target.getComponent(TimeEffect);
             const { none, accelerate, slowdown, rollback } = SkillSet;
             if (this.currentUsingSkill !== none && mechanism.checkStatus(this.currentUsingSkill)) {
+                const id: number = cc.audioEngine.playEffect(this.skillSuccess, false);
+                cc.audioEngine.setVolume(id, 0.3);
                 this.finiteState(StateSet.useSkill);
-                //this.node.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
+                this.troggleSkillSuccessParticle();
                 switch (this.currentUsingSkill) {
                     case accelerate:
                         console.log(`Accelerate ${target.name}`);
                         mechanism.accelerate();
-                        //施法結束
-                        // this.effectsAnimation.play("reverseAccel");
-                        // this.currentUsingSkill = -1;
                         break;
                     case slowdown:
                         console.log(`Slowdown ${target.name}`);
                         mechanism.slowdown();
-                        //施法結束
-                        // this.effectsAnimation.play("reverseSlow");
-                        // this.currentUsingSkill = -1;
                         break;
                     case rollback:
                         console.log(`Rollback ${target.name}`);
                         mechanism.rollback();
-                        //施法結束
-                        // this.effectsAnimation.play("reverseRollBack");
-                        // this.currentUsingSkill = -1;
                         break;
                 }
+            } else {
+                const id: number = cc.audioEngine.playEffect(this.skillfail, false);
+                cc.audioEngine.setVolume(id, 0.3);
             }
         });
     }
@@ -153,7 +162,11 @@ export default class PlayerManager extends cc.Component {
                 this.finiteState(StateSet.run);
             } else {
                 lv.x = 0;
-                this.finiteState(StateSet.idle);
+                //若在攀爬狀態即不進入idel動畫
+                this.animationEvent.walkAudioPause();
+                if (!this.isClimbing) {
+                    this.finiteState(StateSet.idle);
+                }
             }
             if (this.isClimbing) {
                 // 攀爬
@@ -169,12 +182,17 @@ export default class PlayerManager extends cc.Component {
                     this.playerAnimation.resume('playerClimb');
                 } else {
                     lv.y = 0;
-                    this.playerAnimation.pause('playerClimb');
+                    if (this.climbPauseCount >= 5) {
+                        this.playerAnimation.pause('playerClimb');
+                    } else {
+                        this.climbPauseCount++;
+                    }
                 }
             } else {
                 //跳躍
                 if (this.input[cc.macro.KEY.space]) {
                     if (this.onTheGround) {
+                        this.animationEvent.walkAudioPause();
                         lv.y = this.jumpFroce;
                         this.finiteState(StateSet.jump);
                     }
@@ -199,27 +217,32 @@ export default class PlayerManager extends cc.Component {
         // position
         this.node.setPosition(this.playerPosition[this.currentSceneIdx]);
 
-        // movement
-        this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
-
         // direction
         this.node.scaleX = this.playerDirection[this.currentSceneIdx] ? -0.5 : 0.5;
-
+        // movement
         // input
-        this.input = {};
-        this.playerState = StateSet.none;
         // skill range
-        this.skillRange.active = true;
-        this.skillRange.children.forEach((node) => (node.active = true));
-        this.currentUsingSkill = -1;
+        this.resetPlayerState();
 
         //pointer
         this.userPointer.changeScene();
+    }
+    //進入不可控制狀態即reset這些數值
+    private resetPlayerState() {
+        this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
+
+        this.input = {};
+        this.playerState = StateSet.none;
+
+        this.skillRange.active = true;
+        this.currentUsingSkill = -1;
+        this.animationEvent.noneEffect();
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         // 受到傷害
         if (self.tag === 0 && (other.node.group === 'Damage' || other.node.group === 'MonsterDamage') && !this.isInvincible) {
+            this.resetPlayerState();
             if (other.node.name === 'rollingRock') {
                 //滾石即死
                 this.finiteState(StateSet.die);
@@ -228,16 +251,23 @@ export default class PlayerManager extends cc.Component {
             }
             if (this.healthPoint > 1) {
                 this.finiteState(StateSet.hurt);
+                this.input = {};
             }
             this.updateHearts(--this.healthPoint);
             this.beingInvincible();
         }
     }
-
+    private troggleSkillSuccessParticle() {
+        console.log('djfnsjknfkjgndsf');
+        let temp = cc.instantiate(this.triggerSkillParticle);
+        this.userPointer.node.getParent().addChild(temp);
+        temp.position = this.userPointer.node.position;
+    }
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
         // 攀爬
         if (other.node.name === 'VineBody' || other.node.name === 'SilkBody') {
             // 避免觸發其他觸發器
+            this.climbPauseCount = 0; //給動畫一點時間再允許暫停
             this.playerAnimation.play('playerClimb');
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             this.onTheGround = true;
@@ -334,11 +364,6 @@ export default class PlayerManager extends cc.Component {
                     }
                     break;
             }
-        }
-
-        this.skillRange.active = this.skillRange.children.some((area) => area.active);
-        if (!this.skillRange.active) {
-            this.currentUsingSkill = SkillSet.none;
         }
     }
 
