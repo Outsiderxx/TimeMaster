@@ -5418,7 +5418,7 @@
       "ctor": "Float64Array",
       "array": [
         3130.144,
-        860.172,
+        864.098,
         0,
         0,
         0,
@@ -5453,12 +5453,12 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": -55.2,
       "y": 0
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 530,
+      "width": 419.5,
       "height": 20
     },
     "_id": "8bVBoObmVHBptw7G4vR+Ob"

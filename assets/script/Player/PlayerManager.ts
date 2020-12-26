@@ -103,28 +103,30 @@ export default class PlayerManager extends cc.Component {
             console.log('skill casted');
             const mechanism: TimeEffect = target.getComponent(TimeEffect);
             const { none, accelerate, slowdown, rollback } = SkillSet;
-            if (this.currentUsingSkill !== none && mechanism.checkStatus(this.currentUsingSkill)) {
-                const id: number = cc.audioEngine.playEffect(this.skillSuccess, false);
-                cc.audioEngine.setVolume(id, 0.3);
-                this.finiteState(StateSet.useSkill);
-                this.troggleSkillSuccessParticle();
-                switch (this.currentUsingSkill) {
-                    case accelerate:
-                        console.log(`Accelerate ${target.name}`);
-                        mechanism.accelerate();
-                        break;
-                    case slowdown:
-                        console.log(`Slowdown ${target.name}`);
-                        mechanism.slowdown();
-                        break;
-                    case rollback:
-                        console.log(`Rollback ${target.name}`);
-                        mechanism.rollback();
-                        break;
+            if (this.currentUsingSkill !== none) {
+                if (mechanism.checkStatus(this.currentUsingSkill)) {
+                    const id: number = cc.audioEngine.playEffect(this.skillSuccess, false);
+                    cc.audioEngine.setVolume(id, 0.3);
+                    this.finiteState(StateSet.useSkill);
+                    this.troggleSkillSuccessParticle();
+                    switch (this.currentUsingSkill) {
+                        case accelerate:
+                            console.log(`Accelerate ${target.name}`);
+                            mechanism.accelerate();
+                            break;
+                        case slowdown:
+                            console.log(`Slowdown ${target.name}`);
+                            mechanism.slowdown();
+                            break;
+                        case rollback:
+                            console.log(`Rollback ${target.name}`);
+                            mechanism.rollback();
+                            break;
+                    }
+                } else {
+                    const id: number = cc.audioEngine.playEffect(this.skillfail, false);
+                    cc.audioEngine.setVolume(id, 0.3);
                 }
-            } else {
-                const id: number = cc.audioEngine.playEffect(this.skillfail, false);
-                cc.audioEngine.setVolume(id, 0.3);
             }
         });
     }
