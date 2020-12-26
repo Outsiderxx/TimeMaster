@@ -11,6 +11,9 @@ export default class NormalElevatorMechanism extends TimeEffect {
     @property(SpecialButton)
     private upBtn: SpecialButton = null;
 
+    @property(cc.AudioClip)
+    private elevatorEffect: cc.AudioClip = null;
+
     @property([cc.Node])
     private chains: cc.Node[] = [];
 
@@ -38,6 +41,7 @@ export default class NormalElevatorMechanism extends TimeEffect {
 
     private isMoving: boolean = false;
     private isInHighPosition: boolean = true;
+    private effectID: number = null;
 
     onLoad() {
         this.chains[0].zIndex = -1;
@@ -66,10 +70,14 @@ export default class NormalElevatorMechanism extends TimeEffect {
         this.elevatorTween = cc
             .tween(this.node)
             .delay(this.remainSecond)
+            .call(() => {
+                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, false);
+            })
             .to(this.movingSecond, { y: this.highPosition.y })
             .call(() => {
                 this.isMoving = false;
                 this.isInHighPosition = true;
+                cc.audioEngine.stopEffect(this.effectID);
             })
             .start();
         this.chainOneTween = cc.tween(this.chains[0]).delay(this.remainSecond).to(this.movingSecond, { height: this.chainHighHeight }).start();
@@ -84,10 +92,14 @@ export default class NormalElevatorMechanism extends TimeEffect {
         this.elevatorTween = cc
             .tween(this.node)
             .delay(this.remainSecond)
+            .call(() => {
+                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, false);
+            })
             .to(this.movingSecond, { y: this.lowPosition.y })
             .call(() => {
                 this.isMoving = false;
                 this.isInHighPosition = false;
+                cc.audioEngine.stopEffect(this.effectID);
             })
             .start();
         this.chainOneTween = cc.tween(this.chains[0]).delay(this.remainSecond).to(this.movingSecond, { height: this.chainLowHeight }).start();
@@ -107,5 +119,6 @@ export default class NormalElevatorMechanism extends TimeEffect {
         this.chains[0].height = this.chainHighHeight;
         this.chains[1].height = this.chainHighHeight;
         this.isMoving = false;
+        cc.audioEngine.stopEffect(this.effectID);
     }
 }

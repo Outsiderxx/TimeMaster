@@ -10,6 +10,11 @@ export default class StairMechanism extends TimeEffect {
     private pCollider: cc.PhysicsPolygonCollider = null;
     @property(cc.PhysicsBoxCollider)
     private bCollider: cc.PhysicsPolygonCollider = null;
+    @property(cc.AudioClip)
+    private break: cc.AudioClip = null;
+    @property(cc.AudioClip)
+    private build: cc.AudioClip = null;
+
     onLoad() {
         this.status = 'triggered';
         this.pCollider.enabled = false;
@@ -31,10 +36,12 @@ export default class StairMechanism extends TimeEffect {
     }
 
     public rollback() {
+        cc.audioEngine.playEffect(this.build,false);
         this.stairAnimation.play('StairBuild');
     }
 
     public accelerate() {
+        cc.audioEngine.playEffect(this.break,false);
         this.stairAnimation.play('StairBreak');
     }
 
@@ -42,7 +49,7 @@ export default class StairMechanism extends TimeEffect {
 
     public reset() {
             this.status = 'triggered';
-            this.accelerate();
+            this.stairAnimation.play('StairBreak');
         }
 }
 

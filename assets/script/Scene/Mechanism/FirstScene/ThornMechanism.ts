@@ -8,7 +8,8 @@ export default class ThornMechanism extends TimeEffect {
     private vineAnimation: cc.Animation = null;
     @property(cc.Node)
     private thorn: cc.Node = null;
-    // TODO: need to add joint point at the root
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
 
     onLoad() {
         this.status = 'triggered';
@@ -21,12 +22,14 @@ export default class ThornMechanism extends TimeEffect {
     }
 
     public rollback() {
+        cc.audioEngine.playEffect(this.sound,false);
         this.vineAnimation.play('thornGrownback');
         let hurtCollider = this.thorn.getComponent(cc.PhysicsBoxCollider);
         hurtCollider.enabled = false;
     }
 
     public accelerate() {
+        cc.audioEngine.playEffect(this.sound,false);
         this.vineAnimation.play('thornGrows');
         let hurtCollider = this.thorn.getComponent(cc.PhysicsBoxCollider);
         hurtCollider.enabled = true;

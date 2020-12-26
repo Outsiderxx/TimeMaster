@@ -14,6 +14,9 @@ export default class GateMechanism extends TimeEffect {
 
     @property(cc.Boolean)
     initialOpened: boolean = false;
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
+
     public buttonFirstTriggered = false;
 
     private isOpened: boolean = false;
@@ -62,11 +65,12 @@ export default class GateMechanism extends TimeEffect {
             this.close();
         } else {
             this.open();
+            cc.audioEngine.playEffect(this.sound,false);
         }
     }
 
     private open() {
-
+         
         this.gateAnimation.play("open");
         cc.tween(this.boxColliderUp)
             .to(0.8, { offset: this.upOpenedOffset, size: this.upOpenedSize })
@@ -81,7 +85,7 @@ export default class GateMechanism extends TimeEffect {
     }
 
     private close() {
-
+        
         this.gateAnimation.play("close");
         cc.tween(this.boxColliderUp)
             .to(0.8, { offset: this.upClosedOffset, size: this.upClosedSize })
@@ -99,6 +103,7 @@ export default class GateMechanism extends TimeEffect {
         if (this.gateStatus !== 'default') {
             if (this.forerUsedSkill === 'accelerate' || this.forerUsedSkill === 'none') {
                 if (this.gateStatus === 'closed') {
+                    cc.audioEngine.playEffect(this.sound,false);
                     this.open();
                     this.forerUsedSkill = 'rollback';
                 } else if (this.gateStatus === 'opened') {
@@ -114,6 +119,7 @@ export default class GateMechanism extends TimeEffect {
         if (this.gateStatus !== 'default') {
             if (this.forerUsedSkill === 'rollback') {
                 if (this.gateStatus === 'closed') {
+                    cc.audioEngine.playEffect(this.sound,false);
                     this.open();
                     this.forerUsedSkill = 'accelerate';
                 } else if (this.gateStatus === 'opened') {

@@ -10,12 +10,16 @@ export default class ElevatorManager extends TimeEffect {
     @property(cc.Node)
     private test: cc.Node = null;
 
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
+
     private downAnimationState: cc.AnimationState = null;
     private upAnimationState: cc.AnimationState = null;
     private stayAnimationState: cc.AnimationState = null;
     private chainOneTween: cc.Tween = null;
     private chainTwoTween: cc.Tween = null;
     private currentSpeedRatio: number = 1;
+    private effectID: number = null;
 
     onLoad() {
         this.chains[0].zIndex = -1;
@@ -30,6 +34,8 @@ export default class ElevatorManager extends TimeEffect {
     public elevatorTriggered() {
         this.reset();
         this.node.getComponent(cc.Animation).play('elevatorDown');
+        this.effectID = cc.audioEngine.playEffect(this.sound, false);
+        cc.audioEngine.setVolume(this.effectID, 0.3);
         this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 593 }).start();
         this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 593 }).start();
         (this.chainOneTween as any)._finalAction._speedMethod = true;
@@ -38,12 +44,13 @@ export default class ElevatorManager extends TimeEffect {
     }
 
     // 為了能讓 sceneManager call reset 所以要繼承 TimeEffect
-    public accelerate() { }
-    public slowdown() { }
-    public rollback() { }
+    public accelerate() {}
+    public slowdown() {}
+    public rollback() {}
 
     public reset() {
         this.node.getComponent(cc.Animation).stop();
+        cc.audioEngine.stopEffect(this.effectID);
         this.chainOneTween?.stop();
         this.chainTwoTween?.stop();
         this.node.position.y = 235;
@@ -55,10 +62,13 @@ export default class ElevatorManager extends TimeEffect {
         if (this.node.getComponent(cc.Animation).currentClip?.name === 'elevatorDown') {
             // 電梯向下結束
             this.node.getComponent(cc.Animation).play('elevatorStaying');
+            cc.audioEngine.stopEffect(this.effectID);
             this.onChangeSpeed('specific');
         } else if (this.node.getComponent(cc.Animation).currentClip?.name === 'elevatorStaying') {
             // 電梯停留結束
             this.node.getComponent(cc.Animation).play('elevatorReturn');
+            this.effectID = cc.audioEngine.playEffect(this.sound, false);
+            cc.audioEngine.setVolume(this.effectID, 0.3);
             this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 830 }).start();
             this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 830 }).start();
             (this.chainOneTween as any)._finalAction._speedMethod = true;
@@ -66,6 +76,7 @@ export default class ElevatorManager extends TimeEffect {
             this.onChangeSpeed('set');
         } else if (this.node.getComponent(cc.Animation).currentClip?.name === 'elevatorReturn') {
             // 電梯向上結束
+            cc.audioEngine.stopEffect(this.effectID);
         }
     }
 

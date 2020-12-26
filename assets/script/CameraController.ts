@@ -20,6 +20,7 @@ export default class CameraController extends cc.Component {
     private sceneManager: cc.Node = null;
     private _isUpdate: boolean = true;
     private cameraMovementResolve: (value: void) => void = null;
+    private movementTween: cc.Tween = null;
 
     public set isUpdate(flag: boolean) {
         this._isUpdate = flag;
@@ -43,7 +44,8 @@ export default class CameraController extends cc.Component {
     }
 
     public async sceneThreeCameraMovement() {
-        cc.tween(this.camera.node)
+        this.movementTween = cc
+            .tween(this.camera.node)
             .delay(1)
             .to(1, { y: 855 })
             .delay(1)
@@ -59,7 +61,8 @@ export default class CameraController extends cc.Component {
     }
 
     public async sceneFourCameraMovement() {
-        cc.tween(this.camera.node)
+        this.movementTween = cc
+            .tween(this.camera.node)
             .delay(1)
             .to(0.5, { y: 1440 })
             .to(1, { x: -1280, y: 1950 })
@@ -89,6 +92,7 @@ export default class CameraController extends cc.Component {
     public reset() {
         this.sceneManager = this.gameStage.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
         this.camera.node.setPosition(this.sceneManager.getComponent(SceneManager).initialCameraPosition);
+        this.movementTween?.stop();
         this.middleGround = this.sceneManager.getChildByName('Foreground');
         this._isUpdate = true;
     }

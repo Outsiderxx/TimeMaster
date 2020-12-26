@@ -8,7 +8,8 @@ export default class SilkMechanism extends TimeEffect {
     private silkAnimation: cc.Animation = null;
     @property(cc.Boolean)
     private silkStatus: boolean = false;
-    // TODO: need to add joint point at the root
+    @property(cc.AudioClip)
+    private skilkEffect: cc.AudioClip = null;
 
     onLoad() {
         this.status = this.silkStatus === true ? 'triggered' : 'original';
@@ -34,10 +35,12 @@ export default class SilkMechanism extends TimeEffect {
     }
 
     public rollback() {
+        cc.audioEngine.playEffect(this.skilkEffect, false);
         this.silkAnimation.play('silkGrownBack');
     }
 
     public accelerate() {
+        cc.audioEngine.playEffect(this.skilkEffect, false);
         this.silkAnimation.play('silkGrows');
     }
 

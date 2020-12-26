@@ -9,6 +9,8 @@ export default class VineMechanism extends TimeEffect {
     @property(cc.Boolean)
     private vineStatus: boolean = false;
     // TODO: need to add joint point at the root
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
 
     onLoad() {
         this.status = this.vineStatus === true ? 'triggered' : 'original';
@@ -32,10 +34,12 @@ export default class VineMechanism extends TimeEffect {
     }
 
     public rollback() {
+        cc.audioEngine.playEffect(this.sound, false);
         this.vineAnimation.play('vineGrownBack');
     }
 
     public accelerate() {
+        cc.audioEngine.playEffect(this.sound, false);
         this.vineAnimation.play('vineGrows');
     }
 
@@ -44,10 +48,10 @@ export default class VineMechanism extends TimeEffect {
     public reset() {
         if (this.vineStatus) {
             this.status = 'triggered';
-            this.accelerate();
+            this.vineAnimation.play('vineGrows');
         } else {
             this.status = 'original';
-            this.rollback();
+            this.vineAnimation.play('vineGrownBack');
         }
     }
 }

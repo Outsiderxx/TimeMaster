@@ -6,6 +6,9 @@ const { ccclass, property } = cc._decorator;
 export default class CannonContact extends cc.Component {
     @property(cc.Animation)
     private CannonAnimation: cc.Animation = null;
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
+
     onLoad() {
         this.CannonAnimation.on('play', () => {
             if (this.CannonAnimation.currentClip.name === 'Explosion') {
@@ -24,7 +27,8 @@ export default class CannonContact extends cc.Component {
     }
     
     onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider){
-        if (other.node.group === 'default' || other.node.group === 'Monster') {   
+        if (other.node.group === 'default' || other.node.group === 'Monster') {  
+            cc.audioEngine.playEffect(this.sound,false); 
             this.CannonAnimation.play('Explosion');
         }
     }

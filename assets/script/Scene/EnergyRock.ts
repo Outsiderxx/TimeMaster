@@ -28,7 +28,6 @@ export default class EnergyRock extends TimeEffect {
             this.reset();
         } else {
             this.isOpen = true;
-            this.status = 'triggered';
             this.energyRockAnimation.play('EnergyRockRecharged');
             this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 196;
         }

@@ -8,12 +8,14 @@ export default class CannonMechanism extends TimeEffect {
     private CannonBody: cc.Animation = null;
     @property(cc.Animation)
     private CannonMap: cc.Animation = null;
-    // TODO: need to add joint point at the root
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
 
     onLoad() {
         this.status = 'triggered';
         this.CannonBody.on('finished', () => {
             if (this.CannonBody.currentClip.name === 'CannonFlyOut') {
+                cc.audioEngine.playEffect(this.sound,false);
                 this.CannonMap.play('MapBreak');
             }
         });
@@ -22,6 +24,7 @@ export default class CannonMechanism extends TimeEffect {
     public rollback() {
         this.status = 'original';
         this.CannonMap.play('MapBuild');
+        cc.audioEngine.playEffect(this.sound,false);
         this.CannonBody.play('CannonFlyBack');
     }
 
@@ -34,6 +37,7 @@ export default class CannonMechanism extends TimeEffect {
 
     public reset() {
         this.status = 'triggered';
-        this.accelerate();
+        this.CannonMap.play('MapBreak');
+        this.CannonBody.node.setPosition(1580, 180);
     }
 }

@@ -10,6 +10,9 @@ export default class NewClass extends cc.Component {
 
     @property
     private target_y: number = 0;
+    
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
 
     public isDrop: boolean = false;
     private firstTime: boolean = true;
@@ -31,6 +34,7 @@ export default class NewClass extends cc.Component {
         if (other.node.group === 'default' && this.firstTime === true) {
             this.isDrop = true;
             this.firstTime = false;
+            cc.audioEngine.playEffect(this.sound,false);
             this.currentTween = cc.tween(this.node).to(this.dropSpeed, { y: this.target_y }).start();
         }
     }

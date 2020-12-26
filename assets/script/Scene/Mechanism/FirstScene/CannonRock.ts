@@ -10,9 +10,11 @@ export default class CannonRock extends TimeEffect {
     @property(cc.Boolean)
     private rockStatus: boolean = false;
     @property(cc.Node)
-    private rockSprite: cc.Node = null; 
+    private rockSprite: cc.Node = null;
     @property(cc.Animation)
     private RockBody: cc.Animation = null;
+    @property(cc.AudioClip)
+    private sound: cc.AudioClip = null;
     onLoad() {
         this.status = 'original';
         this.rockSprite.active = false;
@@ -20,10 +22,10 @@ export default class CannonRock extends TimeEffect {
             if (this.CannonBody.currentClip.name === 'Explosion') {
                 this.rockStatus = true;
                 this.rockSprite.active = true;
-            }else{
+            } /*else{
                 this.rockStatus = false;
                 this.rockSprite.active = false;
-            }
+            }*/
         });
         this.RockBody.on('play', () => {
             this.RockBody.node.active = true;
@@ -35,18 +37,18 @@ export default class CannonRock extends TimeEffect {
         });
     }
     public rollback() {
-        if(this.rockStatus){
+        if (this.rockStatus) {
             this.status = 'original';
             this.RockBody.play('RockReturn');
         }
     }
 
     public accelerate() {
-        if(this.rockStatus){
+        if (this.rockStatus) {
             this.status = 'triggered';
+            cc.audioEngine.playEffect(this.sound, false);
             this.RockBody.play('RockFallen');
         }
-        
     }
 
     public slowdown() {}
@@ -56,5 +58,6 @@ export default class CannonRock extends TimeEffect {
         this.rockStatus = true;
         this.rollback();
         this.rockStatus = false;
+        this.rockSprite.active = false;
     }
 }

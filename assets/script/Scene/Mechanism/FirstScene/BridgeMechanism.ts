@@ -6,6 +6,10 @@ const { ccclass, property } = cc._decorator;
 export default class BridgeMechanism extends TimeEffect {
     @property(cc.Animation)
     private bridgeAnimation: cc.Animation = null;
+    @property(cc.AudioClip)
+    private break: cc.AudioClip = null;
+    @property(cc.AudioClip)
+    private build: cc.AudioClip = null;
 
     onLoad() {
         this.status = 'triggered';
@@ -18,10 +22,12 @@ export default class BridgeMechanism extends TimeEffect {
     }
 
     public rollback() {
+        cc.audioEngine.playEffect(this.build, false);
         this.bridgeAnimation.play('unBreakingBridge');
     }
 
     public accelerate() {
+        cc.audioEngine.playEffect(this.break, false);
         this.bridgeAnimation.play('breakingBridge');
     }
 

@@ -16,6 +16,7 @@ export default class TransitionController extends cc.Component {
     public showGameResult(isWin: boolean) {
         this.node.opacity = 0;
         this.mask.opacity = 150;
+        this.hint.node.active = true;
         this.message.node.scale = 1;
         this.message.node.active = true;
         this.message.node.setPosition(0, 60);
@@ -37,8 +38,9 @@ export default class TransitionController extends cc.Component {
                     .start();
                 this.node.once(cc.Node.EventType.TOUCH_END, () => {
                     this.node.active = false;
-                    this.hint.node.opacity = 0;
                     this.tween.stop();
+                    this.hint.node.opacity = 0;
+                    this.hint.node.active = false;
                     this.node.emit('back', isWin);
                 });
             })

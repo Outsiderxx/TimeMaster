@@ -46,15 +46,18 @@ export default class GameController extends cc.Component {
     private bgmMainMenu: cc.AudioClip = null;
 
     @property
-    private soundVolume: number = 0;
+    private musicVolume: number = 0;
+
+    @property
+    private effectVolume: number = 0;
 
     private currentSceneIdx: number = 0;
     private transitionPromise: (value: any) => void = null;
 
     onLoad() {
         cc.game.setFrameRate(30);
-        cc.audioEngine.setMusicVolume(this.soundVolume);
-        cc.audioEngine.setEffectsVolume(this.soundVolume);
+        cc.audioEngine.setMusicVolume(this.musicVolume);
+        cc.audioEngine.setEffectsVolume(this.effectVolume);
         this.mainMenu.node.on('enterFirstScene', () => cc.audioEngine.playMusic(this.bgmCave, true));
         this.menu.node.on('back', () => {
             this.player.status = false;

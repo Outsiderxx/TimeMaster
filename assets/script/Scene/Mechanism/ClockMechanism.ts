@@ -48,6 +48,9 @@ export default class ClockMechanism extends TimeEffect {
     @property(cc.SpriteFrame)
     private doorOpened: cc.SpriteFrame = null;
 
+    @property(cc.AudioClip)
+    private doorEffect: cc.AudioClip = null;
+
     @property
     private secondPerCircle: number = 0;
 
@@ -88,6 +91,7 @@ export default class ClockMechanism extends TimeEffect {
                 if (this.clockButtons.filter((button) => button.isActived === true).length === 3) {
                     this.door.spriteFrame = this.doorOpened;
                     this.transferPoint.name = 'TransferPoint';
+                    cc.audioEngine.playEffect(this.doorEffect, false);
                 }
             });
         });
