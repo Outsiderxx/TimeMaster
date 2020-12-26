@@ -71,7 +71,7 @@ export default class NormalElevatorMechanism extends TimeEffect {
             .tween(this.node)
             .delay(this.remainSecond)
             .call(() => {
-                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, false);
+                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, true);
             })
             .to(this.movingSecond, { y: this.highPosition.y })
             .call(() => {
@@ -93,7 +93,7 @@ export default class NormalElevatorMechanism extends TimeEffect {
             .tween(this.node)
             .delay(this.remainSecond)
             .call(() => {
-                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, false);
+                this.effectID = cc.audioEngine.playEffect(this.elevatorEffect, true);
             })
             .to(this.movingSecond, { y: this.lowPosition.y })
             .call(() => {

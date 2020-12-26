@@ -51,6 +51,9 @@ export default class ClockMechanism extends TimeEffect {
     @property(cc.AudioClip)
     private doorEffect: cc.AudioClip = null;
 
+    @property(cc.AudioClip)
+    private bellEffect: cc.AudioClip = null;
+
     @property
     private secondPerCircle: number = 0;
 
@@ -63,6 +66,7 @@ export default class ClockMechanism extends TimeEffect {
     private currentSpeedIdx: number = 1;
     private currentHour: number = 0;
     private currentMinute: number = 15;
+    private isBellPlayed: boolean = false;
 
     public reset() {
         // Clock
@@ -81,6 +85,7 @@ export default class ClockMechanism extends TimeEffect {
         this.directionStone.angle = 180;
         this.door.spriteFrame = this.doorUnopened;
         this.transferPoint.name = 'UnActivedTransferPoint';
+        this.isBellPlayed = false;
     }
 
     onLoad() {
@@ -103,8 +108,14 @@ export default class ClockMechanism extends TimeEffect {
         // Stair
         if (this.currentHour === 0 || this.currentHour === 3 || this.currentHour === 6 || this.currentHour === 9) {
             this.stair.active = true;
+            if (!this.isBellPlayed) {
+                const id: number = cc.audioEngine.playEffect(this.bellEffect, false);
+                cc.audioEngine.setVolume(id, 0.8);
+                this.isBellPlayed = true;
+            }
         } else {
             this.stair.active = false;
+            this.isBellPlayed = false;
         }
         // Floor
         this.floors[0].active = this.currentMinute >= 0 && this.currentMinute <= 30;

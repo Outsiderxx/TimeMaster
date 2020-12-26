@@ -16,6 +16,9 @@ export default class SceneManager extends cc.Component {
     @property([cc.Node])
     private climbMonsters: cc.Node[] = [];
 
+    @property([cc.Node])
+    private specialMonsters: cc.Node[] = [];
+
     @property(cc.Prefab)
     private rangedMonsterPrefab: cc.Prefab = null;
 
@@ -24,6 +27,9 @@ export default class SceneManager extends cc.Component {
 
     @property(cc.Prefab)
     private climbMonsterPrefab: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    private specialMonsterPrefab: cc.Prefab = null;
 
     @property([cc.Vec2])
     private floorWidthEdgeOffset: cc.Vec2[] = []; // x: top, y: down
@@ -37,12 +43,14 @@ export default class SceneManager extends cc.Component {
     private rangedMonsterPositions: cc.Vec2[] = [];
     private meleeMonsterPositions: cc.Vec2[] = [];
     private climbMonsterPositions: cc.Vec2[] = [];
+    private specialMonsterPositions: cc.Vec2[] = [];
     private currentFloor: number = 0;
 
     onLoad() {
         this.rangedMonsterPositions = this.rangedMonsters.map((monster) => monster.getPosition());
         this.meleeMonsterPositions = this.meleeMonsters.map((monster) => monster.getPosition());
         this.climbMonsterPositions = this.climbMonsters.map((monster) => monster.getPosition());
+        this.specialMonsterPositions = this.specialMonsters.map((monster) => monster.getPosition());
         this.floorDetected.forEach((node, idx) => {
             node.on('crossFloor', () => {
                 this.currentFloor = idx;
@@ -80,9 +88,15 @@ export default class SceneManager extends cc.Component {
                 monster.destroy();
             }
         });
+        this.specialMonsters.forEach((monster) => {
+            if (monster.isValid) {
+                monster.destroy();
+            }
+        });
         this.rangedMonsters.length = 0;
         this.meleeMonsters.length = 0;
         this.climbMonsters.length = 0;
+        this.specialMonsters.length = 0;
 
         // 依照怪物位置表生成怪物
         this.rangedMonsterPositions.forEach((position) => {
@@ -101,6 +115,12 @@ export default class SceneManager extends cc.Component {
             const node: cc.Node = cc.instantiate(this.climbMonsterPrefab);
             node.setPosition(position);
             this.meleeMonsters.push(node);
+            this.node.addChild(node);
+        });
+        this.specialMonsterPositions.forEach((position) => {
+            const node: cc.Node = cc.instantiate(this.specialMonsterPrefab);
+            node.setPosition(position);
+            this.specialMonsters.push(node);
             this.node.addChild(node);
         });
     }

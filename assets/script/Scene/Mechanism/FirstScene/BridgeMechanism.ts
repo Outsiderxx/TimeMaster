@@ -27,7 +27,8 @@ export default class BridgeMechanism extends TimeEffect {
     }
 
     public accelerate() {
-        cc.audioEngine.playEffect(this.break, false);
+        const id: number = cc.audioEngine.playEffect(this.break, false);
+        cc.audioEngine.setVolume(id, 0.3);
         this.bridgeAnimation.play('breakingBridge');
     }
 

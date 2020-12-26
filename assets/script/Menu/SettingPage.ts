@@ -11,12 +11,16 @@ export default class NewClass extends cc.Component {
     @property(cc.Node)
     private closeBtn: cc.Node = null;
 
+    @property(cc.AudioClip)
+    private buttonEffect: cc.AudioClip = null;
+
     onLoad() {
         this.mask.on(cc.Node.EventType.TOUCH_END, () => this.close());
         this.volumeToggle.on('toggle', () => {
             if (cc.audioEngine.getMusicVolume() === 0) {
                 cc.audioEngine.setMusicVolume(0.5);
                 cc.audioEngine.setEffectsVolume(0.5);
+                cc.audioEngine.playEffect(this.buttonEffect, false);
             } else {
                 cc.audioEngine.setMusicVolume(0);
                 cc.audioEngine.setEffectsVolume(0);

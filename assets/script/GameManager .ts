@@ -117,10 +117,14 @@ export default class GameController extends cc.Component {
     }
 
     private async transferStage(idx: number, isBackToMainMenu: boolean = false) {
+        const currentMusicVolume: number = cc.audioEngine.getMusicVolume();
+        const currentEffectVolume: number = cc.audioEngine.getEffectsVolume();
         cc.audioEngine.stopMusic();
+        cc.audioEngine.setMusicVolume(0);
+        cc.audioEngine.setEffectsVolume(0);
+        this.currentScene.reset();
         this.transition.openTransitionferStage();
         await new Promise((resolve) => (this.transitionPromise = resolve));
-        this.currentScene.reset();
         if (idx !== this.currentSceneIdx) {
             this.camera.isUpdate = false;
             this.currentScene.node.active = false;
@@ -143,8 +147,11 @@ export default class GameController extends cc.Component {
         } else if (this.currentSceneIdx <= 2) {
             cc.audioEngine.playMusic(this.bgmCave, true);
         } else {
-            cc.audioEngine.playMusic(this.bgmCastle, true);
+            const id: number = cc.audioEngine.playMusic(this.bgmCastle, true);
+            cc.audioEngine.setVolume(id, 0.2);
         }
+        cc.audioEngine.setMusicVolume(currentMusicVolume);
+        cc.audioEngine.setEffectsVolume(currentEffectVolume);
         if (this.currentSceneIdx === 2) {
             this.player.status = false;
             this.camera.isUpdate = false;

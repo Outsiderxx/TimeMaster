@@ -7,9 +7,6 @@ export default class ElevatorManager extends TimeEffect {
     @property([cc.Node])
     private chains: cc.Node[] = [];
 
-    @property(cc.Node)
-    private test: cc.Node = null;
-
     @property(cc.AudioClip)
     private sound: cc.AudioClip = null;
 
@@ -25,7 +22,6 @@ export default class ElevatorManager extends TimeEffect {
         this.chains[0].zIndex = -1;
         this.chains[1].zIndex = -1;
         this.node.getComponent(cc.Animation).on('finished', this.elevatorControl, this);
-        this.test.on(cc.Node.EventType.TOUCH_END, () => this.elevatorTriggered());
         this.downAnimationState = this.node.getComponent(cc.Animation).getAnimationState('elevatorDown');
         this.upAnimationState = this.node.getComponent(cc.Animation).getAnimationState('elevatorReturn');
         this.stayAnimationState = this.node.getComponent(cc.Animation).getAnimationState('elevatorStaying');
@@ -34,7 +30,7 @@ export default class ElevatorManager extends TimeEffect {
     public elevatorTriggered() {
         this.reset();
         this.node.getComponent(cc.Animation).play('elevatorDown');
-        this.effectID = cc.audioEngine.playEffect(this.sound, false);
+        this.effectID = cc.audioEngine.playEffect(this.sound, true);
         cc.audioEngine.setVolume(this.effectID, 0.3);
         this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 593 }).start();
         this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 593 }).start();

@@ -17,11 +17,15 @@ export default class MenuController extends cc.Component {
     @property(cc.Node)
     private closeBtn: cc.Node = null;
 
+    @property(cc.AudioClip)
+    private buttonEffect: cc.AudioClip = null;
+
     private isOpen: boolean = false;
 
     onLoad() {
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             if (event.keyCode === cc.macro.KEY.escape) {
+                cc.audioEngine.playEffect(this.buttonEffect, false);
                 if (this.isOpen) {
                     this.isOpen = false;
                     this.helpPanel.active = false;
@@ -41,14 +45,17 @@ export default class MenuController extends cc.Component {
         });
         this.helpBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.helpPanel.active = true;
+            cc.audioEngine.playEffect(this.buttonEffect, false);
         });
         this.closeBtn.on(cc.Node.EventType.TOUCH_END, () => {
             this.helpPanel.active = false;
+            cc.audioEngine.playEffect(this.buttonEffect, false);
         });
         this.volumeToggle.on('toggle', () => {
             if (cc.audioEngine.getMusicVolume() === 0) {
                 cc.audioEngine.setMusicVolume(0.5);
                 cc.audioEngine.setEffectsVolume(0.5);
+                cc.audioEngine.playEffect(this.buttonEffect, false);
             } else {
                 cc.audioEngine.setMusicVolume(0);
                 cc.audioEngine.setEffectsVolume(0);

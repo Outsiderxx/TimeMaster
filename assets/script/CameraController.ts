@@ -47,14 +47,13 @@ export default class CameraController extends cc.Component {
         this.movementTween = cc
             .tween(this.camera.node)
             .delay(1)
-            .to(1, { y: 855 })
+            .to(1, { y: 855 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(2, { x: 1800 })
+            .to(2, { x: 1800 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(1, { y: 350 })
-            .to(2, { x: 2800, y: -35 })
+            .to(3, { x: 2800, y: -35 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(2, { x: -240, y: 25 })
+            .to(2, { x: -240, y: 25 }, cc.easeCircleActionInOut())
             .call(() => this.cameraMovementResolve())
             .start();
         await new Promise((resolve) => (this.cameraMovementResolve = resolve));
@@ -64,16 +63,15 @@ export default class CameraController extends cc.Component {
         this.movementTween = cc
             .tween(this.camera.node)
             .delay(1)
-            .to(0.5, { y: 1440 })
-            .to(1, { x: -1280, y: 1950 })
+            .to(1, { x: -1280, y: 1950 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(2, { x: 2560, y: 2160 })
+            .to(2, { x: 2560, y: 2160 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(1.25, { y: 800 })
+            .to(1.25, { y: 800 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(0.5, { x: 1780 })
+            .to(0.5, { x: 1780 }, cc.easeCircleActionInOut())
             .delay(1)
-            .to(1.5, { x: 0, y: 873.6 })
+            .to(1.5, { x: 0, y: 873.6 }, cc.easeCircleActionInOut())
             .call(() => this.cameraMovementResolve())
             .start();
         await new Promise((resolve) => (this.cameraMovementResolve = resolve));
