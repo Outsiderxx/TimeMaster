@@ -44,6 +44,7 @@ export default class BossFallenRock extends TimeEffect {
         cc.tween(this.node)
         .to(this.dropSpeed, { y: this.target_y })
         .call(() => {
+            this.node.children[0].getComponent(cc.PhysicsBoxCollider).sensor = false;
             this.node.children[0].group = 'default';
             this.node.children[0].getComponent(cc.PhysicsBoxCollider).apply();
         })

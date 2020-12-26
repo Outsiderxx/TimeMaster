@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "8994d258-b312-4e9d-abe0-a7b47cc75e63",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "point",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 700,
+  "height": 400,
+  "platformSettings": {},
+  "subMetas": {
+    "boss準備攻擊06": {
+      "ver": "1.0.4",
+      "uuid": "366b0b35-31a0-44d2-85e6-078a80f4cc8c",
+      "rawTextureUuid": "8994d258-b312-4e9d-abe0-a7b47cc75e63",
+      "trimType": "none",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 700,
+      "height": 400,
+      "rawWidth": 700,
+      "rawHeight": 400,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

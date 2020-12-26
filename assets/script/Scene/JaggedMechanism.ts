@@ -48,7 +48,8 @@ export default class JaggedMechanism extends TimeEffect {
         this.status = 'normal';
 
         let newParticleSystem = cc.instantiate(this.jaggedParticleSystem);
-        newParticleSystem.getComponent(cc.ParticleSystem).duration = 1 + delayTime;
+        newParticleSystem.getComponent(cc.ParticleSystem).life = 0.5 + delayTime;
+        newParticleSystem.setPosition(0, 0);
         newParticleSystem.scale = this.node.scale;
         this.node.addChild(newParticleSystem);
 

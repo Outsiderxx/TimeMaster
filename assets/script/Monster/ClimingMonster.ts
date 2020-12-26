@@ -22,6 +22,12 @@ export default class climbingMonster extends cc.Component {
     @property(cc.Prefab)
     private monsterDeathAnimation: cc.Prefab = null;
 
+    @property(cc.AudioClip)
+    private shootEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private deathEffect: cc.AudioClip = null;
+
     @property
     private jumpFroce: number = 0;
 
@@ -36,9 +42,13 @@ export default class climbingMonster extends cc.Component {
             this.playJumpAnimation();
             let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
             lv.x = this.jumpFroce;
-            lv.y = this.jumpFroce;
+            lv.y = this.jumpFroce * 0.8;
             this.getComponent(cc.RigidBody).linearVelocity = lv;
         }
+    }
+
+    onLoad() {
+        this.monsterAnimation.on('finished', this.playClimingAnimation, this);
     }
 
     private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
@@ -63,7 +73,7 @@ export default class climbingMonster extends cc.Component {
         if (other.node.name === 'VineBody' && !this.death) {
             const rigidBody: cc.RigidBody = self.getComponent(cc.RigidBody);
             rigidBody.type = cc.RigidBodyType.Dynamic;
-            this.unschedule(this.playShootAnimation);
+            this.unscheduleAllCallbacks();
             this.playIdleAnimation();
         }
     }
@@ -77,8 +87,14 @@ export default class climbingMonster extends cc.Component {
     }
 
     private playIdleAnimation() {
-        if (this.monsterAnimation.currentClip?.name !== 'monsterIdle') {
-            this.monsterAnimation.play('monsterIdle');
+        if (this.monsterAnimation.currentClip?.name !== 'RangedMonsterIdle') {
+            this.monsterAnimation.play('RangedMonsterIdle');
+        }
+    }
+
+    private playClimingAnimation() {
+        if (this.monsterAnimation.currentClip?.name !== 'monsterClimingIdle') {
+            this.monsterAnimation.play('monsterClimingIdle');
         }
     }
 
@@ -89,16 +105,18 @@ export default class climbingMonster extends cc.Component {
     }
 
     private playShootAnimation() {  
+        cc.audioEngine.playEffect(this.shootEffect, false);
         this.monsterAnimation.play('monsterShoot');
         this.schedule(this.shootBullet,0.5,0);
     }
 
     private playDeathAnimation() {
+        cc.audioEngine.playEffect(this.deathEffect, false);
         let anim = cc.instantiate(this.monsterDeathAnimation);
         anim.setPosition(this.node.getPosition());
         anim.scaleX = this.node.scaleX;
         this.node.parent.addChild(anim);
-        anim.getComponent(cc.Animation).play('monsterDeath');
+        anim.getComponent(cc.Animation).play('RangedMonsterDeath');
     }
 
     private shootBullet() {

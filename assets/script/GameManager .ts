@@ -120,6 +120,7 @@ export default class GameController extends cc.Component {
         const currentMusicVolume: number = cc.audioEngine.getMusicVolume();
         const currentEffectVolume: number = cc.audioEngine.getEffectsVolume();
         cc.audioEngine.stopMusic();
+        console.log('transion mute');
         cc.audioEngine.setMusicVolume(0);
         cc.audioEngine.setEffectsVolume(0);
         this.transition.openTransitionferStage();

@@ -24,7 +24,6 @@ export default class BossWeapon extends TimeEffect {
     private axeParticleSystem: cc.Prefab = null;
 
     private attacking: boolean = false;
-    private moveingTime: number = 0;
     private wayPoints: cc.Vec2[] = new Array();
     private anglePoints: number[] = new Array();
     private attackType: attackPath = attackPath.none;
@@ -37,6 +36,7 @@ export default class BossWeapon extends TimeEffect {
     private yAcc: number = 0;
     public Boss: cc.Node = null;
     public hitWall: boolean = false;
+    public causeDamage: boolean = false;
 
     onLoad() {
         this.status = 'normal';
@@ -46,12 +46,7 @@ export default class BossWeapon extends TimeEffect {
 
         this.playerDirection = direction ? 1 : -1;
 
-        //讓update開始記錄移動狀態
         this.attacking = true;
-        //可能需要將之前記錄過的狀態清掉
-        //this.anglePoints.length = 0
-        //this.wayPoints.length = 0
-        //moveingTime = 0
 
         this.attackType = Math.floor(Math.random() * 3) + 1;       
         switch(this.attackType) {
@@ -82,6 +77,7 @@ export default class BossWeapon extends TimeEffect {
 
     private stopMove() {
         this.node.group = 'default';
+        this.node.getComponent(cc.PhysicsBoxCollider).apply();
         this.hitWall = true;
     }
     
@@ -108,9 +104,9 @@ export default class BossWeapon extends TimeEffect {
 
         //按照紀錄的位置移動,每次完成移動後就把index - 1然後重新呼叫本function
         cc.tween(this.node)
-        .parallel(cc.tween().to(this.moveingTime / (this.wayPoints.length + 1), {x: this.wayPoints[index].x}),
-                  cc.tween().to(this.moveingTime / (this.wayPoints.length + 1), {y: this.wayPoints[index].y}),
-                  cc.tween().to(this.moveingTime / (this.wayPoints.length + 1), {angle: this.anglePoints[index]}))
+        .parallel(cc.tween().to(0.03, {x: this.wayPoints[index].x}),
+                  cc.tween().to(0.03, {y: this.wayPoints[index].y}),
+                  cc.tween().to(0.03, {angle: this.anglePoints[index]}))
         .call(() => {this.returnToOriginPos(index - 1)})
         .start();
         
@@ -153,11 +149,7 @@ export default class BossWeapon extends TimeEffect {
 
     //被倒帶時從移動紀錄最後一個元素開始跑倒帶
     public rollback() {
-        if(this.hitWall) {
-            this.scheduleOnce(() => {
-            this.node.group = 'Damage';
-            this.node.getComponent(cc.PhysicsBoxCollider).apply();}, 0.1) 
-        }
+        this.causeDamage = true;
         this.returnToOriginPos(this.wayPoints.length - 1);
     }
 
@@ -184,7 +176,6 @@ export default class BossWeapon extends TimeEffect {
                     this.schedule(() => {this.yAcc = temp}, 0.35, 0)
                 }
             }
-            this.moveingTime += dt;
             this.wayPoints.push(this.node.getPosition());
             this.anglePoints.push(this.node.angle);
             this.node.x += this.xSpeed * dt * this.speedPara;

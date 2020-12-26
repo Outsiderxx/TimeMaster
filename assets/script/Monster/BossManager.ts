@@ -9,6 +9,7 @@ import JaggedMechanism from '../Scene/JaggedMechanism';
 import BossFallenRock from './BossFallenRock';
 import TimeEffect from '../TimeEffect';
 import BossWeapon from './BossWeapon';
+import PlayerManager from '../Player/PlayerManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -50,6 +51,21 @@ export default class Boss extends TimeEffect {
 
     @property(cc.Animation)
     private bossAnimation: cc.Animation = null;
+
+    @property(cc.AudioClip)
+    private axeEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private jaggedEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private sprintEffectOne: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private sprintEffectTwo: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private deathEffect: cc.AudioClip = null;
 
     @property
     private active: boolean = false;
@@ -100,6 +116,30 @@ export default class Boss extends TimeEffect {
         this.reset();
     }
 
+    private playSkillAnimation() {
+        if(this.bossAnimation.currentClip.name !== 'BossSkill') {
+            this.bossAnimation.play('BossSkill');
+        }
+    }
+
+    private playIdleAnimation() {
+        if(this.bossAnimation.currentClip.name !== 'BossIdle') {
+            this.bossAnimation.play();
+        }
+    }
+
+    private playSprintAnimation() {
+        if(this.bossAnimation.currentClip.name !== 'BossSprint') {
+            this.bossAnimation.play('BossSprint');
+        }
+    }
+
+    private playDeadAnimation() {
+        if(this.bossAnimation.currentClip.name !== 'BossDead') {
+            this.bossAnimation.play('BossDead');
+        }
+    }
+
     private moveDecision() {
         switch (this.position) {
             case currentPosition.leftTop:
@@ -146,6 +186,9 @@ export default class Boss extends TimeEffect {
             this.currentTween.stop();
         }
 
+        const distanceX = this.player.x - nextPos.x;
+        this.node.scaleX = distanceX < 0 ? 1 : -1;
+
         this.currentTween = cc
             .tween(this.node)
             .to(100 / this.moveSpeed, { position: nextPos }, { easing: 'quartOut' })
@@ -158,19 +201,25 @@ export default class Boss extends TimeEffect {
     private useSkill() {
         const skillDecision = this.weaponOnHand ? Math.floor(Math.random() * 4) : Math.floor(Math.random() * 3);
         if (skillDecision === 0) {
+            this.playSkillAnimation();
+            cc.audioEngine.playEffect(this.jaggedEffect, false);
             const isDelay: boolean = Math.floor(Math.random() * 2) === 0 ? true : false;
             this.jaggedAttack(isDelay);
         } else if (skillDecision === 1) {
+            cc.audioEngine.playEffect(this.sprintEffectOne, false);
             this.sprintModeOne();
         } else if (skillDecision === 2) {
+            cc.audioEngine.playEffect(this.sprintEffectTwo, false);
             this.sprintModeTwo();
         } else {
+            this.playSkillAnimation();
+            cc.audioEngine.playEffect(this.axeEffect, false);
             this.throwWeapon();
         }
     }
 
     private jaggedAttack(isDelay: boolean = true) {
-        const delayTime = isDelay ? Math.random() * 0.5 + 0.5 : 0;
+        const delayTime = isDelay ? Math.random() * 0.5 + 0.75 : 0;
 
         let jaggedIndex = Math.floor(Math.random() * 3);
         let offsetIndex = Math.floor(Math.random() * 3);
@@ -178,6 +227,8 @@ export default class Boss extends TimeEffect {
         offsetIndex = Math.floor(Math.random() * 3);
         jaggedIndex = (jaggedIndex + 1) % 3;
         this.Jagged[jaggedIndex].getComponent(JaggedMechanism).preAttack(this.attackPosOffset[offsetIndex], delayTime);
+
+        this.scheduleOnce(this.playIdleAnimation, 1);
     }
 
     private sprintModeOne() {
@@ -188,6 +239,8 @@ export default class Boss extends TimeEffect {
         this.usingSpecialSkill = true;
         this.node.group = 'MonsterDamage';
         this.node.getComponent(cc.PhysicsBoxCollider).apply();
+        const bossWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
+        this.node.scaleX = this.player.x - this.player.parent.convertToNodeSpaceAR(bossWorldPos).x < 0 ? 1 : -1;
 
         let newParticleSystem = cc.instantiate(this.bossSprintParticleSystem);
         this.node.addChild(newParticleSystem);
@@ -197,12 +250,20 @@ export default class Boss extends TimeEffect {
 
         const distanceX = this.player.x - randX;
         const distanceY = this.player.y - randY;
+        const radian = Math.atan(distanceY / distanceX);
+        let angle = (radian * 180) / Math.PI;
 
         const moveTime = Math.sqrt(distanceX * distanceX + distanceY * distanceY) / (this.moveSpeed * 7.5);
 
         this.currentTween = cc
             .tween(this.node)
             .parallel(cc.tween().to(1, { x: randX }), cc.tween().to(1, { y: randY }))
+            .call(()=> {
+                this.node.scaleX = distanceX < 0 ? 1 : -1;
+                this.node.angle = angle;
+                this.playSprintAnimation();
+                
+            })
             .parallel(cc.tween().to(moveTime, { x: this.player.x }, { easing: 'sineIn' }), cc.tween().to(moveTime, { y: this.player.y }, { easing: 'sineIn' }))
             .call(() => {
                 this.spawnFallenRock();
@@ -232,18 +293,24 @@ export default class Boss extends TimeEffect {
 
         this.currentTween = cc
             .tween(this.node)
+            .call(() => {
+                this.playSkillAnimation();
+            })
             .delay(1)
+            .call(() => {
+                this.playIdleAnimation();
+            })
             .to(moveTime, { position: cc.v3(-350, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
-            .to(0.2, { position: cc.v3(-350, -230, 0) })
+            .to(0.2, { position: cc.v3(-350, -200, 0) })
             .delay(0.2)
             .to(0.2, { position: cc.v3(0, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
-            .to(0.2, { position: cc.v3(0, -230, 0) })
+            .to(0.2, { position: cc.v3(0, -200, 0) })
             .delay(0.2)
             .to(0.2, { position: cc.v3(350, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
-            .to(0.2, { position: cc.v3(350, -230, 0) })
+            .to(0.2, { position: cc.v3(350, -200, 0) })
             .call(() => {
                 this.spawnFallenRock();
                 this.schedule(this.endSpecialSkill, 0.2, 0);
@@ -256,6 +323,8 @@ export default class Boss extends TimeEffect {
         this.node.getComponent(cc.PhysicsBoxCollider).apply();
         this.usingSpecialSkill = false;
         this.isInvincible = true;
+        this.node.angle = 0;
+        this.playIdleAnimation();
         this.moveDecision();
     }
 
@@ -304,7 +373,7 @@ export default class Boss extends TimeEffect {
             .parallel(cc.tween().to(moveTime, { x: posX }, { easing: 'quartOut' }), cc.tween().to(moveTime, { y: posY }, { easing: 'quartOut' }))
             .call(() => {
                 let newParticleSystem = cc.instantiate(this.axeParticleSystem);
-                newParticleSystem.setPosition(70, 0);
+                newParticleSystem.setPosition(90, 5);
                 this.node.addChild(newParticleSystem);
                 this.schedule(this.spawnWeapon, 1, 0);
             })
@@ -313,7 +382,7 @@ export default class Boss extends TimeEffect {
 
     private spawnWeapon() {
         let newWeapon = cc.instantiate(this.bossWeapon);
-        newWeapon.setPosition(this.node.x + 70, this.node.y + 40);
+        newWeapon.setPosition(this.node.x + 70 * this.node.scaleX, this.node.y + 30);
         this.node.parent.addChild(newWeapon);
         this.weapon = newWeapon;
         const bossWorldPos: cc.Vec2 = this.node.parent.convertToWorldSpaceAR(this.node.getPosition());
@@ -355,7 +424,7 @@ export default class Boss extends TimeEffect {
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
-        if (other.node.group === 'Damage' && !this.isInvincible) {
+        if ((other.node.group === 'Damage' || (other.node.name === 'BossWeapon' && this.weapon.getComponent(BossWeapon).causeDamage)) && !this.isInvincible) {
             this.currentHP -= 10;
             this.HPCheck(this.currentHP);
             this.node.children[0].color = cc.color(255, 0, 0);
@@ -365,8 +434,10 @@ export default class Boss extends TimeEffect {
 
     private HPCheck(HP: number) {
         if (HP <= 0) {
+            cc.audioEngine.playEffect(this.deathEffect, false);
+            this.playDeadAnimation();
             this.unscheduleAllCallbacks();
-            this.node.active = false;
+            this.scheduleOnce(() => this.node.active = false, 1);
             this.scheduleOnce(() => this.node.emit('dead'), 1);
         }
         this.HPDisplay.progress = HP / this.bossHP;
@@ -425,6 +496,8 @@ export default class Boss extends TimeEffect {
         this.HPDisplay.progress = 1;
         this.position = currentPosition.middleBottom;
         this.node.setPosition(this.bossPosition[this.position]);
+        this.node.scaleX = 1;
+        this.node.angle = 0;
     }
 
     update(dt) {
@@ -441,7 +514,7 @@ export default class Boss extends TimeEffect {
             }
         }
 
-        if (this.usingSpecialSkill) {
+        if (this.usingSpecialSkill || !this.player.getComponent(PlayerManager).status || this.currentHP <= 0) {
             this.moveTimer = 0;
             this.skillTimer = 0;
         }

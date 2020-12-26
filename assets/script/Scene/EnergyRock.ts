@@ -10,8 +10,8 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class EnergyRock extends TimeEffect {
-    @property(cc.Animation)
-    private energyRockAnimation: cc.Animation = null;
+    @property(cc.Sprite)
+    private energyRock: cc.Sprite = null;
 
     private isOpen: boolean = false;
 
@@ -28,15 +28,15 @@ export default class EnergyRock extends TimeEffect {
             this.reset();
         } else {
             this.isOpen = true;
-            this.energyRockAnimation.play('EnergyRockRecharged');
-            this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 196;
+            this.energyRock.enabled = true;
+            this.energyRock.getComponent(cc.CircleCollider).radius = 196;
         }
     }
 
     public reset() {
         this.status = 'normal';
         this.isOpen = false;
-        this.energyRockAnimation.play('EnergyRockEmpty');
-        this.energyRockAnimation.getComponent(cc.CircleCollider).radius = 0;
+        this.energyRock.enabled = false;
+        this.energyRock.getComponent(cc.CircleCollider).radius = 0;
     }
 }

@@ -57,6 +57,7 @@ export default class MenuController extends cc.Component {
                 cc.audioEngine.setEffectsVolume(0.5);
                 cc.audioEngine.playEffect(this.buttonEffect, false);
             } else {
+                console.log('menuController mute');
                 cc.audioEngine.setMusicVolume(0);
                 cc.audioEngine.setEffectsVolume(0);
             }

@@ -175,7 +175,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "a57f5901-b505-498a-b28f-7e32ead561a0"
+      "__uuid__": "f5488457-36c4-49ec-aacd-16e8b180cd9e"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -200,17 +200,20 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "baf6b688-93e3-4da8-af4a-9bb7930a703c"
+      "__uuid__": "33c53b32-b468-45dc-8430-2a76dbd380c4"
     },
     "_clips": [
-      {
-        "__uuid__": "baf6b688-93e3-4da8-af4a-9bb7930a703c"
-      },
       {
         "__uuid__": "a750274c-22b2-4cb5-8735-7519bfffc51a"
       },
       {
         "__uuid__": "65cb71e9-9763-4c18-bd8a-dbacdb5ee369"
+      },
+      {
+        "__uuid__": "33c53b32-b468-45dc-8430-2a76dbd380c4"
+      },
+      {
+        "__uuid__": "49415b69-71ae-4275-a4bd-f07f81669296"
       }
     ],
     "playOnLoad": true,
@@ -242,7 +245,13 @@
       "__id__": 4
     },
     "monsterDeathAnimation": {
-      "__uuid__": "4b5e833c-2646-4ca8-81ba-b30e6f63f78a"
+      "__uuid__": "bd611cd9-cd50-4e7f-bac2-6074ce4cb5ba"
+    },
+    "shootEffect": {
+      "__uuid__": "cd4e6eaf-6c92-4f98-903b-f1e950a7425d"
+    },
+    "deathEffect": {
+      "__uuid__": "6011d76f-fa3f-423d-a4d2-11bb57eb9415"
     },
     "jumpFroce": 200,
     "_id": ""
@@ -296,7 +305,7 @@
     "tag": 2,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": -10,
       "y": -40
     },
     "_size": {
