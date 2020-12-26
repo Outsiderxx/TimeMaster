@@ -15,6 +15,12 @@ export default class RangedMonster extends cc.Component {
     @property(cc.Animation)
     private monsterAnimation: cc.Animation = null;
 
+    @property(cc.AudioClip)
+    private shootEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private deathEffect: cc.AudioClip = null;
+
     @property
     private moveSpeed: number = 0;
 
@@ -212,12 +218,14 @@ export default class RangedMonster extends cc.Component {
 
     private playShootAnimation() {
         if (this.onTheGround) {
+            cc.audioEngine.playEffect(this.shootEffect, false);
             this.monsterAnimation.play('monsterShoot');
             this.schedule(this.shootBullet, 0.5, 0);
         }
     }
 
     private playDeathAnimation() {
+        cc.audioEngine.playEffect(this.deathEffect, false);
         let anim = cc.instantiate(this.monsterDeathAnimation);
         anim.setPosition(this.node.getPosition());
         anim.scaleX = this.node.scaleX;

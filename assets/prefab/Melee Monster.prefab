@@ -245,6 +245,12 @@
     "damageArea": {
       "__uuid__": "d9afb950-c08d-42e6-9eca-9d718f7a7477"
     },
+    "attackEffect": {
+      "__uuid__": "d556616f-88bf-425f-8e5d-ec64caab33c3"
+    },
+    "deathEffect": {
+      "__uuid__": "6011d76f-fa3f-423d-a4d2-11bb57eb9415"
+    },
     "moveSpeed": 100,
     "freezeTime": 1,
     "_id": ""

@@ -241,6 +241,12 @@
     "monsterAnimation": {
       "__id__": 4
     },
+    "shootEffect": {
+      "__uuid__": "cd4e6eaf-6c92-4f98-903b-f1e950a7425d"
+    },
+    "deathEffect": {
+      "__uuid__": "6011d76f-fa3f-423d-a4d2-11bb57eb9415"
+    },
     "moveSpeed": 100,
     "attackDistance": 250,
     "_id": ""

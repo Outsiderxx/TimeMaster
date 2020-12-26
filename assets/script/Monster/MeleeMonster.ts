@@ -15,6 +15,12 @@ export default class MeleeMonster extends cc.Component {
     @property(cc.Prefab)
     private damageArea: cc.Prefab = null;
 
+    @property(cc.AudioClip)
+    private attackEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    private deathEffect: cc.AudioClip = null;
+
     @property
     private moveSpeed: number = 0;
 
@@ -114,7 +120,7 @@ export default class MeleeMonster extends cc.Component {
         const temp: cc.Vec3 = this.node.parent.convertToWorldSpaceAR(this.node.position);
         const edgeCheckP1: cc.Vec2 = cc.v2(temp.x + offset, temp.y);
         const edgeCheckP2: cc.Vec2 = cc.v2(temp.x + offset, temp.y - 110 * Math.abs(this.node.scaleX));
-        
+
         const wallCheckTopP1: cc.Vec2 = cc.v2(temp.x, temp.y + 10 * Math.abs(this.node.scaleX));
         const wallCheckTopP2: cc.Vec2 = cc.v2(temp.x + offset * 1.2, temp.y + 10 * Math.abs(this.node.scaleX));
         const wallCheckMediumP1: cc.Vec2 = cc.v2(temp.x, temp.y - 40 * Math.abs(this.node.scaleX));
@@ -237,6 +243,7 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private playDeathAnimation() {
+        cc.audioEngine.playEffect(this.deathEffect, false);
         let anim = cc.instantiate(this.monsterDeathAnimation);
         anim.setPosition(this.node.getPosition());
         anim.scaleX = this.node.scaleX;
@@ -245,6 +252,7 @@ export default class MeleeMonster extends cc.Component {
     }
 
     private generateDamageArea() {
+        cc.audioEngine.playEffect(this.attackEffect, false);
         let newArea = cc.instantiate(this.damageArea);
         const offset = this._moveDirection ? -40 : 40;
         newArea.setPosition(this.node.x + offset, this.node.y);
