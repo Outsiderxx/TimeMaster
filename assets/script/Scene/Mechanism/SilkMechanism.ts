@@ -49,10 +49,10 @@ export default class SilkMechanism extends TimeEffect {
     public reset() {
         if (this.silkStatus) {
             this.status = 'triggered';
-            this.accelerate();
+            this.silkAnimation.play('silkGrows');
         } else {
             this.status = 'original';
-            this.rollback();
+            this.silkAnimation.play('silkGrownBack');
         }
     }
 }

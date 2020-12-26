@@ -108,7 +108,7 @@ export default class PlayerManager extends cc.Component {
                     const id: number = cc.audioEngine.playEffect(this.skillSuccess, false);
                     cc.audioEngine.setVolume(id, 0.3);
                     this.finiteState(StateSet.useSkill);
-                    this.troggleSkillSuccessParticle();
+                    this.triggleSkillSuccessParticle();
                     switch (this.currentUsingSkill) {
                         case accelerate:
                             console.log(`Accelerate ${target.name}`);
@@ -164,7 +164,7 @@ export default class PlayerManager extends cc.Component {
                 this.finiteState(StateSet.run);
             } else {
                 lv.x = 0;
-                //若在攀爬狀態即不進入idel動畫
+                //若在攀爬狀態即不進入idle動畫
                 this.animationEvent.walkAudioPause();
                 if (!this.isClimbing) {
                     this.finiteState(StateSet.idle);
@@ -229,12 +229,27 @@ export default class PlayerManager extends cc.Component {
         //pointer
         this.userPointer.changeScene();
     }
+
+    public resumeFromFail() {
+        // position
+        this.node.setPosition(this.playerPosition[this.currentSceneIdx]);
+
+        // direction
+        this.node.scaleX = this.playerDirection[this.currentSceneIdx] ? -0.5 : 0.5;
+        // movement
+        // input
+        // skill range
+        this.resetPlayerState();
+        this.isAlive = true;
+    }
+
     //進入不可控制狀態即reset這些數值
     private resetPlayerState() {
         this.getComponent(cc.RigidBody).linearVelocity = new cc.Vec2(0, 0);
 
         this.input = {};
         this.playerState = StateSet.none;
+        this.finiteState(StateSet.idle);
 
         this.skillRange.active = true;
         this.currentUsingSkill = -1;
@@ -247,7 +262,6 @@ export default class PlayerManager extends cc.Component {
             this.resetPlayerState();
             if (other.node.name === 'rollingRock') {
                 //滾石即死
-                this.finiteState(StateSet.die);
                 this.updateHearts(0);
                 return;
             }
@@ -259,7 +273,7 @@ export default class PlayerManager extends cc.Component {
             this.beingInvincible();
         }
     }
-    private troggleSkillSuccessParticle() {
+    private triggleSkillSuccessParticle() {
         console.log('djfnsjknfkjgndsf');
         let temp = cc.instantiate(this.triggerSkillParticle);
         this.userPointer.node.getParent().addChild(temp);
@@ -279,8 +293,17 @@ export default class PlayerManager extends cc.Component {
         }
         // 角色死亡
         if (other.node.name === 'Deadline') {
-            this.finiteState(StateSet.die);
             this.updateHearts(0);
+        } else if (other.node.name === 'FailLine') {
+            this.healthPoint -= 2;
+            if (this.healthPoint <= 0) {
+                this.updateHearts(0);
+            } else {
+                this.finiteState(StateSet.hurt);
+                this.updateHearts(this.healthPoint);
+                this.isAlive = false;
+                this.node.emit('failed');
+            }
         }
         // 通關
         else if (other.node.name === 'TransferPoint') {
@@ -378,6 +401,7 @@ export default class PlayerManager extends cc.Component {
             this.heartGroup.children.slice(num).forEach((node) => (node.getComponentInChildren(cc.Toggle).isChecked = false));
             if (num === 0) {
                 this.finiteState(StateSet.die);
+                this.animationEvent.walkAudioPause();
                 this.node.emit('dead');
                 this.isAlive = false;
             }

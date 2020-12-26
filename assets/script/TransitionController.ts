@@ -81,6 +81,7 @@ export default class TransitionController extends cc.Component {
         cc.tween(this.mask)
             .to(1, { opacity: 255 })
             .delay(1)
+            .call(() => this.node.emit('failTransitionDone'))
             .to(1, { opacity: 0 })
             .call(() => {
                 this.node.active = false;

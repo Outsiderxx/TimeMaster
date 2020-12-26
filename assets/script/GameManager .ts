@@ -76,6 +76,10 @@ export default class GameController extends cc.Component {
             }
         });
         this.transition.node.on('transitionEnd', () => this.transitionPromise(''));
+        this.transition.node.on('failTransitionDone', () => {
+            this.player.resumeFromFail();
+            this.camera.reset();
+        });
         this.boss.on('dead', () => {
             this.player.status = false;
             this.transition.showGameResult(true);
@@ -85,6 +89,9 @@ export default class GameController extends cc.Component {
         });
         this.player.node.on('transfer', () => {
             this.transferStage(this.currentSceneIdx + 1);
+        });
+        this.player.node.on('failed', () => {
+            this.transition.clockSceneFailTransition();
         });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             if (event.keyCode === cc.macro.KEY.tab && this.sceneNodes.length > this.currentSceneIdx + 1) {
@@ -121,8 +128,6 @@ export default class GameController extends cc.Component {
         const currentEffectVolume: number = cc.audioEngine.getEffectsVolume();
         cc.audioEngine.stopMusic();
         console.log('transion mute');
-        cc.audioEngine.setMusicVolume(0);
-        cc.audioEngine.setEffectsVolume(0);
         this.transition.openTransitionferStage();
         await new Promise((resolve) => (this.transitionPromise = resolve));
         this.currentScene.reset();
@@ -151,8 +156,6 @@ export default class GameController extends cc.Component {
             const id: number = cc.audioEngine.playMusic(this.bgmCastle, true);
             cc.audioEngine.setVolume(id, 0.2);
         }
-        cc.audioEngine.setMusicVolume(currentMusicVolume);
-        cc.audioEngine.setEffectsVolume(currentEffectVolume);
         if (this.currentSceneIdx === 2) {
             this.player.status = false;
             this.camera.isUpdate = false;
