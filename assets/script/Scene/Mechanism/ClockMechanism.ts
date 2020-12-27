@@ -168,6 +168,7 @@ export default class ClockMechanism extends TimeEffect {
     public accelerate() {
         if (this.currentSpeedIdx !== 2) {
             this.currentSpeedIdx++;
+            console.log(`current speed index ${this.currentSpeedIdx}`);
             this.floors[1].getComponent(StretchPlatformMechanism).changeSpeed(this.speedOptions[this.currentSpeedIdx]);
             this.floors[2].getComponent(StretchPlatformMechanism).changeSpeed(this.speedOptions[this.currentSpeedIdx]);
             (this.hourHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];
@@ -180,6 +181,7 @@ export default class ClockMechanism extends TimeEffect {
     public slowdown() {
         if (this.currentSpeedIdx !== 0) {
             this.currentSpeedIdx--;
+            console.log(`current speed index ${this.currentSpeedIdx}`);
             this.floors[1].getComponent(StretchPlatformMechanism).changeSpeed(this.speedOptions[this.currentSpeedIdx]);
             this.floors[2].getComponent(StretchPlatformMechanism).changeSpeed(this.speedOptions[this.currentSpeedIdx]);
             (this.hourHandTween as any)._finalAction._speed = this.speedOptions[this.currentSpeedIdx];

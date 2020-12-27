@@ -11,15 +11,18 @@ export default class SkillCast extends cc.Component {
     private camera: cc.Node = null;
 
     private userPointer: cc.BoxCollider = null;
-    private originalPointerPosition: cc.Vec2 = null;
+    private originalPointerPosition: cc.Vec2 = cc.v2(640, 360);
     private scene: cc.Node = null;
+    private currentCollider: cc.Collider = null;
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
         //cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
-        this.node.active = false;
-        this.changeScene();
+        this.userPointer.getComponent(cc.Animation).play();
+        this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
+        this.scene.on(cc.Node.EventType.MOUSE_MOVE, this.trackPointerPosition, this);
+        this.scene.on(cc.Node.EventType.MOUSE_UP, this.onPointerClick, this);
     }
 
     update() {
@@ -29,32 +32,36 @@ export default class SkillCast extends cc.Component {
     }
 
     public changeScene() {
+        this.scene.off(cc.Node.EventType.MOUSE_MOVE, this.trackPointerPosition, this);
+        this.scene.off(cc.Node.EventType.MOUSE_UP, this.onPointerClick, this);
         this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
-        this.scene.on(cc.Node.EventType.TOUCH_START, (event: cc.Event.EventTouch) => {
-            this.userPointer.node.active = true;
-            const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());
-            const localPos: cc.Vec2 = this.node.parent.convertToNodeSpaceAR(originalPos);
-            this.originalPointerPosition = localPos;
-            this.addCameraOffset();
-        });
-        this.scene.on(cc.Node.EventType.TOUCH_MOVE, (event: cc.Event.EventTouch) => {
-            const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());
-            const localPos: cc.Vec2 = this.node.parent.convertToNodeSpaceAR(originalPos);
-            this.originalPointerPosition = localPos;
-            this.addCameraOffset();
-        });
-        this.scene.on(cc.Node.EventType.TOUCH_END, (event: cc.Event.EventTouch) => {
-            this.userPointer.node.active = false;
-        });
-        this.scene.on(cc.Node.EventType.TOUCH_CANCEL, (event: cc.Event.EventTouch) => {
-            this.userPointer.node.active = false;
-        });
+        this.scene.on(cc.Node.EventType.MOUSE_MOVE, this.trackPointerPosition, this);
+        this.scene.on(cc.Node.EventType.MOUSE_UP, this.onPointerClick, this);
     }
 
-    private onCollisionEnter(other: cc.Collider, self: cc.Collider) {
-        if (this.rangeCheck()) {
-            this.node.emit('skillHit', other);
+    private trackPointerPosition(event: cc.Event.EventMouse) {
+        const originalPos: cc.Vec2 = new cc.Vec2(event.getLocationX(), event.getLocationY());
+        const localPos: cc.Vec2 = this.node.parent.convertToNodeSpaceAR(originalPos);
+        this.originalPointerPosition = localPos;
+        this.addCameraOffset();
+    }
+
+    private onPointerClick() {
+        if (this.currentCollider && this.rangeCheck()) {
+            this.node.emit('skillHit', this.currentCollider);
+            console.log('emit skill hit');
         }
+    }
+
+    private onCollisionEnter(other: cc.Collider) {
+        // 顯示時鐘pointer
+        this.node.getComponent(cc.Sprite).enabled = true;
+        this.currentCollider = other;
+    }
+
+    private onCollisionExit() {
+        this.node.getComponent(cc.Sprite).enabled = false;
+        this.currentCollider = null;
     }
 
     private addCameraOffset() {

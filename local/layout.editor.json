@@ -57,7 +57,7 @@
                 "width": 1130.984375
               },
               {
-                "active": 0,
+                "active": 1,
                 "children": [
                   "console",
                   "timeline",
