@@ -14,10 +14,11 @@ export default class SkillCast extends cc.Component {
     private originalPointerPosition: cc.Vec2 = cc.v2(640, 360);
     private scene: cc.Node = null;
     private currentCollider: cc.Collider = null;
+    private secondCollider: cc.Collider = null;
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
-        //cc.director.getCollisionManager().enabledDebugDraw = true;
+        // cc.director.getCollisionManager().enabledDebugDraw = true;
         this.userPointer = this.node.getComponent(cc.BoxCollider);
         this.userPointer.getComponent(cc.Animation).play();
         this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
@@ -32,6 +33,8 @@ export default class SkillCast extends cc.Component {
     }
 
     public changeScene() {
+        this.currentCollider = null;
+        this.secondCollider = null;
         this.scene.off(cc.Node.EventType.MOUSE_MOVE, this.trackPointerPosition, this);
         this.scene.off(cc.Node.EventType.MOUSE_UP, this.onPointerClick, this);
         this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
@@ -56,12 +59,21 @@ export default class SkillCast extends cc.Component {
     private onCollisionEnter(other: cc.Collider) {
         // 顯示時鐘pointer
         this.node.getComponent(cc.Sprite).enabled = true;
-        this.currentCollider = other;
+        if (this.currentCollider !== null) {
+            this.secondCollider = other;
+        } else {
+            this.currentCollider = other;
+        }
     }
 
     private onCollisionExit() {
-        this.node.getComponent(cc.Sprite).enabled = false;
-        this.currentCollider = null;
+        if (this.secondCollider === null) {
+            this.node.getComponent(cc.Sprite).enabled = false;
+            this.currentCollider = null;
+        } else {
+            this.currentCollider = this.secondCollider;
+            this.secondCollider = null;
+        }
     }
 
     private addCameraOffset() {

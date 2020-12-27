@@ -52,18 +52,18 @@
                 "children": [
                   "scene"
                 ],
-                "height": 570,
+                "height": 653,
                 "type": "panel",
                 "width": 1130.984375
               },
               {
-                "active": 1,
+                "active": 0,
                 "children": [
                   "console",
                   "timeline",
                   "game-window"
                 ],
-                "height": 349,
+                "height": 266,
                 "type": "panel",
                 "width": 1130.984375
               }
@@ -84,7 +84,8 @@
         "timeline",
         "game-window"
       ]
-    }
+    },
+    "window-1609069646615": {}
   },
   "panels": {
     "project-settings": {
@@ -106,8 +107,8 @@
       "height": 640
     },
     "package-asset.import": {
-      "x": 752,
-      "y": 230,
+      "x": 703,
+      "y": 259,
       "width": 420,
       "height": 585
     },

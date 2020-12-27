@@ -28,6 +28,9 @@ export default class FallenRockMechanism extends TimeEffect {
     @property(cc.Sprite)
     private rock: cc.Sprite = null;
 
+    @property(cc.Node)
+    private sandParticle: cc.Node = null;
+
     @property(cc.AudioClip)
     private sound: cc.AudioClip = null;
 
@@ -42,6 +45,7 @@ export default class FallenRockMechanism extends TimeEffect {
             .to(this.dropSpeed, { y: this.intial_y })
             .call(() => {
                 this.status = 'original';
+                this.sandParticle.active = true;
                 if (this.isColliderMoving) {
                     this.node.getComponent(cc.BoxCollider).offset.y = this.intial_y;
                 }
@@ -50,13 +54,14 @@ export default class FallenRockMechanism extends TimeEffect {
     }
 
     public accelerate() {
-        cc.audioEngine.playEffect(this.sound,false);
+        cc.audioEngine.playEffect(this.sound, false);
         this.status = 'transforming';
         cc.tween(this.rock.node)
             .to(this.dropSpeed, { y: this.target_y })
             .call(() => {
                 this.rock.node.active = this.needRemainDisplaying;
                 this.status = 'triggered';
+                this.sandParticle.active = false;
                 if (this.isColliderMoving) {
                     this.node.getComponent(cc.BoxCollider).offset.y = this.target_y;
                 }
@@ -69,16 +74,17 @@ export default class FallenRockMechanism extends TimeEffect {
     public reset() {
         if (this.isResetTriggered) {
             this.status = 'transforming';
-        cc.tween(this.rock.node)
-            .to(this.dropSpeed, { y: this.target_y })
-            .call(() => {
-                this.rock.node.active = this.needRemainDisplaying;
-                this.status = 'triggered';
-                if (this.isColliderMoving) {
-                    this.node.getComponent(cc.BoxCollider).offset.y = this.target_y;
-                }
-            })
-            .start();
+            this.sandParticle.active = false;
+            cc.tween(this.rock.node)
+                .to(this.dropSpeed, { y: this.target_y })
+                .call(() => {
+                    this.rock.node.active = this.needRemainDisplaying;
+                    this.status = 'triggered';
+                    if (this.isColliderMoving) {
+                        this.node.getComponent(cc.BoxCollider).offset.y = this.target_y;
+                    }
+                })
+                .start();
         } else {
             this.rock.node.active = true;
             this.rollback();

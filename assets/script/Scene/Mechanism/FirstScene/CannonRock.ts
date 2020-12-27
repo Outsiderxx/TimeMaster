@@ -11,10 +11,13 @@ export default class CannonRock extends TimeEffect {
     private rockStatus: boolean = false;
     @property(cc.Node)
     private rockSprite: cc.Node = null;
+    @property(cc.Node)
+    private sandParticle: cc.Node = null;
     @property(cc.Animation)
     private RockBody: cc.Animation = null;
     @property(cc.AudioClip)
     private sound: cc.AudioClip = null;
+
     onLoad() {
         this.status = 'original';
         this.rockSprite.active = false;
@@ -22,10 +25,8 @@ export default class CannonRock extends TimeEffect {
             if (this.CannonBody.currentClip.name === 'Explosion') {
                 this.rockStatus = true;
                 this.rockSprite.active = true;
-            } /*else{
-                this.rockStatus = false;
-                this.rockSprite.active = false;
-            }*/
+                this.sandParticle.active = true;
+            }
         });
         this.RockBody.on('play', () => {
             this.RockBody.node.active = true;
@@ -33,9 +34,12 @@ export default class CannonRock extends TimeEffect {
         this.RockBody.on('finished', () => {
             if (this.RockBody.currentClip.name === 'RockFallen') {
                 this.RockBody.node.active = false;
+            } else if (this.RockBody.currentClip.name === 'RockReturn') {
+                this.sandParticle.active = true;
             }
         });
     }
+
     public rollback() {
         if (this.rockStatus) {
             this.status = 'original';
@@ -46,6 +50,7 @@ export default class CannonRock extends TimeEffect {
     public accelerate() {
         if (this.rockStatus) {
             this.status = 'triggered';
+            this.sandParticle.active = false;
             cc.audioEngine.playEffect(this.sound, false);
             this.RockBody.play('RockFallen');
         }
@@ -59,5 +64,6 @@ export default class CannonRock extends TimeEffect {
         this.rollback();
         this.rockStatus = false;
         this.rockSprite.active = false;
+        this.sandParticle.active = false;
     }
 }
