@@ -2,6 +2,7 @@ import PlotPoint from './PlotPoint';
 import BridgeMechanism from '../Scene/Mechanism/FirstScene/BridgeMechanism';
 import VineMechanism from '../Scene/Mechanism/FirstScene/VineMechanism';
 import UpDownRockMoveMechanism from '../Scene/Mechanism/FirstScene/UpDownMoveRockMechanism';
+import Player from '../Player/PlayerManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -29,6 +30,9 @@ export default class NarratorManaget extends cc.Component {
     @property(cc.Node)
     private directionStone: cc.Node = null;
 
+    @property(Player)
+    private player: Player = null;
+
     @property(cc.Node)
     private mask: cc.Node = null;
 
@@ -44,6 +48,9 @@ export default class NarratorManaget extends cc.Component {
     @property([cc.Vec2])
     private lightSectionSizes: cc.Vec2[] = [];
 
+    @property([cc.Vec2])
+    private maskPositoins: cc.Vec2[] = [];
+
     @property
     private initY: number = 0;
 
@@ -52,15 +59,16 @@ export default class NarratorManaget extends cc.Component {
 
     private firstRangedMonster: cc.Node = null;
     private currentTween: cc.Tween = null;
+    private hasDisplayedHint: boolean[] = [false, false, false];
 
     private readonly messageContents: string[] = [
-        '按下"A"或"D"鍵移動， 空白鍵跳躍。',
+        '按下"A"或"D"鍵進行移動， 空白鍵跳躍。',
         '前方的木橋已經斷裂了， 如果能夠讓斷橋回到完好無缺的時候...\n按下「R」 鍵， 並在技能範圍內點選斷橋， 來施放時間倒轉。',
         '噢! 不好了， 怪物出現了! 只能先撤退回去!',
-        '對了! 如果讓木橋再次斷裂， 就能引誘怪物墜落深淵!\n按下「Q」 鍵， 並在技能範圍內點選木橋， 來施放時間加速。',
+        '對了! 如果讓木橋再次斷裂， 就能使怪物墜落深淵!\n按下「Q」 鍵， 並在技能範圍內點選木橋， 來施放時間加速。',
         '藤蔓還沒完全生長， 太短了...\n按下「Q」 鍵， 並在技能範圍內點選藤蔓， 來施放時間加速。',
         '這樣就能夠攀爬了!\n跳到藤蔓上並且按下"W"或"S"鍵攀爬。',
-        '這個石塊的速度未免也太快了! 要如何才能順利地跳上去?\n按下「E」 鍵，並在技能範圍內點選移動的石塊， 來施放時間緩滯。',
+        '這個石塊的移動速度未免也太快了! 要如何才能順利地跳上去?\n按下「E」 鍵，並在技能範圍內點選移動的石塊， 來施放時間緩滯。',
         '石頭上有「裂痕」， 看起來快要掉落了，\n使用「時間加速」 讓石頭提前掉落吧!',
         '附近似乎沒有能傷害怪物的物體， 只好利用怪物的攻擊反擊!',
         '儲存石! 能夠「儲存」 時間能量，並「散發」 出來!',
@@ -119,6 +127,9 @@ export default class NarratorManaget extends cc.Component {
         this.plotPoints.forEach((point) => (point.node.active = true));
         this.plotPoints[3].node.active = false;
         this.plotPoints[11].node.active = false;
+        this.hasDisplayedHint[0] = false;
+        this.hasDisplayedHint[1] = false;
+        this.hasDisplayedHint[2] = false;
     }
 
     public enableClockSceneMessage() {
@@ -132,6 +143,15 @@ export default class NarratorManaget extends cc.Component {
     private onPlotPointTrigger(idx: number) {
         this.text.string = this.messageContents[idx];
         switch (idx) {
+            case 1:
+                this.pauseForHint(0);
+                break;
+            case 4:
+                this.pauseForHint(1);
+                break;
+            case 6:
+                this.pauseForHint(2);
+                break;
             case 2:
                 this.plotPoints[3].node.active = true;
                 //this.pauseForHint(idx);
@@ -156,12 +176,19 @@ export default class NarratorManaget extends cc.Component {
     }
 
     private pauseForHint(idx: number) {
-        cc.director.pause();
-        this.lightSection.setPosition(this.lightSectionPositions[idx]);
-        this.mask.setPosition(-this.lightSectionPositions[idx].x, -this.lightSectionPositions[idx].y);
+        if (!this.hasDisplayedHint[idx]) {
+            this.hasDisplayedHint[idx] = true;
+            this.lightSection.active = true;
+            this.player.onHintPause();
+            this.scheduleOnce(() => {
+                this.player.status = true;
+                this.lightSection.active = false;
+            }, 3);
+            this.lightSection.setPosition(this.lightSectionPositions[idx]);
+            this.lightSection.setContentSize(this.lightSectionSizes[idx].x, this.lightSectionSizes[idx].y);
+            this.mask.setPosition(this.maskPositoins[idx]);
+        }
     }
-
-    private open() {}
 
     private close() {
         if (cc.director.isPaused) {

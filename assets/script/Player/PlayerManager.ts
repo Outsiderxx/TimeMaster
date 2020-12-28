@@ -208,6 +208,15 @@ export default class PlayerManager extends cc.Component {
         }
     }
 
+    public onHintPause() {
+        let lv = this.node.getComponent(cc.RigidBody).linearVelocity;
+        lv.x = 0;
+        this.animationEvent.walkAudioPause();
+        this.finiteState(StateSet.idle);
+        this.input = {};
+        this.isAlive = false;
+    }
+
     public reset(idx?: number) {
         if (idx !== undefined) {
             this.currentSceneIdx = idx;
