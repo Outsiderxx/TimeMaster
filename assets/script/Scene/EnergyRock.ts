@@ -26,10 +26,12 @@ export default class EnergyRock extends TimeEffect {
     public slowdown() {
         if (this.isOpen) {
             this.reset();
+            this.node.emit('status', 'normal');
         } else {
             this.isOpen = true;
             this.energyRock.enabled = true;
             this.energyRock.getComponent(cc.CircleCollider).radius = 196;
+            this.node.emit('status', 'slowdown');
         }
     }
 

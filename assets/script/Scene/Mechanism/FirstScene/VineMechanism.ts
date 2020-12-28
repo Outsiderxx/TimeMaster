@@ -16,9 +16,11 @@ export default class VineMechanism extends TimeEffect {
         this.status = this.vineStatus === true ? 'triggered' : 'original';
         this.vineAnimation.on('play', () => {
             this.status = 'transforming';
+            this.node.emit('status', this.status);
         });
         this.vineAnimation.on('finished', () => {
             this.status = this.vineAnimation.currentClip.name === 'vineGrows' ? 'triggered' : 'original';
+            this.node.emit('status', this.status);
             const climbCollider: cc.BoxCollider = this.vineAnimation.getComponent(cc.BoxCollider);
             const skillCollider: cc.BoxCollider = this.getComponent(cc.BoxCollider);
             climbCollider.size.height = this.vineAnimation.node.height;

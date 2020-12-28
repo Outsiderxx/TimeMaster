@@ -15,9 +15,11 @@ export default class BridgeMechanism extends TimeEffect {
         this.status = 'triggered';
         this.bridgeAnimation.on('play', () => {
             this.status = 'transforming';
+            this.node.emit('status', this.status);
         });
         this.bridgeAnimation.on('finished', () => {
             this.status = this.bridgeAnimation.currentClip.name === 'breakingBridge' ? 'triggered' : 'original';
+            this.node.emit('status', this.status);
         });
     }
 

@@ -1,5 +1,4 @@
 import TimeEffect from '../../../TimeEffect';
-import ThornMechanism from './ThornMechanism';
 
 const { ccclass, property } = cc._decorator;
 
@@ -34,7 +33,7 @@ export default class CannonRock extends TimeEffect {
         this.RockBody.on('finished', () => {
             if (this.RockBody.currentClip.name === 'RockFallen') {
                 this.RockBody.node.active = false;
-            } else if (this.RockBody.currentClip.name === 'RockReturn') {
+            } else if (this.RockBody.currentClip.name === 'RockReturn' && this.rockStatus) {
                 this.sandParticle.active = true;
             }
         });

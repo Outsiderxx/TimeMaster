@@ -53,7 +53,7 @@ export default class PlayerManager extends cc.Component {
     private speed: cc.Vec2 = cc.v2(0, 0);
     private currentUsingSkill: SkillSet = -1;
     private isClimbing: boolean = false;
-    private isAlive: boolean = true;
+    private isAlive: boolean = false;
     private isInvincible: boolean = false;
     private currentSceneIdx: number = null; // current scene idx
     private climbPauseCount: number = 0;
@@ -77,6 +77,10 @@ export default class PlayerManager extends cc.Component {
         this.effectsAnimation = this.node.getChildByName('SkillArea').getChildByName('Effects').getComponent(cc.Animation);
         // 技能切換
         this.animationEvent = this.node.getChildByName('Appearance').getComponent('AnimationEvent');
+        this.node.on('win', () => {
+            this.isAlive = false;
+            this.animationEvent.walkAudioPause();
+        });
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, (event: cc.Event.EventKeyboard) => {
             if ((event.keyCode === cc.macro.KEY.q || event.keyCode === cc.macro.KEY.e || event.keyCode === cc.macro.KEY.r) && !this.input[event.keyCode]) {
                 this.toggleSkill(event.keyCode, true);
@@ -302,6 +306,7 @@ export default class PlayerManager extends cc.Component {
                 this.finiteState(StateSet.hurt);
                 this.updateHearts(this.healthPoint);
                 this.isAlive = false;
+                this.animationEvent.walkAudioPause();
                 this.node.emit('failed');
             }
         }
@@ -309,6 +314,7 @@ export default class PlayerManager extends cc.Component {
         else if (other.node.name === 'TransferPoint') {
             if (this.isAlive) {
                 this.isAlive = false;
+                this.animationEvent.walkAudioPause();
                 this.node.emit('transfer');
             }
         }
@@ -415,11 +421,11 @@ export default class PlayerManager extends cc.Component {
 
     private onTheGroundCheck() {
         const tempPoint: cc.Vec2 = this.feetRayPoint.convertToWorldSpaceAR(cc.v2(0, 0));
-        const leftP1 = cc.v2(tempPoint.x - 12, tempPoint.y);
-        const leftP2 = cc.v2(tempPoint.x - 12, tempPoint.y - 24);
+        const leftP1 = cc.v2(tempPoint.x - 11, tempPoint.y);
+        const leftP2 = cc.v2(tempPoint.x - 11, tempPoint.y - 24);
 
-        const rightP1 = cc.v2(tempPoint.x + 17, tempPoint.y);
-        const rightP2 = cc.v2(tempPoint.x + 17, tempPoint.y - 24);
+        const rightP1 = cc.v2(tempPoint.x + 11, tempPoint.y);
+        const rightP2 = cc.v2(tempPoint.x + 11, tempPoint.y - 24);
 
         const leftRayResult = cc.director.getPhysicsManager().rayCast(leftP1, leftP2, cc.RayCastType.All);
         const rightRayResult = cc.director.getPhysicsManager().rayCast(rightP1, rightP2, cc.RayCastType.All);

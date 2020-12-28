@@ -85,12 +85,14 @@ export default class AnimationEvent extends cc.Component {
 
     public walkAudioPlay() {
         //console.log("walkID =  ", this.walkAudioID);
-        if (this.walkAudioID === -10) {
-            this.walkAudioID = cc.audioEngine.play(this.walkAudio, true, 1);
-            //console.log("walkID =  ", this.walkAudioID);
-        } else if (cc.audioEngine.getState(this.walkAudioID) === cc.audioEngine.AudioState.PAUSED) {
-            //console.log("resume walk audio");
-            cc.audioEngine.resume(this.walkAudioID);
+        if (this.playerManager.status) {
+            if (this.walkAudioID === -10) {
+                this.walkAudioID = cc.audioEngine.play(this.walkAudio, true, 1);
+                //console.log("walkID =  ", this.walkAudioID);
+            } else if (cc.audioEngine.getState(this.walkAudioID) === cc.audioEngine.AudioState.PAUSED) {
+                //console.log("resume walk audio");
+                cc.audioEngine.resume(this.walkAudioID);
+            }
         }
     }
     public walkAudioPause() {

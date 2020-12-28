@@ -106,16 +106,16 @@
     "lifeVar": 0.1,
     "_startColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 153,
-      "b": 51,
+      "r": 0,
+      "g": 204,
+      "b": 255,
       "a": 255
     },
     "_startColorVar": {
       "__type__": "cc.Color",
-      "r": 60,
-      "g": 55,
-      "b": 164,
+      "r": 0,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_endColor": {
@@ -134,8 +134,8 @@
     },
     "angle": 34,
     "angleVar": 180,
-    "startSize": 4,
-    "startSizeVar": 4,
+    "startSize": 10,
+    "startSizeVar": 10,
     "endSize": 4,
     "endSizeVar": 4,
     "startSpin": 720,

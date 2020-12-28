@@ -4,6 +4,7 @@ import TransitionController from './TransitionController';
 import CameraController from './CameraController';
 import PlayerManager from './Player/PlayerManager';
 import SceneManager from './Scene/SceneManager';
+import NarratorManager from './Narrator/NarratorManager';
 
 const { ccclass, property } = cc._decorator;
 
@@ -33,6 +34,9 @@ export default class GameController extends cc.Component {
     @property(TransitionController)
     private transition: TransitionController = null;
 
+    @property(NarratorManager)
+    private narrator: NarratorManager = null;
+
     @property(cc.AudioClip)
     private bgmCave: cc.AudioClip = null;
 
@@ -58,19 +62,20 @@ export default class GameController extends cc.Component {
         cc.game.setFrameRate(30);
         cc.audioEngine.setMusicVolume(this.musicVolume);
         cc.audioEngine.setEffectsVolume(this.effectVolume);
-        this.mainMenu.node.on('enterFirstScene', () => cc.audioEngine.playMusic(this.bgmCave, true));
+        this.mainMenu.node.on('enterFirstScene', () => {
+            this.player.status = true;
+            cc.audioEngine.playMusic(this.bgmCave, true);
+        });
         this.menu.node.on('back', () => {
             this.player.status = false;
             this.transferStage(0, true);
             this.mainMenu.node.active = true;
-            cc.audioEngine.playMusic(this.bgmMainMenu, true);
         });
         this.transition.node.on('back', (isWin: boolean) => {
             this.player.status = false;
             if (isWin) {
                 this.transferStage(0, true);
                 this.mainMenu.node.active = true;
-                cc.audioEngine.playMusic(this.bgmMainMenu, true);
             } else {
                 this.transferStage(this.currentSceneIdx);
             }
@@ -81,7 +86,7 @@ export default class GameController extends cc.Component {
             this.camera.reset();
         });
         this.boss.on('dead', () => {
-            this.player.status = false;
+            this.player.node.emit('win');
             this.transition.showGameResult(true);
         });
         this.player.node.on('dead', () => {
@@ -140,6 +145,7 @@ export default class GameController extends cc.Component {
         }
         this.player.reset(idx);
         this.camera.reset();
+        this.narrator.reset();
         if (this.currentSceneIdx >= this.sceneNodes.length - 2) {
             this.camera.finalSceneSetUp();
         } else {
@@ -167,6 +173,7 @@ export default class GameController extends cc.Component {
             this.camera.isUpdate = false;
             await this.camera.sceneFourCameraMovement();
             this.player.status = true;
+            this.narrator.enableClockSceneMessage();
             this.camera.isUpdate = true;
         }
     }

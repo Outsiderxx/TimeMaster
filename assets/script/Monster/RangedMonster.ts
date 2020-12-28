@@ -71,6 +71,10 @@ export default class RangedMonster extends cc.Component {
         }
     }
 
+    onDestroy() {
+        this.node.emit('dead');
+    }
+
     onLoad() {
         this.monsterAnimation.on('finished', this.playIdleAnimation, this);
     }

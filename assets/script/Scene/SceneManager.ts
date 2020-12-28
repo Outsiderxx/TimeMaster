@@ -75,21 +75,25 @@ export default class SceneManager extends cc.Component {
         // 清除剩餘怪物
         this.rangedMonsters.forEach((monster) => {
             if (monster.isValid) {
+                monster.removeFromParent();
                 monster.destroy();
             }
         });
         this.meleeMonsters.forEach((monster) => {
             if (monster.isValid) {
+                monster.removeFromParent();
                 monster.destroy();
             }
         });
         this.climbMonsters.forEach((monster) => {
             if (monster.isValid) {
+                monster.removeFromParent();
                 monster.destroy();
             }
         });
         this.specialMonsters.forEach((monster) => {
             if (monster.isValid) {
+                monster.removeFromParent();
                 monster.destroy();
             }
         });

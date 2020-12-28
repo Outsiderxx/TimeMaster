@@ -56,5 +56,6 @@ export default class UpDownMoveRockMechanism extends TimeEffect {
             (this.currentTween as any)._finalAction._speed = 1;
             this.status = 'normal';
         }
+        this.node.emit('status', this.status);
     }
 }
