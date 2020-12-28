@@ -117,25 +117,25 @@ export default class Boss extends TimeEffect {
     }
 
     private playSkillAnimation() {
-        if(this.bossAnimation.currentClip.name !== 'BossSkill') {
+        if (this.bossAnimation.currentClip.name !== 'BossSkill') {
             this.bossAnimation.play('BossSkill');
         }
     }
 
     private playIdleAnimation() {
-        if(this.bossAnimation.currentClip.name !== 'BossIdle') {
+        if (this.bossAnimation.currentClip.name !== 'BossIdle') {
             this.bossAnimation.play();
         }
     }
 
     private playSprintAnimation() {
-        if(this.bossAnimation.currentClip.name !== 'BossSprint') {
+        if (this.bossAnimation.currentClip.name !== 'BossSprint') {
             this.bossAnimation.play('BossSprint');
         }
     }
 
     private playDeadAnimation() {
-        if(this.bossAnimation.currentClip.name !== 'BossDead') {
+        if (this.bossAnimation.currentClip.name !== 'BossDead') {
             this.bossAnimation.play('BossDead');
         }
     }
@@ -258,11 +258,10 @@ export default class Boss extends TimeEffect {
         this.currentTween = cc
             .tween(this.node)
             .parallel(cc.tween().to(1, { x: randX }), cc.tween().to(1, { y: randY }))
-            .call(()=> {
+            .call(() => {
                 this.node.scaleX = distanceX < 0 ? 1 : -1;
                 this.node.angle = angle;
                 this.playSprintAnimation();
-                
             })
             .parallel(cc.tween().to(moveTime, { x: this.player.x }, { easing: 'sineIn' }), cc.tween().to(moveTime, { y: this.player.y }, { easing: 'sineIn' }))
             .call(() => {
@@ -394,7 +393,7 @@ export default class Boss extends TimeEffect {
     }
 
     private pickupWeapon() {
-        if (this.weapon === null) {
+        if (this.weapon === null || this.weapon.getComponent(BossWeapon).rollbacking) {
             return;
         }
         this.usingSpecialSkill = true;
@@ -424,11 +423,21 @@ export default class Boss extends TimeEffect {
     }
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
-        if ((other.node.group === 'Damage' || (other.node.name === 'BossWeapon' && this.weapon.getComponent(BossWeapon).causeDamage)) && !this.isInvincible) {
-            this.currentHP -= 10;
-            this.HPCheck(this.currentHP);
-            this.node.children[0].color = cc.color(255, 0, 0);
-            this.beingInvincible();
+        if (!this.isInvincible) {
+            if (other.node.group === 'Damage') {
+                this.currentHP -= 10;
+                this.HPCheck(this.currentHP);
+                this.node.children[0].color = cc.color(255, 0, 0);
+                this.beingInvincible();
+            }
+            if (this.weapon !== null) {
+                if (other.node.name === 'BossWeapon' && this.weapon.getComponent(BossWeapon).causeDamage) {
+                    this.currentHP -= 10;
+                    this.HPCheck(this.currentHP);
+                    this.node.children[0].color = cc.color(255, 0, 0);
+                    this.beingInvincible();
+                }
+            }
         }
     }
 
@@ -437,7 +446,7 @@ export default class Boss extends TimeEffect {
             cc.audioEngine.playEffect(this.deathEffect, false);
             this.playDeadAnimation();
             this.unscheduleAllCallbacks();
-            this.scheduleOnce(() => this.node.active = false, 1);
+            this.scheduleOnce(() => (this.node.active = false), 1);
             this.scheduleOnce(() => this.node.emit('dead'), 1);
         }
         this.HPDisplay.progress = HP / this.bossHP;
@@ -507,7 +516,7 @@ export default class Boss extends TimeEffect {
                 this.moveTimer = 0;
                 this.endSpecialSkill();
             }
-            if (this.weapon.getComponent(BossWeapon).hitWall) {
+            if (!this.weapon.isValid || this.weapon.getComponent(BossWeapon).hitWall) {
                 this.weaponWaiting = false;
                 this.moveTimer = 0;
                 this.endSpecialSkill();

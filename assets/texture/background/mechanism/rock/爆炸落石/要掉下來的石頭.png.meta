@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "6dad1bc0-13bc-4b8f-b50f-ca1da9b136d9",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 480,
+  "height": 480,
+  "platformSettings": {},
+  "subMetas": {
+    "要掉下來的石頭": {
+      "ver": "1.0.4",
+      "uuid": "479372dc-54cc-4b09-8d25-a69bcdcb1a41",
+      "rawTextureUuid": "6dad1bc0-13bc-4b8f-b50f-ca1da9b136d9",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0.5,
+      "offsetY": -0.5,
+      "trimX": 151,
+      "trimY": 152,
+      "width": 179,
+      "height": 177,
+      "rawWidth": 480,
+      "rawHeight": 480,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,1 @@
+[{"__type__":"cc.SpriteFrame","content":{"name":"boss sprint","texture":"a9kUGgK2lIoYW2O7tTtqH5","rect":[0,0,700,400],"offset":[0,0],"originalSize":[700,400],"capInsets":[0,0,0,0]}},{"__type__":"cc.AnimationClip","_name":"BossSprint","_duration":0.016666666666666666,"curveData":{"comps":{"cc.Sprite":{"spriteFrame":[{"frame":0,"value":{"__uuid__":"c2rJwoCuVL/rp+LeMjtBUq"}}]}}}}]

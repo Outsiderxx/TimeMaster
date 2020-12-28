@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "7108c353-5ba4-468a-a50f-77c27443efa0",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 480,
+  "height": 480,
+  "platformSettings": {},
+  "subMetas": {
+    "懸崖-石頭掉落後": {
+      "ver": "1.0.4",
+      "uuid": "e4f6eadf-ab7a-4d18-989b-6f11beec724c",
+      "rawTextureUuid": "7108c353-5ba4-468a-a50f-77c27443efa0",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 104,
+      "trimY": 104,
+      "width": 272,
+      "height": 272,
+      "rawWidth": 480,
+      "rawHeight": 480,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

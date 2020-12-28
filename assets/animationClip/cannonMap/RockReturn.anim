@@ -3,10 +3,10 @@
   "_name": "RockReturn",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.6,
+  "_duration": 0.7,
   "sample": 10,
   "speed": 1,
-  "wrapMode": 1,
+  "wrapMode": 36,
   "curveData": {
     "comps": {
       "cc.Sprite": {
@@ -14,37 +14,43 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "0010ac3f-107a-4ba0-a228-8906d73b335b"
+              "__uuid__": "a1b47440-9c0e-4c62-b17a-b8fa6ac7532b"
             }
           },
           {
             "frame": 0.1,
             "value": {
-              "__uuid__": "fadc3ebf-f53c-43b8-95fa-b05c71f47bec"
+              "__uuid__": "9eeef6e6-f4cf-4a48-8c01-eb5743848ae9"
             }
           },
           {
             "frame": 0.2,
             "value": {
-              "__uuid__": "92c175e9-4128-4177-9b90-627ac082039f"
+              "__uuid__": "aeedbf88-9f65-4907-a928-6ec5a91802c6"
             }
           },
           {
             "frame": 0.3,
             "value": {
-              "__uuid__": "e336d545-0be1-4ab9-95bf-4c668ab38c43"
+              "__uuid__": "8c004592-c68d-456d-9fd2-3ee64ba055f7"
             }
           },
           {
             "frame": 0.4,
             "value": {
-              "__uuid__": "1c2b9859-7951-4985-b5f7-938b8507f451"
+              "__uuid__": "e6591e07-af49-4d88-b28a-81011946119f"
             }
           },
           {
             "frame": 0.5,
             "value": {
-              "__uuid__": "bd45edf9-e959-4887-94d1-75978357860a"
+              "__uuid__": "e116d36f-57e2-43ef-82e4-39878d3f6dc8"
+            }
+          },
+          {
+            "frame": 0.6,
+            "value": {
+              "__uuid__": "a0f0b755-3f69-4851-9e88-3ee82c05503f"
             }
           }
         ]
@@ -55,18 +61,28 @@
         {
           "frame": 0,
           "value": [
-            47.791,
-            -230,
+            -10,
+            17.5,
             0
           ]
         },
         {
-          "frame": 0.5,
+          "frame": 0.6,
           "value": [
-            47.791,
-            -38.727,
+            -10,
+            -200,
             0
           ]
+        }
+      ],
+      "angle": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.6,
+          "value": -30
         }
       ]
     }

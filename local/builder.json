@@ -2,7 +2,7 @@
   "platform": "win32",
   "actualPlatform": "win32",
   "template": "link",
-  "buildPath": "./build/8",
+  "buildPath": "./build",
   "debug": false,
   "sourceMaps": true,
   "embedWebDebugger": false,

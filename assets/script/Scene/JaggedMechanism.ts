@@ -185,8 +185,9 @@ export default class JaggedMechanism extends TimeEffect {
         }else if(!this.timeEffectFromDR && !this.rollbacking) {
             this.node.children[0].group = 'Damage';
             this.node.children[0].getComponent(cc.PhysicsBoxCollider).apply();
-
-            this.currentTween.stop();
+            if(this.currentTween !== null) {
+                this.currentTween.stop();
+            }
             this.returnToOriginalPos();
 
         }

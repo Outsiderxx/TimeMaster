@@ -1,4 +1,5 @@
 import TimeEffect from '../../../TimeEffect';
+import CannonContact from './CannonContact';
 
 const { ccclass, property } = cc._decorator;
 
@@ -15,16 +16,16 @@ export default class CannonMechanism extends TimeEffect {
         this.status = 'triggered';
         this.CannonBody.on('finished', () => {
             if (this.CannonBody.currentClip.name === 'CannonFlyOut') {
-                cc.audioEngine.playEffect(this.sound,false);
+                cc.audioEngine.playEffect(this.sound, false);
                 this.CannonMap.play('MapBreak');
             }
         });
     }
-    
+
     public rollback() {
         this.status = 'original';
         this.CannonMap.play('MapBuild');
-        cc.audioEngine.playEffect(this.sound,false);
+        cc.audioEngine.playEffect(this.sound, false);
         this.CannonBody.play('CannonFlyBack');
     }
 
@@ -39,5 +40,6 @@ export default class CannonMechanism extends TimeEffect {
         this.status = 'triggered';
         this.CannonMap.play('MapBreak');
         this.CannonBody.node.setPosition(1580, 180);
+        this.CannonBody.getComponent(CannonContact).reset();
     }
 }
