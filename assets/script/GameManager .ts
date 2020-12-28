@@ -159,8 +159,7 @@ export default class GameController extends cc.Component {
         } else if (this.currentSceneIdx <= 2) {
             cc.audioEngine.playMusic(this.bgmCave, true);
         } else {
-            const id: number = cc.audioEngine.playMusic(this.bgmCastle, true);
-            cc.audioEngine.setVolume(id, 0.2);
+            cc.audioEngine.playMusic(this.bgmCastle, true);
         }
         if (this.currentSceneIdx === 2) {
             this.player.status = false;

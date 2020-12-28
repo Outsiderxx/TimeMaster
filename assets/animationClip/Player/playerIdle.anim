@@ -3,8 +3,8 @@
   "_name": "playerIdle",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.68,
-  "sample": 25,
+  "_duration": 0.4,
+  "sample": 5,
   "speed": 1,
   "wrapMode": 2,
   "curveData": {
@@ -18,15 +18,9 @@
             }
           },
           {
-            "frame": 0.32,
+            "frame": 0.2,
             "value": {
               "__uuid__": "e62c0848-d07e-4e3f-956e-124db0bf0c63"
-            }
-          },
-          {
-            "frame": 0.64,
-            "value": {
-              "__uuid__": "7bd88755-3243-42b7-bc46-dd046ea0874d"
             }
           }
         ]

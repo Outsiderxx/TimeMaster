@@ -205,16 +205,16 @@
     "_defaultClip": null,
     "_clips": [
       {
-        "__uuid__": "fee70534-5754-4b1f-ba51-50628376359a"
+        "__uuid__": "49285a39-f877-4398-be40-1ed230f27e6c"
       },
       {
         "__uuid__": "7a010372-6d4d-4c3d-bb7d-a948bdba193c"
       },
       {
-        "__uuid__": "e4cc2d05-ea87-4863-a1f0-4d3ad594ec1a"
+        "__uuid__": "149abf4d-60c0-47d8-a8f1-574f77c4db21"
       },
       {
-        "__uuid__": "ea2a9258-71b3-444f-b6ae-befa12e6bf46"
+        "__uuid__": "82d6df56-26d8-4ba0-bbd0-39d6ef493a83"
       }
     ],
     "playOnLoad": true,
@@ -226,7 +226,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "565d7d02-8bca-46a7-9773-21a2287447e2"
     },
     "fileId": "cfpJhk9kFO44UXCENsRGYS",
     "sync": false
@@ -249,10 +249,10 @@
       "__uuid__": "d9afb950-c08d-42e6-9eca-9d718f7a7477"
     },
     "attackEffect": {
-      "__uuid__": "d556616f-88bf-425f-8e5d-ec64caab33c3"
+      "__uuid__": "24fb21d0-9825-4897-b1ed-0bff64add0a7"
     },
     "deathEffect": {
-      "__uuid__": "6011d76f-fa3f-423d-a4d2-11bb57eb9415"
+      "__uuid__": "0bcd2cb7-841e-45c4-9f6a-9bb7caa088a4"
     },
     "moveSpeed": 100,
     "freezeTime": 1,
@@ -399,7 +399,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "565d7d02-8bca-46a7-9773-21a2287447e2"
     },
     "fileId": "c1exEyyPNAjLehpTGq+xjS",
     "sync": false

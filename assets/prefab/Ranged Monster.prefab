@@ -201,7 +201,7 @@
     },
     "_clips": [
       {
-        "__uuid__": "007076d5-bf5a-4007-8cc7-bcbef6ae3cf6"
+        "__uuid__": "a750274c-22b2-4cb5-8735-7519bfffc51a"
       },
       {
         "__uuid__": "33c53b32-b468-45dc-8430-2a76dbd380c4"
@@ -242,10 +242,10 @@
       "__id__": 4
     },
     "shootEffect": {
-      "__uuid__": "cd4e6eaf-6c92-4f98-903b-f1e950a7425d"
+      "__uuid__": "035adc1a-8706-4871-b792-1c2c7671a354"
     },
     "deathEffect": {
-      "__uuid__": "6011d76f-fa3f-423d-a4d2-11bb57eb9415"
+      "__uuid__": "0bcd2cb7-841e-45c4-9f6a-9bb7caa088a4"
     },
     "moveSpeed": 100,
     "attackDistance": 250,
