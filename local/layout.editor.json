@@ -18,32 +18,32 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 332.46875,
+                "height": 431.375,
                 "type": "panel",
-                "width": 281.578125
+                "width": 352.953125
               },
               {
                 "active": 0,
                 "children": [
                   "assets"
                 ],
-                "height": 386.53125,
+                "height": 503.625,
                 "type": "panel",
-                "width": 281.578125
+                "width": 352.953125
               }
             ],
-            "height": 722,
+            "height": 938,
             "type": "dock-v",
-            "width": 281.578125
+            "width": 352.953125
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 722,
+            "height": 938,
             "type": "panel",
-            "width": 338.09375
+            "width": 422.53125
           },
           {
             "children": [
@@ -52,9 +52,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 436.5,
+                "height": 568.734375,
                 "type": "panel",
-                "width": 910.328125
+                "width": 1138.515625
               },
               {
                 "active": 0,
@@ -63,14 +63,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 282.5,
+                "height": 366.265625,
                 "type": "panel",
-                "width": 910.328125
+                "width": 1138.515625
               }
             ],
-            "height": 722,
+            "height": 938,
             "type": "dock-v",
-            "width": 910.328125
+            "width": 1138.515625
           }
         ],
         "type": "dock-h"
@@ -94,8 +94,8 @@
       "height": 718
     },
     "preferences": {
-      "x": 351,
-      "y": 291,
+      "x": 329,
+      "y": 276,
       "width": 600,
       "height": 565
     },
