@@ -1,6 +1,6 @@
 {
   "ver": "2.3.5",
-  "uuid": "ab899325-6b88-400d-994a-f9247b6f0730",
+  "uuid": "4bd7919d-bca0-4a00-b30d-3c0eea483788",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "vine-ani2.1-f15": {
       "ver": "1.0.4",
-      "uuid": "a291529d-60b6-4558-966e-70d1c9ae1cf6",
-      "rawTextureUuid": "ab899325-6b88-400d-994a-f9247b6f0730",
+      "uuid": "15d01d6d-4fa9-4650-a061-2f2052ccabb5",
+      "rawTextureUuid": "4bd7919d-bca0-4a00-b30d-3c0eea483788",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

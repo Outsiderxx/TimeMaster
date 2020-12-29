@@ -18,23 +18,23 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 422.640625,
+                "height": 423,
                 "type": "panel",
-                "width": 350.046875
+                "width": 350
               },
               {
                 "active": 0,
                 "children": [
                   "assets"
                 ],
-                "height": 496.359375,
+                "height": 496,
                 "type": "panel",
-                "width": 350.046875
+                "width": 350
               }
             ],
             "height": 922,
             "type": "dock-v",
-            "width": 350.046875
+            "width": 350
           },
           {
             "active": 0,
@@ -43,7 +43,7 @@
             ],
             "height": 922,
             "type": "panel",
-            "width": 416.484375
+            "width": 417
           },
           {
             "children": [
@@ -52,9 +52,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 557.296875,
+                "height": 557,
                 "type": "panel",
-                "width": 1131.46875
+                "width": 1131
               },
               {
                 "active": 0,
@@ -63,14 +63,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 361.703125,
+                "height": 362,
                 "type": "panel",
-                "width": 1131.46875
+                "width": 1131
               }
             ],
             "height": 922,
             "type": "dock-v",
-            "width": 1131.46875
+            "width": 1131
           }
         ],
         "type": "dock-h"
@@ -85,7 +85,7 @@
         "game-window"
       ]
     },
-    "window-1609185625220": {}
+    "worker": {}
   },
   "panels": {
     "project-settings": {
