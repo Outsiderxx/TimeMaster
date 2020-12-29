@@ -27,7 +27,10 @@ export default class NewClass extends cc.Component {
                 cc.audioEngine.setEffectsVolume(0);
             }
         });
-        this.closeBtn.on(cc.Node.EventType.TOUCH_END, () => this.close());
+        this.closeBtn.on(cc.Node.EventType.TOUCH_END, () => {
+            cc.audioEngine.playEffect(this.buttonEffect, false);
+            this.close();
+        });
         this.node.active = false;
         this.node.opacity = 255;
     }

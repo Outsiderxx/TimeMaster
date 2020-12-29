@@ -34,16 +34,28 @@ export default class MainMenuController extends cc.Component {
             this.node.emit('enterFirstScene');
             cc.audioEngine.playEffect(this.buttonEffect, false);
         });
+        this.startBtn.node.on(cc.Node.EventType.MOUSE_ENTER, () => {
+            cc.audioEngine.playEffect(this.buttonEffect, false);
+        });
         this.exitBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             cc.audioEngine.playEffect(this.buttonEffect, false);
             cc.game.end();
+        });
+        this.exitBtn.node.on(cc.Node.EventType.MOUSE_ENTER, () => {
+            cc.audioEngine.playEffect(this.buttonEffect, false);
         });
         this.settingBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.settingPage.open();
             cc.audioEngine.playEffect(this.buttonEffect, false);
         });
+        this.settingBtn.node.on(cc.Node.EventType.MOUSE_ENTER, () => {
+            cc.audioEngine.playEffect(this.buttonEffect, false);
+        });
         this.helpBtn.node.on(cc.Node.EventType.TOUCH_END, () => {
             this.helpPage.active = true;
+            cc.audioEngine.playEffect(this.buttonEffect, false);
+        });
+        this.helpBtn.node.on(cc.Node.EventType.MOUSE_ENTER, () => {
             cc.audioEngine.playEffect(this.buttonEffect, false);
         });
         this.closeHelpPageBtn.on(cc.Node.EventType.TOUCH_END, () => {

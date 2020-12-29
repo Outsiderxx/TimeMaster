@@ -18,32 +18,32 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 430.359375,
+                "height": 332.46875,
                 "type": "panel",
-                "width": 352.953125
+                "width": 281.578125
               },
               {
                 "active": 0,
                 "children": [
                   "assets"
                 ],
-                "height": 504.640625,
+                "height": 386.53125,
                 "type": "panel",
-                "width": 352.953125
+                "width": 281.578125
               }
             ],
-            "height": 938,
+            "height": 722,
             "type": "dock-v",
-            "width": 352.953125
+            "width": 281.578125
           },
           {
             "active": 0,
             "children": [
               "inspector"
             ],
-            "height": 938,
+            "height": 722,
             "type": "panel",
-            "width": 420.515625
+            "width": 338.09375
           },
           {
             "children": [
@@ -52,9 +52,9 @@
                 "children": [
                   "scene"
                 ],
-                "height": 566.703125,
+                "height": 436.5,
                 "type": "panel",
-                "width": 1140.53125
+                "width": 910.328125
               },
               {
                 "active": 0,
@@ -63,14 +63,14 @@
                   "timeline",
                   "game-window"
                 ],
-                "height": 368.296875,
+                "height": 282.5,
                 "type": "panel",
-                "width": 1140.53125
+                "width": 910.328125
               }
             ],
-            "height": 938,
+            "height": 722,
             "type": "dock-v",
-            "width": 1140.53125
+            "width": 910.328125
           }
         ],
         "type": "dock-h"
