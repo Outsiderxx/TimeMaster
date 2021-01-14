@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 424,
+                "height": 474,
                 "type": "panel",
                 "width": 350
               },
@@ -27,7 +27,7 @@
                 "children": [
                   "assets"
                 ],
-                "height": 495,
+                "height": 445,
                 "type": "panel",
                 "width": 350
               }
@@ -57,7 +57,7 @@
                 "width": 1128.984375
               },
               {
-                "active": 0,
+                "active": 1,
                 "children": [
                   "console",
                   "timeline",
@@ -84,8 +84,7 @@
         "timeline",
         "game-window"
       ]
-    },
-    "worker": {}
+    }
   },
   "panels": {
     "project-settings": {

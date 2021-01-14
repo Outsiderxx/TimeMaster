@@ -110,7 +110,9 @@ export default class PlayerManager extends cc.Component {
             if (this.currentUsingSkill !== none) {
                 if (mechanism.checkStatus(this.currentUsingSkill)) {
                     const id: number = cc.audioEngine.playEffect(this.skillSuccess, false);
-                    cc.audioEngine.setVolume(id, 0.3);
+                    if (cc.audioEngine.getEffectsVolume() !== 0) {
+                        cc.audioEngine.setVolume(id, 0.3);
+                    }
                     this.finiteState(StateSet.useSkill);
                     this.triggleSkillSuccessParticle();
                     switch (this.currentUsingSkill) {
@@ -129,7 +131,9 @@ export default class PlayerManager extends cc.Component {
                     }
                 } else {
                     const id: number = cc.audioEngine.playEffect(this.skillfail, false);
-                    cc.audioEngine.setVolume(id, 0.3);
+                    if (cc.audioEngine.getEffectsVolume() !== 0) {
+                        cc.audioEngine.setVolume(id, 0.3);
+                    }
                 }
             }
         });

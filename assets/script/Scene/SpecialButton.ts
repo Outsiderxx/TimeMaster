@@ -11,7 +11,9 @@ export default class SpecialButton extends cc.Component {
             this.node.emit('triggered');
             if (!this.animState?.isPlaying) {
                 const id: number = cc.audioEngine.playEffect(this.buttonEffect, false);
-                cc.audioEngine.setVolume(id, 1);
+                if (cc.audioEngine.getEffectsVolume() !== 0) {
+                    cc.audioEngine.setVolume(id, 1);
+                }
                 this.animState = this.node.getComponent(cc.Animation).play();
             }
         }

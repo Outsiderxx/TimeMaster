@@ -31,7 +31,9 @@ export default class ElevatorManager extends TimeEffect {
         this.reset();
         this.node.getComponent(cc.Animation).play('elevatorDown');
         this.effectID = cc.audioEngine.playEffect(this.sound, true);
-        cc.audioEngine.setVolume(this.effectID, 0.3);
+        if (cc.audioEngine.getEffectsVolume() !== 0) {
+            cc.audioEngine.setVolume(this.effectID, 0.3);
+        }
         this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 593 }).start();
         this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 593 }).start();
         (this.chainOneTween as any)._finalAction._speedMethod = true;
@@ -64,7 +66,9 @@ export default class ElevatorManager extends TimeEffect {
             // 電梯停留結束
             this.node.getComponent(cc.Animation).play('elevatorReturn');
             this.effectID = cc.audioEngine.playEffect(this.sound, true);
-            cc.audioEngine.setVolume(this.effectID, 0.3);
+            if (cc.audioEngine.getEffectsVolume() !== 0) {
+                cc.audioEngine.setVolume(this.effectID, 0.3);
+            }
             this.chainOneTween = cc.tween(this.chains[0]).to(1, { y: 830 }).start();
             this.chainTwoTween = cc.tween(this.chains[1]).to(1, { y: 830 }).start();
             (this.chainOneTween as any)._finalAction._speedMethod = true;

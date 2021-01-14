@@ -110,7 +110,9 @@ export default class ClockMechanism extends TimeEffect {
             this.stair.active = true;
             if (!this.isBellPlayed) {
                 const id: number = cc.audioEngine.playEffect(this.bellEffect, false);
-                cc.audioEngine.setVolume(id, 0.8);
+                if (cc.audioEngine.getEffectsVolume() !== 0) {
+                    cc.audioEngine.setVolume(id, 0.8);
+                }
                 this.isBellPlayed = true;
             }
         } else {

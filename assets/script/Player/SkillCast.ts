@@ -15,6 +15,7 @@ export default class SkillCast extends cc.Component {
     private scene: cc.Node = null;
     private currentCollider: cc.Collider = null;
     private secondCollider: cc.Collider = null;
+    private currentColliders: Map<string, cc.Collider> = new Map();
 
     onLoad() {
         cc.director.getCollisionManager().enabled = true;
@@ -33,8 +34,9 @@ export default class SkillCast extends cc.Component {
     }
 
     public changeScene() {
-        this.currentCollider = null;
-        this.secondCollider = null;
+        this.currentColliders.clear();
+        // this.currentCollider = null;
+        // this.secondCollider = null;
         this.scene.off(cc.Node.EventType.MOUSE_MOVE, this.trackPointerPosition, this);
         this.scene.off(cc.Node.EventType.MOUSE_UP, this.onPointerClick, this);
         this.scene = this.node.parent.getComponentsInChildren(SceneManager).filter((sceneManager) => sceneManager.node.active === true)[0].node;
@@ -50,29 +52,41 @@ export default class SkillCast extends cc.Component {
     }
 
     private onPointerClick() {
-        if (this.currentCollider && this.rangeCheck()) {
-            this.node.emit('skillHit', this.currentCollider);
-            console.log('emit skill hit');
+        if (this.currentColliders.size !== 0 && this.rangeCheck()) {
+            this.currentColliders.forEach((collider) => {
+                this.node.emit('skillHit', collider);
+            });
         }
     }
 
+    // private onCollisionEnter(other: cc.Collider) {
+    //     // 顯示時鐘pointer
+    //     this.node.getComponent(cc.Sprite).enabled = true;
+    //     if (this.currentCollider !== null) {
+    //         this.secondCollider = other;
+    //     } else {
+    //         this.currentCollider = other;
+    //     }
+    // }
     private onCollisionEnter(other: cc.Collider) {
         // 顯示時鐘pointer
         this.node.getComponent(cc.Sprite).enabled = true;
-        if (this.currentCollider !== null) {
-            this.secondCollider = other;
-        } else {
-            this.currentCollider = other;
-        }
+        this.currentColliders.set(other.node.name, other);
     }
 
-    private onCollisionExit() {
-        if (this.secondCollider === null) {
+    // private onCollisionExit() {
+    //     if (this.secondCollider === null) {
+    //         this.node.getComponent(cc.Sprite).enabled = false;
+    //         this.currentCollider = null;
+    //     } else {
+    //         this.currentCollider = this.secondCollider;
+    //         this.secondCollider = null;
+    //     }
+    // }
+    private onCollisionExit(other: cc.Collider) {
+        this.currentColliders.delete(other.node.name);
+        if (this.currentColliders.size === 0) {
             this.node.getComponent(cc.Sprite).enabled = false;
-            this.currentCollider = null;
-        } else {
-            this.currentCollider = this.secondCollider;
-            this.secondCollider = null;
         }
     }
 

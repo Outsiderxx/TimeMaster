@@ -24,7 +24,9 @@ export default class ClockButtonMechanism extends cc.Component {
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         if (other.node.name === 'Player' && !this.isActived) {
             const id: number = cc.audioEngine.playEffect(this.buttonEffect, false);
-            cc.audioEngine.setVolume(id, 1);
+            if (cc.audioEngine.getEffectsVolume() !== 0) {
+                cc.audioEngine.setVolume(id, 1);
+            }
             this.active();
         }
     }

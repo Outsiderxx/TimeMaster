@@ -31,6 +31,18 @@ export default class SceneManager extends cc.Component {
     @property(cc.Prefab)
     private specialMonsterPrefab: cc.Prefab = null;
 
+    @property(cc.Vec2)
+    private rangedMonsterPositions: cc.Vec2[] = [];
+
+    @property(cc.Vec2)
+    private meleeMonsterPositions: cc.Vec2[] = [];
+
+    @property(cc.Vec2)
+    private climbMonsterPositions: cc.Vec2[] = [];
+
+    @property(cc.Vec2)
+    private specialMonsterPositions: cc.Vec2[] = [];
+
     @property([cc.Vec2])
     private floorWidthEdgeOffset: cc.Vec2[] = []; // x: top, y: down
 
@@ -40,17 +52,13 @@ export default class SceneManager extends cc.Component {
     @property(cc.Vec2)
     public initialCameraPosition: cc.Vec2 = null;
 
-    private rangedMonsterPositions: cc.Vec2[] = [];
-    private meleeMonsterPositions: cc.Vec2[] = [];
-    private climbMonsterPositions: cc.Vec2[] = [];
-    private specialMonsterPositions: cc.Vec2[] = [];
     private currentFloor: number = 0;
 
     onLoad() {
-        this.rangedMonsterPositions = this.rangedMonsters.map((monster) => monster.getPosition());
-        this.meleeMonsterPositions = this.meleeMonsters.map((monster) => monster.getPosition());
-        this.climbMonsterPositions = this.climbMonsters.map((monster) => monster.getPosition());
-        this.specialMonsterPositions = this.specialMonsters.map((monster) => monster.getPosition());
+        // this.rangedMonsterPositions = this.rangedMonsters.map((monster) => monster.getPosition());
+        // this.meleeMonsterPositions = this.meleeMonsters.map((monster) => monster.getPosition());
+        // this.climbMonsterPositions = this.climbMonsters.map((monster) => monster.getPosition());
+        // this.specialMonsterPositions = this.specialMonsters.map((monster) => monster.getPosition());
         this.floorDetected.forEach((node, idx) => {
             node.on('crossFloor', () => {
                 this.currentFloor = idx;
@@ -65,6 +73,21 @@ export default class SceneManager extends cc.Component {
 
     public getCurrentFloorEdgeOffset() {
         return this.floorWidthEdgeOffset[this.currentFloor];
+    }
+
+    public resetMonsterPosition() {
+        this.rangedMonsters.forEach((monster, idx) => {
+            monster.setPosition(this.rangedMonsterPositions[idx]);
+        });
+        this.meleeMonsters.forEach((monster, idx) => {
+            monster.setPosition(this.meleeMonsterPositions[idx]);
+        });
+        this.specialMonsters.forEach((monster, idx) => {
+            monster.setPosition(this.specialMonsterPositions[idx]);
+        });
+        this.climbMonsters.forEach((monster, idx) => {
+            monster.setPosition(this.climbMonsterPositions[idx]);
+        });
     }
 
     public reset() {
@@ -118,7 +141,7 @@ export default class SceneManager extends cc.Component {
         this.climbMonsterPositions.forEach((position) => {
             const node: cc.Node = cc.instantiate(this.climbMonsterPrefab);
             node.setPosition(position);
-            this.meleeMonsters.push(node);
+            this.climbMonsters.push(node);
             this.node.addChild(node);
         });
         this.specialMonsterPositions.forEach((position) => {

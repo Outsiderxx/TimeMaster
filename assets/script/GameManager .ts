@@ -126,23 +126,25 @@ export default class GameController extends cc.Component {
                 scene.active = false;
             }
         });
+        this.transferStage(0, true);
     }
 
     private async transferStage(idx: number, isBackToMainMenu: boolean = false) {
-        const currentMusicVolume: number = cc.audioEngine.getMusicVolume();
-        const currentEffectVolume: number = cc.audioEngine.getEffectsVolume();
         cc.audioEngine.stopMusic();
         console.log('transion mute');
         this.transition.openTransitionferStage();
         await new Promise((resolve) => (this.transitionPromise = resolve));
-        this.currentScene.reset();
         if (idx !== this.currentSceneIdx) {
+            // close the orignial scene
             this.camera.isUpdate = false;
+            this.currentScene.reset();
             this.currentScene.node.active = false;
+            // open the new scene
             this.currentScene = this.sceneNodes[idx].getComponent(SceneManager);
             this.currentScene.node.active = true;
             this.currentSceneIdx = idx;
         }
+        this.currentScene.reset();
         this.player.reset(idx);
         this.camera.reset();
         this.narrator.reset();
@@ -175,5 +177,6 @@ export default class GameController extends cc.Component {
             this.narrator.enableClockSceneMessage();
             this.camera.isUpdate = true;
         }
+        this.currentScene.resetMonsterPosition();
     }
 }

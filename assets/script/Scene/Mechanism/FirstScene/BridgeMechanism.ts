@@ -30,7 +30,9 @@ export default class BridgeMechanism extends TimeEffect {
 
     public accelerate() {
         const id: number = cc.audioEngine.playEffect(this.break, false);
-        cc.audioEngine.setVolume(id, 0.3);
+        if (cc.audioEngine.getEffectsVolume() !== 0) {
+            cc.audioEngine.setVolume(id, 0.3);
+        }
         this.bridgeAnimation.play('breakingBridge');
     }
 
