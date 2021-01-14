@@ -65,6 +65,9 @@ export default class Boss extends TimeEffect {
     private sprintEffectTwo: cc.AudioClip = null;
 
     @property(cc.AudioClip)
+    private hitGroundEffect: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
     private deathEffect: cc.AudioClip = null;
 
     @property
@@ -265,6 +268,7 @@ export default class Boss extends TimeEffect {
             })
             .parallel(cc.tween().to(moveTime, { x: this.player.x }, { easing: 'sineIn' }), cc.tween().to(moveTime, { y: this.player.y }, { easing: 'sineIn' }))
             .call(() => {
+                cc.audioEngine.playEffect(this.hitGroundEffect, false);
                 this.spawnFallenRock();
                 this.schedule(this.endSpecialSkill, 0.2, 0);
             })
@@ -302,15 +306,18 @@ export default class Boss extends TimeEffect {
             .to(moveTime, { position: cc.v3(-350, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
             .to(0.2, { position: cc.v3(-350, -200, 0) })
+            .call(()=> {cc.audioEngine.playEffect(this.hitGroundEffect, false);})
             .delay(0.2)
             .to(0.2, { position: cc.v3(0, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
             .to(0.2, { position: cc.v3(0, -200, 0) })
+            .call(()=> {cc.audioEngine.playEffect(this.hitGroundEffect, false);})
             .delay(0.2)
             .to(0.2, { position: cc.v3(350, 150, 0) }, { easing: 'sineOut' })
             .delay(0.2)
             .to(0.2, { position: cc.v3(350, -200, 0) })
             .call(() => {
+                cc.audioEngine.playEffect(this.hitGroundEffect, false);
                 this.spawnFallenRock();
                 this.schedule(this.endSpecialSkill, 0.2, 0);
             })
