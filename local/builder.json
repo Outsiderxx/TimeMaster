@@ -4,7 +4,7 @@
   "template": "link",
   "buildPath": "./build",
   "debug": false,
-  "sourceMaps": true,
+  "sourceMaps": false,
   "embedWebDebugger": false,
   "previewWidth": "1280",
   "previewHeight": "720",

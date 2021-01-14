@@ -112,16 +112,16 @@ export default class NarratorManaget extends cc.Component {
             this.plotPoints[10].node.active = status !== 'slowdown';
         });
         this.firstRangedMonster = cc.find('Canvas/GameStage/Scene2/Ranged Monster');
-        this.firstRangedMonster.on('dead', this.onRangedMonsterDead, this);
+        this.firstRangedMonster?.on('dead', this.onRangedMonsterDead, this);
         this.mask.on(cc.Node.EventType.TOUCH_END, () => {
             this.close();
         });
     }
 
     public reset() {
-        this.firstRangedMonster.off('dead', this.onRangedMonsterDead, this);
+        this.firstRangedMonster?.off('dead', this.onRangedMonsterDead, this);
         this.firstRangedMonster = cc.find('Canvas/GameStage/Scene2/Ranged Monster');
-        this.firstRangedMonster.on('dead', this.onRangedMonsterDead, this);
+        this.firstRangedMonster?.on('dead', this.onRangedMonsterDead, this);
         this.currentTween.stop();
         this.background.y = this.initY;
         this.plotPoints.forEach((point) => (point.node.active = true));

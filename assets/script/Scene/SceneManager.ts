@@ -7,18 +7,6 @@ export default class SceneManager extends cc.Component {
     @property([TimeEffect])
     private mechanisms: TimeEffect[] = [];
 
-    @property([cc.Node])
-    private rangedMonsters: cc.Node[] = [];
-
-    @property([cc.Node])
-    private meleeMonsters: cc.Node[] = [];
-
-    @property([cc.Node])
-    private climbMonsters: cc.Node[] = [];
-
-    @property([cc.Node])
-    private specialMonsters: cc.Node[] = [];
-
     @property(cc.Prefab)
     private rangedMonsterPrefab: cc.Prefab = null;
 
@@ -52,13 +40,13 @@ export default class SceneManager extends cc.Component {
     @property(cc.Vec2)
     public initialCameraPosition: cc.Vec2 = null;
 
+    private rangedMonsters: cc.Node[] = [];
+    private meleeMonsters: cc.Node[] = [];
+    private climbMonsters: cc.Node[] = [];
+    private specialMonsters: cc.Node[] = [];
     private currentFloor: number = 0;
 
     onLoad() {
-        // this.rangedMonsterPositions = this.rangedMonsters.map((monster) => monster.getPosition());
-        // this.meleeMonsterPositions = this.meleeMonsters.map((monster) => monster.getPosition());
-        // this.climbMonsterPositions = this.climbMonsters.map((monster) => monster.getPosition());
-        // this.specialMonsterPositions = this.specialMonsters.map((monster) => monster.getPosition());
         this.floorDetected.forEach((node, idx) => {
             node.on('crossFloor', () => {
                 this.currentFloor = idx;

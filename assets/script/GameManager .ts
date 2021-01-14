@@ -120,7 +120,6 @@ export default class GameController extends cc.Component {
 
     start() {
         this.mainMenu.node.active = true;
-        cc.audioEngine.playMusic(this.bgmMainMenu, true);
         this.sceneNodes.forEach((scene, idx) => {
             if (idx !== 0) {
                 scene.active = false;
