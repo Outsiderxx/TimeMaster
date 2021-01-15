@@ -18,7 +18,7 @@
                 "children": [
                   "hierarchy"
                 ],
-                "height": 481.984375,
+                "height": 708.984375,
                 "type": "panel",
                 "width": 353
               },
@@ -27,7 +27,7 @@
                 "children": [
                   "assets"
                 ],
-                "height": 453,
+                "height": 226,
                 "type": "panel",
                 "width": 353
               }
@@ -43,7 +43,7 @@
             ],
             "height": 938,
             "type": "panel",
-            "width": 422
+            "width": 425
           },
           {
             "children": [
@@ -54,7 +54,7 @@
                 ],
                 "height": 569,
                 "type": "panel",
-                "width": 1139
+                "width": 1136
               },
               {
                 "active": 0,
@@ -65,12 +65,12 @@
                 ],
                 "height": 366,
                 "type": "panel",
-                "width": 1139
+                "width": 1136
               }
             ],
             "height": 938,
             "type": "dock-v",
-            "width": 1139
+            "width": 1136
           }
         ],
         "type": "dock-h"
@@ -85,7 +85,7 @@
         "game-window"
       ]
     },
-    "window-1610642407273": {}
+    "window-1610713859931": {}
   },
   "panels": {
     "project-settings": {

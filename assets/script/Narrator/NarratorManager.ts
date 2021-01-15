@@ -122,8 +122,9 @@ export default class NarratorManaget extends cc.Component {
         this.firstRangedMonster?.off('dead', this.onRangedMonsterDead, this);
         this.firstRangedMonster = cc.find('Canvas/GameStage/Scene2/Ranged Monster');
         this.firstRangedMonster?.on('dead', this.onRangedMonsterDead, this);
-        this.currentTween.stop();
+        this.currentTween?.stop();
         this.background.y = this.initY;
+        this.plotPoints[0].node.active = false;
         this.plotPoints.forEach((point) => (point.node.active = true));
         this.plotPoints[3].node.active = false;
         this.plotPoints[11].node.active = false;

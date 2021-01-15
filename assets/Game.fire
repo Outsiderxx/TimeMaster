@@ -3562,7 +3562,7 @@
       "__id__": 52
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 77
@@ -3594,7 +3594,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        403.149,
+        441.747,
         288.29,
         0,
         0,
@@ -7355,7 +7355,7 @@
         "__id__": 309
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 311
@@ -12600,7 +12600,7 @@
         "__id__": 499
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 501
@@ -19911,7 +19911,7 @@
         "__id__": 787
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 832
@@ -33318,7 +33318,7 @@
         "__id__": 958
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 960
