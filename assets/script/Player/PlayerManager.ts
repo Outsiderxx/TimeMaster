@@ -275,6 +275,9 @@ export default class PlayerManager extends cc.Component {
 
     private onBeginContact(contact: cc.PhysicsContact, self: cc.PhysicsCollider, other: cc.PhysicsCollider) {
         // 受到傷害
+        if (!this.isAlive) {
+            return;
+        }
         if (self.tag === 0 && (other.node.group === 'Damage' || other.node.group === 'MonsterDamage') && !this.isInvincible) {
             this.resetPlayerState();
             if (other.node.name === 'rollingRock') {
@@ -418,7 +421,7 @@ export default class PlayerManager extends cc.Component {
             this.heartGroup.children.forEach((node) => (node.getComponentInChildren(cc.Toggle).isChecked = true));
         } else {
             this.heartGroup.children.slice(num).forEach((node) => (node.getComponentInChildren(cc.Toggle).isChecked = false));
-            if (num === 0) {
+            if (num === 0 && this.playerState !== StateSet.die) {
                 this.finiteState(StateSet.die);
                 this.animationEvent.walkAudioPause();
                 this.node.emit('dead');
